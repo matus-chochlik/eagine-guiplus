@@ -17,6 +17,34 @@ static void run_loop(GLFWwindow* window, int width, int height) {
     (void)window;
     (void)width;
     (void)height;
+
+    glClearColor(0.3F, 0.3F, 0.9F, 0.0F);
+    glClearDepth(1);
+
+    while(true) {
+        glfwPollEvents();
+
+        if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+            glfwSetWindowShouldClose(window, 1);
+            break;
+        }
+
+        if(glfwWindowShouldClose(window)) {
+            break;
+        }
+
+        int new_width, new_height;
+        glfwGetWindowSize(window, &new_width, &new_height);
+        if((width != new_width) or (height != new_height)) {
+            width = new_width;
+            height = new_height;
+        }
+
+        glViewport(0, 0, width, height);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glfwSwapBuffers(window);
+    }
 }
 
 static void init_and_run() {
@@ -40,7 +68,7 @@ static void init_and_run() {
         int width = 800, height = 600;
 
         GLFWwindow* window =
-          glfwCreateWindow(width, height, "OGLplus example", nullptr, nullptr);
+          glfwCreateWindow(width, height, "GUIplus example", nullptr, nullptr);
 
         if(not window) {
             throw std::runtime_error("Error creating GLFW window");
