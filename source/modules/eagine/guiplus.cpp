@@ -7,5 +7,9 @@
 ///
 export module eagine.guiplus;
 
-// TODO: remove this
-export namespace eagine::guiplus {}
+export import :config;
+export import :result;
+export import :api_traits;
+export import :c_api;
+export import :constants;
+export import :api;

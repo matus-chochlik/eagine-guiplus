@@ -4,6 +4,52 @@
 #  http://www.boost.org/LICENSE_1_0.txt
 
 eagine_add_module(
+	eagine.guiplus PARTITION config
+	IMPORTS eagine.core.types
+)
+
+eagine_add_module(
+	eagine.guiplus PARTITION result
+	IMPORTS
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.c_api
+)
+
+eagine_add_module(
+	eagine.guiplus PARTITION api_traits
+	IMPORTS
+		result
+		eagine.core.memory
+		eagine.core.c_api
+)
+
+eagine_add_module(
+	eagine.guiplus PARTITION c_api
+	IMPORTS
+		config result
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.c_api
+)
+
+eagine_add_module(
+	eagine.guiplus PARTITION constants
+	IMPORTS c_api
+)
+
+eagine_add_module(
+	eagine.guiplus PARTITION api
+	IMPORTS
+		config api_traits result
+		c_api constants
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.utility
+		eagine.core.c_api
+)
+
+eagine_add_module(
 	eagine.guiplus
 	SOURCES
 	IMPORTS

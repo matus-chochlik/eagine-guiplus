@@ -14,12 +14,11 @@ import eagine.guiplus;
 
 static void run_loop(GLFWwindow* window, int width, int height) {
     using namespace eagine::guiplus;
-    (void)window;
-    (void)width;
-    (void)height;
 
     glClearColor(0.3F, 0.3F, 0.9F, 0.0F);
     glClearDepth(1);
+
+    const imgui_api gui;
 
     while(true) {
         glfwPollEvents();
