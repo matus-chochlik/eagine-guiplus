@@ -20,29 +20,33 @@ static void run_loop(GLFWwindow* window, int width, int height) {
 
     const imgui_api gui;
 
-    while(true) {
-        glfwPollEvents();
+    if(gui.CreateContext) {
+        while(true) {
+            glfwPollEvents();
 
-        if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-            glfwSetWindowShouldClose(window, 1);
-            break;
+            if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+                glfwSetWindowShouldClose(window, 1);
+                break;
+            }
+
+            if(glfwWindowShouldClose(window)) {
+                break;
+            }
+
+            int new_width, new_height;
+            glfwGetWindowSize(window, &new_width, &new_height);
+            if((width != new_width) or (height != new_height)) {
+                width = new_width;
+                height = new_height;
+            }
+
+            glViewport(0, 0, width, height);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            glfwSwapBuffers(window);
         }
-
-        if(glfwWindowShouldClose(window)) {
-            break;
-        }
-
-        int new_width, new_height;
-        glfwGetWindowSize(window, &new_width, &new_height);
-        if((width != new_width) or (height != new_height)) {
-            width = new_width;
-            height = new_height;
-        }
-
-        glViewport(0, 0, width, height);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glfwSwapBuffers(window);
+    } else {
+        std::cout << "missing required API" << std::endl;
     }
 }
 
@@ -64,18 +68,14 @@ static void init_and_run() {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        int width = 800, height = 600;
+        int width = 1024, height = 768;
 
-        GLFWwindow* window =
-          glfwCreateWindow(width, height, "GUIplus example", nullptr, nullptr);
-
-        if(not window) {
-            throw std::runtime_error("Error creating GLFW window");
-        } else {
+        if(auto window{glfwCreateWindow(
+             width, height, "GUIplus example", nullptr, nullptr)}) {
             glfwMakeContextCurrent(window);
-            // const eagine::guiplus::api_initializer gui_api_init;
-            glGetError();
             run_loop(window, width, height);
+        } else {
+            throw std::runtime_error("Error creating GLFW window");
         }
     }
 }

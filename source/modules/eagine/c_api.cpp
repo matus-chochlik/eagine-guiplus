@@ -7,9 +7,12 @@
 ///
 module;
 #if __has_include(<imgui.h>)
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 #include <imgui.h>
 #define EAGINE_HAS_IMGUI 1
 #else
+#error BAGER
 #define EAGINE_HAS_IMGUI 0
 #endif
 
@@ -22,13 +25,17 @@ import :result;
 
 #ifndef GUIPLUS_IMGUI_STATIC_FUNC
 #if EAGINE_HAS_IMGUI
-#define GUIPLUS_IMGUI_STATIC_FUNC(NAME) &ImGui::CreateContext
+#define GUIPLUS_IMGUI_STATIC_FUNC(NAME) &ImGui::NAME
+#define GUIPLUS_IMGUI_STATIC_IMPL_FUNC(NAME) &ImGui_Impl##NAME
 #else
 #define GUIPLUS_IMGUI_STATIC_FUNC(NAME) nullptr
+#define GUIPLUS_IMGUI_STATIC_IMPL_FUNC(NAME) nullptr
 #endif
 #endif
 
 namespace eagine::guiplus {
+//------------------------------------------------------------------------------
+auto basic_imgui_c_api_check_version() noexcept -> bool;
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the C-functions from the IMGui API.
 /// @ingroup imgui_api_wrap
@@ -67,6 +74,47 @@ public:
       imgui_types::has_api,
       bool(Function)>;
 
+    /// @var OpenGL3_Init
+    /// @imguifuncwrap{OpenGL3_Init}
+    imgui_api_function<
+      bool(const char*),
+      GUIPLUS_IMGUI_STATIC_IMPL_FUNC(OpenGL3_Init)>
+      OpenGL3_Init;
+
+    /// @var OpenGL3_Shutdown
+    /// @imguifuncwrap{OpenGL3_Shutdown}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_IMPL_FUNC(OpenGL3_Shutdown)>
+      OpenGL3_Shutdown;
+
+    /// @var OpenGL3_NewFrame
+    /// @imguifuncwrap{OpenGL3_NewFrame}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_IMPL_FUNC(OpenGL3_NewFrame)>
+      OpenGL3_NewFrame;
+
+    /// @var OpenGL3_RenderDrawData
+    /// @imguifuncwrap{OpenGL3_RenderDrawData}
+    imgui_api_function<
+      void(draw_data_type*),
+      GUIPLUS_IMGUI_STATIC_IMPL_FUNC(OpenGL3_RenderDrawData)>
+      OpenGL3_RenderDrawData;
+
+    /// @var Glfw_InitForOpenGL
+    /// @imguifuncwrap{Glfw_InitForOpenGL}
+    imgui_api_function<
+      bool(GLFWwindow*, bool),
+      GUIPLUS_IMGUI_STATIC_IMPL_FUNC(Glfw_InitForOpenGL)>
+      Glfw_InitForOpenGL;
+
+    /// @var Glfw_Shutdown
+    /// @imguifuncwrap{Glfw_Shutdown}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_IMPL_FUNC(Glfw_Shutdown)>
+      Glfw_Shutdown;
+
+    /// @var Glfw_NewFrame
+    /// @imguifuncwrap{Glfw_NewFrame}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_IMPL_FUNC(Glfw_NewFrame)>
+      Glfw_NewFrame;
+
     /// @var CreateContext
     /// @imguifuncwrap{CreateContext}
     imgui_api_function<
@@ -90,7 +138,7 @@ public:
 
     /// @var GetDrawData
     /// @imguifuncwrap{GetDrawData}
-    imgui_api_function<draw_data_type&(), GUIPLUS_IMGUI_STATIC_FUNC(GetDrawData)>
+    imgui_api_function<draw_data_type*(), GUIPLUS_IMGUI_STATIC_FUNC(GetDrawData)>
       GetDrawData;
 
     /// @var GetIO
@@ -126,11 +174,20 @@ public:
     auto traits() noexcept -> api_traits& {
         return _traits;
     }
+
+private:
 };
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   : _traits{traits}
+  , OpenGL3_Init{"ImGui_ImplOpenGL3_Init", *this}
+  , OpenGL3_Shutdown{"ImGui_ImplOpenGL3_Shutdown", *this}
+  , OpenGL3_NewFrame{"ImGui_ImplOpenGL3_NewFrame", *this}
+  , OpenGL3_RenderDrawData{"ImGui_ImplOpenGL3_RenderDrawData", *this}
+  , Glfw_InitForOpenGL{"ImGui_ImplGlfw_InitForOpenGL", *this}
+  , Glfw_Shutdown{"ImGui_ImplGlfw_Shutdown", *this}
+  , Glfw_NewFrame{"ImGui_ImplGlfw_NewFrame", *this}
   , CreateContext{"CreateContext", *this}
   , GetCurrentContext{"GetCurrentContext", *this}
   , SetCurrentContext{"SetCurrentContext", *this}
@@ -140,6 +197,8 @@ basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   , NewFrame{"NewFrame", *this}
   , EndFrame{"EndFrame", *this}
   , Render{"Render", *this}
-  , DestroyContext{"DestroyContext", *this} {}
+  , DestroyContext{"DestroyContext", *this} {
+    basic_imgui_c_api_check_version();
+}
 //------------------------------------------------------------------------------
 } // namespace eagine::guiplus

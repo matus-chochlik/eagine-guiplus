@@ -6,6 +6,8 @@
 eagine_add_module(
 	eagine.guiplus PARTITION config
 	IMPORTS eagine.core.types
+	PRIVATE_INCLUDE_DIRECTORIES
+		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
 )
 
 eagine_add_module(
@@ -31,6 +33,8 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.c_api
+	PRIVATE_INCLUDE_DIRECTORIES
+		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
 )
 
 eagine_add_module(
@@ -52,8 +56,12 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus
 	SOURCES
+		c_api
 	IMPORTS
 		eagine.core.memory
+	PRIVATE_LINK_LIBRARIES
+		eagine-guiplus-imgui
+		EAGine::Deps::GLFW3
 )
 
 eagine_add_module_tests(

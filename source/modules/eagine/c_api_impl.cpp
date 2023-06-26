@@ -7,36 +7,25 @@
 ///
 module;
 #if __has_include(<imgui.h>)
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 #include <imgui.h>
 #define EAGINE_HAS_IMGUI 1
 #else
 #define EAGINE_HAS_IMGUI 0
 #endif
 
-export module eagine.guiplus:config;
-import eagine.core.types;
+export module eagine.guiplus;
 
 namespace eagine::guiplus {
 //------------------------------------------------------------------------------
-export struct imgui_types {
+auto basic_imgui_c_api_check_version() noexcept -> bool {
 #if EAGINE_HAS_IMGUI
-    static constexpr bool has_api = true;
-
-    using context_type = ImGuiContext;
-    using font_atlas_type = ImFontAtlas;
-    using draw_data_type = ImDrawData;
-    using io_type = ImGuiIO;
-    using style_type = ImGuiStyle;
+    return IMGUI_CHECKVERSION();
 #else
-    static constexpr bool has_api = false;
-
-    using context_type = nothing_t;
-    using font_atlas_type = nothing_t;
-    using draw_data_type = nothing_t;
-    using io_type = nothing_t;
-    using style_type = nothing_t;
+    return false;
 #endif
-};
+}
 //------------------------------------------------------------------------------
 } // namespace eagine::guiplus
 

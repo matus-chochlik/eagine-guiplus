@@ -23,6 +23,10 @@ function(eagine_example_common EXAMPLE_NAME)
 		"${EXAMPLE_NAME}.cpp"
 		${ARGN}
 	)
+	target_compile_options(
+		guiplus-${EXAMPLE_NAME}
+		PRIVATE $<$<BOOL:${EAGINE_CLANGXX_COMPILER}>:-Wno-unreachable-code>
+	)
 	eagine_add_exe_analysis(guiplus-${EXAMPLE_NAME})
 	eagine_target_modules(
 		guiplus-${EXAMPLE_NAME}
@@ -44,5 +48,5 @@ function(eagine_example_common EXAMPLE_NAME)
 	eagine_install_example(guiplus-${EXAMPLE_NAME})
 endfunction()
 
-eagine_example_common(001_hello)
+eagine_example_common(001_hello_imgui)
 
