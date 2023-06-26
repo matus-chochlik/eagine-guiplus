@@ -12,7 +12,6 @@ module;
 #include <imgui.h>
 #define EAGINE_HAS_IMGUI 1
 #else
-#error BAGER
 #define EAGINE_HAS_IMGUI 0
 #endif
 
@@ -162,6 +161,33 @@ public:
     /// @imguifuncwrap{Render}
     imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(Render)> Render;
 
+    /// @var ShowDemoWindow
+    /// @imguifuncwrap{ShowDemoWindow}
+    imgui_api_function<void(bool*), GUIPLUS_IMGUI_STATIC_FUNC(ShowDemoWindow)>
+      ShowDemoWindow;
+
+    /// @var ShowMetricsWindow
+    /// @imguifuncwrap{ShowMetricsWindow}
+    imgui_api_function<void(bool*), GUIPLUS_IMGUI_STATIC_FUNC(ShowMetricsWindow)>
+      ShowMetricsWindow;
+
+    /// @var ShowDebugLogWindow
+    /// @imguifuncwrap{ShowDebugLogWindow}
+    imgui_api_function<void(bool*), GUIPLUS_IMGUI_STATIC_FUNC(ShowDebugLogWindow)>
+      ShowDebugLogWindow;
+
+    /// @var ShowStackToolWindow
+    /// @imguifuncwrap{ShowStackToolWindow}
+    imgui_api_function<
+      void(bool*),
+      GUIPLUS_IMGUI_STATIC_FUNC(ShowStackToolWindow)>
+      ShowStackToolWindow;
+
+    /// @var ShowAboutWindow
+    /// @imguifuncwrap{ShowAboutWindow}
+    imgui_api_function<void(bool*), GUIPLUS_IMGUI_STATIC_FUNC(ShowAboutWindow)>
+      ShowAboutWindow;
+
     /// @var DestroyContext
     /// @imguifuncwrap{DestroyContext}
     imgui_api_function<
@@ -197,6 +223,11 @@ basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   , NewFrame{"NewFrame", *this}
   , EndFrame{"EndFrame", *this}
   , Render{"Render", *this}
+  , ShowDemoWindow{"ShowDemoWindow", *this}
+  , ShowMetricsWindow{"ShowMetricsWindow", *this}
+  , ShowDebugLogWindow{"ShowDebugLogWindow", *this}
+  , ShowStackToolWindow{"ShowStackToolWindow", *this}
+  , ShowAboutWindow{"ShowAboutWindow", *this}
   , DestroyContext{"DestroyContext", *this} {
     basic_imgui_c_api_check_version();
 }

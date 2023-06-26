@@ -21,7 +21,12 @@ static void run_loop(GLFWwindow* window, int width, int height) {
     const imgui_api gui;
 
     if(gui.CreateContext) {
-        while(true) {
+        const auto context{gui.CreateContext(nullptr)};
+        gui.Glfw_InitForOpenGL(window, true);
+        gui.OpenGL3_Init("#version 150");
+
+        bool show_window = true;
+        while(show_window) {
             glfwPollEvents();
 
             if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -43,8 +48,21 @@ static void run_loop(GLFWwindow* window, int width, int height) {
             glViewport(0, 0, width, height);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+            gui.OpenGL3_NewFrame();
+            gui.Glfw_NewFrame();
+            gui.NewFrame();
+            gui.ShowDemoWindow(&show_window);
+            gui.EndFrame();
+            gui.Render();
+            if(const auto draw_data{gui.GetDrawData()}) {
+                gui.OpenGL3_RenderDrawData(draw_data);
+            }
+
             glfwSwapBuffers(window);
         }
+        gui.OpenGL3_Shutdown();
+        gui.Glfw_Shutdown();
+        gui.DestroyContext(context);
     } else {
         std::cout << "missing required API" << std::endl;
     }
