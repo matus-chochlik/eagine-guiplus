@@ -53,6 +53,8 @@ public:
     using glfw_window_type = typename imgui_types::glfw_window_type;
     /// @brief The GUI context type.
     using context_type = typename imgui_types::context_type;
+    /// @brief The font type.
+    using font_type = typename imgui_types::font_type;
     /// @brief The font atlas type.
     using font_atlas_type = typename imgui_types::font_atlas_type;
     /// @brief The draw data type.
@@ -237,6 +239,17 @@ public:
     /// @imguifuncwrap{End}
     imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(End)> End;
 
+    /// @var BeginChild
+    /// @imguifuncwrap{BeginChild}
+    imgui_api_function<
+      bool(const char* name, const vec2_type&, bool, window_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(BeginChild)>
+      BeginChild;
+
+    /// @var EndChild
+    /// @imguifuncwrap{EndChild}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndChild)> EndChild;
+
     /// @var IsWindowAppearing
     /// @imguifuncwrap{IsWindowAppearing}
     imgui_api_function<bool(), GUIPLUS_IMGUI_STATIC_FUNC(IsWindowAppearing)>
@@ -292,6 +305,83 @@ public:
       GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowContentSize)>
       SetNextWindowContentSize;
 
+    /// @var SetNextWindowCollapsed
+    /// @imguifuncwrap{SetNextWindowCollapsed}
+    imgui_api_function<
+      void(bool, cond_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowCollapsed)>
+      SetNextWindowCollapsed;
+
+    /// @var SetNextWindowFocus
+    /// @imguifuncwrap{SetNextWindowFocus}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowFocus)>
+      SetNextWindowFocus;
+
+    /// @var SetNextWindowScroll
+    /// @imguifuncwrap{SetNextWindowScroll}
+    imgui_api_function<
+      void(const ImVec2&),
+      GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowScroll)>
+      SetNextWindowScroll;
+
+    /// @var GetScrollMaxX
+    /// @imguifuncwrap{GetScrollMaxX}
+    imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetScrollMaxX)>
+      GetScrollMaxX;
+
+    /// @var GetScrollMaxY
+    /// @imguifuncwrap{GetScrollMaxY}
+    imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetScrollMaxY)>
+      GetScrollMaxY;
+
+    /// @var GetScrollX
+    /// @imguifuncwrap{GetScrollX}
+    imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetScrollX)>
+      GetScrollX;
+
+    /// @var GetScrollY
+    /// @imguifuncwrap{GetScrollY}
+    imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetScrollY)>
+      GetScrollY;
+
+    /// @var SetScrollX
+    /// @imguifuncwrap{SetScrollX}
+    imgui_api_function<void(float), GUIPLUS_IMGUI_STATIC_FUNC(SetScrollX)>
+      SetScrollX;
+
+    /// @var SetScrollY
+    /// @imguifuncwrap{SetScrollY}
+    imgui_api_function<void(float), GUIPLUS_IMGUI_STATIC_FUNC(SetScrollY)>
+      SetScrollY;
+
+    /// @var SetScrollHereX
+    /// @imguifuncwrap{SetScrollHereX}
+    imgui_api_function<void(float), GUIPLUS_IMGUI_STATIC_FUNC(SetScrollHereX)>
+      SetScrollHereX;
+
+    /// @var SetScrollHereY
+    /// @imguifuncwrap{SetScrollHereY}
+    imgui_api_function<void(float), GUIPLUS_IMGUI_STATIC_FUNC(SetScrollHereY)>
+      SetScrollHereY;
+
+    /// @var PushFont
+    /// @imguifuncwrap{PushFont}
+    imgui_api_function<void(font_type*), GUIPLUS_IMGUI_STATIC_FUNC(PushFont)>
+      PushFont;
+
+    /// @var PopFont
+    /// @imguifuncwrap{PopFont}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(PopFont)> PopFont;
+
+    /// @var GetFont
+    /// @imguifuncwrap{GetFont}
+    imgui_api_function<font_type*(), GUIPLUS_IMGUI_STATIC_FUNC(GetFont)> GetFont;
+
+    /// @var GetFontSize
+    /// @imguifuncwrap{GetFontSize}
+    imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetFontSize)>
+      GetFontSize;
+
     /// @var DestroyContext
     /// @imguifuncwrap{DestroyContext}
     imgui_api_function<
@@ -338,6 +428,8 @@ basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   , StyleColorsClassic{"StyleColorsClassic", *this}
   , Begin{"Begin", *this}
   , End{"End", *this}
+  , BeginChild{"BeginChild", *this}
+  , EndChild{"EndChild", *this}
   , IsWindowAppearing{"IsWindowAppearing", *this}
   , IsWindowCollapsed{"IsWindowCollapsed", *this}
   , IsWindowFocused{"IsWindowFocused", *this}
@@ -347,6 +439,21 @@ basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   , SetNextWindowPos{"SetNextWindowPos", *this}
   , SetNextWindowSize{"SetNextWindowSize", *this}
   , SetNextWindowContentSize{"SetNextWindowContentSize", *this}
+  , SetNextWindowCollapsed{"SetNextWindowCollapsed", *this}
+  , SetNextWindowFocus{"SetNextWindowFocus", *this}
+  , SetNextWindowScroll{"SetNextWindowScroll", *this}
+  , GetScrollMaxX{"GetScrollMaxX", *this}
+  , GetScrollMaxY{"GetScrollMaxY", *this}
+  , GetScrollX{"GetScrollX", *this}
+  , GetScrollY{"GetScrollY", *this}
+  , SetScrollX{"SetScrollX", *this}
+  , SetScrollY{"SetScrollY", *this}
+  , SetScrollHereX{"SetScrollHereX", *this}
+  , SetScrollHereY{"SetScrollHereY", *this}
+  , PushFont{"PushFont", *this}
+  , PopFont{"PopFont", *this}
+  , GetFont{"GetFont", *this}
+  , GetFontSize{"GetFontSize", *this}
   , DestroyContext{"DestroyContext", *this} {
     basic_imgui_c_api_check_version();
 }

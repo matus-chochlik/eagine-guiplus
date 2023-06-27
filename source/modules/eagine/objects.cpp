@@ -7,6 +7,8 @@
 ///
 module;
 #if __has_include(<imgui.h>)
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 #include <imgui.h>
 #define EAGINE_HAS_IMGUI 1
 #else
@@ -34,6 +36,11 @@ export using imgui_context_tag = imgui_lib_tag<"Context">;
 /// @see imgui_draw_data_handle
 export using imgui_draw_data_tag = imgui_lib_tag<"DrawData">;
 
+/// @brief Tag type denoting ImGui font object.
+/// @ingroup imgui_api_wrap
+/// @see imgui_font_handle
+export using imgui_font_tag = imgui_lib_tag<"Font">;
+
 /// @brief Tag type denoting ImGui font atlas object.
 /// @ingroup imgui_api_wrap
 /// @see imgui_font_atlas_handle
@@ -54,6 +61,11 @@ export using owned_imgui_context_handle = c_api::
 export using imgui_draw_data_handle =
   c_api::basic_handle<imgui_draw_data_tag, imgui_types::draw_data_type*, nullptr>;
 //------------------------------------------------------------------------------
+/// @brief Alias for ImGui font handle wrapper.
+/// @ingroup imgui_api_wrap
+export using imgui_font_handle =
+  c_api::basic_handle<imgui_font_tag, imgui_types::font_type*, nullptr>;
+
 /// @brief Alias for ImGui font atlas handle wrapper.
 /// @ingroup imgui_api_wrap
 export using imgui_font_atlas_handle = c_api::

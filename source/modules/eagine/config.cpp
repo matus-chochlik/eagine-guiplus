@@ -8,6 +8,7 @@
 module;
 #if __has_include(<imgui.h>)
 #include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 #include <imgui.h>
 #define EAGINE_HAS_IMGUI 1
 #else
@@ -27,6 +28,7 @@ export struct imgui_types {
     using vec2_type = ImVec2;
     using glfw_window_type = GLFWwindow;
     using context_type = ImGuiContext;
+    using font_type = ImFont;
     using font_atlas_type = ImFontAtlas;
     using draw_data_type = ImDrawData;
     using io_type = ImGuiIO;
@@ -41,6 +43,7 @@ export struct imgui_types {
     using vec2_type = math::vector<float, 2, false>;
     using glfw_window_type = nothing_t;
     using context_type = nothing_t;
+    using font_type = nothing_t;
     using font_atlas_type = nothing_t;
     using draw_data_type = nothing_t;
     using io_type = nothing_t;
