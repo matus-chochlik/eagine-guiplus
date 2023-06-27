@@ -49,6 +49,8 @@ public:
 
     /// @brief The GUI 2d vector type.
     using vec2_type = typename imgui_types::vec2_type;
+    /// @brief The GLFW window handle type.
+    using glfw_window_type = typename imgui_types::glfw_window_type;
     /// @brief The GUI context type.
     using context_type = typename imgui_types::context_type;
     /// @brief The font atlas type.
@@ -110,7 +112,7 @@ public:
     /// @var Glfw_InitForOpenGL
     /// @imguifuncwrap{Glfw_InitForOpenGL}
     imgui_api_function<
-      bool(GLFWwindow*, bool),
+      bool(glfw_window_type*, bool),
       GUIPLUS_IMGUI_STATIC_IMPL_FUNC(Glfw_InitForOpenGL)>
       Glfw_InitForOpenGL;
 

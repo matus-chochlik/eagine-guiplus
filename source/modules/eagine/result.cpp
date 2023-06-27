@@ -19,7 +19,7 @@ public:
     }
 
     constexpr auto message() const noexcept -> string_view {
-        return {"IMGui function not available"};
+        return {"ImGui function not available"};
     }
 
     constexpr auto set_unknown_error() noexcept -> auto& {
@@ -30,32 +30,23 @@ public:
 export class imgui_result_info {
 public:
     constexpr imgui_result_info() noexcept = default;
-    constexpr imgui_result_info(imgui_no_result_info) noexcept
-      : _error_code{~0UL} {}
+    constexpr imgui_result_info(imgui_no_result_info) noexcept {}
 
     explicit constexpr operator bool() const noexcept {
-        return _error_code == 0;
+        return true;
     }
 
     constexpr auto error_code(const unsigned long ec) noexcept -> auto& {
-        _error_code = ec;
         return *this;
     }
 
     constexpr auto set_unknown_error() noexcept -> auto& {
-        if(not _error_code) {
-            _error_code = ~0UL;
-        }
         return *this;
     }
 
     auto message() const noexcept -> string_view {
-        // TODO: can we get error string from IMGui?
-        return {"unknown imgui error"};
+        return {"unknown ImGui error"};
     }
-
-private:
-    unsigned long _error_code{0UL};
 };
 //------------------------------------------------------------------------------
 export template <typename Result>

@@ -7,6 +7,7 @@
 ///
 module;
 #if __has_include(<imgui.h>)
+#include <backends/imgui_impl_glfw.h>
 #include <imgui.h>
 #define EAGINE_HAS_IMGUI 1
 #else
@@ -24,6 +25,7 @@ export struct imgui_types {
     static constexpr bool has_api = true;
 
     using vec2_type = ImVec2;
+    using glfw_window_type = GLFWwindow;
     using context_type = ImGuiContext;
     using font_atlas_type = ImFontAtlas;
     using draw_data_type = ImDrawData;
@@ -37,6 +39,7 @@ export struct imgui_types {
     static constexpr bool has_api = false;
 
     using vec2_type = math::vector<float, 2, false>;
+    using glfw_window_type = nothing_t;
     using context_type = nothing_t;
     using font_atlas_type = nothing_t;
     using draw_data_type = nothing_t;
