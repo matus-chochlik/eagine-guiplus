@@ -47,6 +47,8 @@ class basic_imgui_c_api {
 public:
     using this_api = basic_imgui_c_api;
 
+    /// @brief The GUI 2d vector type.
+    using vec2_type = typename imgui_types::vec2_type;
     /// @brief The GUI context type.
     using context_type = typename imgui_types::context_type;
     /// @brief The font atlas type.
@@ -57,6 +59,14 @@ public:
     using io_type = typename imgui_types::io_type;
     /// @brief The style type.
     using style_type = typename imgui_types::style_type;
+    /// @brief The condition type.
+    using cond_type = typename imgui_types::cond_type;
+    /// @brief The window flags type.
+    using window_flags_type = typename imgui_types::window_flags_type;
+    /// @brief The focus flags type.
+    using focused_flags_type = typename imgui_types::focused_flags_type;
+    /// @brief The hover flags type.
+    using hovered_flags_type = typename imgui_types::hovered_flags_type;
 
     /// @brief Alias for the API traits policy type passed as template argument.
     using api_traits = ApiTraits;
@@ -135,6 +145,11 @@ public:
       GUIPLUS_IMGUI_STATIC_FUNC(SetCurrentContext)>
       SetCurrentContext;
 
+    /// @var GetVersion
+    /// @imguifuncwrap{GetVersion}
+    imgui_api_function<const char*(), GUIPLUS_IMGUI_STATIC_FUNC(GetVersion)>
+      GetVersion;
+
     /// @var GetDrawData
     /// @imguifuncwrap{GetDrawData}
     imgui_api_function<draw_data_type*(), GUIPLUS_IMGUI_STATIC_FUNC(GetDrawData)>
@@ -188,6 +203,93 @@ public:
     imgui_api_function<void(bool*), GUIPLUS_IMGUI_STATIC_FUNC(ShowAboutWindow)>
       ShowAboutWindow;
 
+    /// @var StyleColorsDark
+    /// @imguifuncwrap{StyleColorsDark}
+    imgui_api_function<
+      void(style_type*),
+      GUIPLUS_IMGUI_STATIC_FUNC(StyleColorsDark)>
+      StyleColorsDark;
+
+    /// @var StyleColorsLight
+    /// @imguifuncwrap{StyleColorsLight}
+    imgui_api_function<
+      void(style_type*),
+      GUIPLUS_IMGUI_STATIC_FUNC(StyleColorsLight)>
+      StyleColorsLight;
+
+    /// @var StyleColorsClassic
+    /// @imguifuncwrap{StyleColorsClassic}
+    imgui_api_function<
+      void(style_type*),
+      GUIPLUS_IMGUI_STATIC_FUNC(StyleColorsClassic)>
+      StyleColorsClassic;
+
+    /// @var Begin
+    /// @imguifuncwrap{Begin}
+    imgui_api_function<
+      bool(const char* name, bool*, window_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(Begin)>
+      Begin;
+
+    /// @var End
+    /// @imguifuncwrap{End}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(End)> End;
+
+    /// @var IsWindowAppearing
+    /// @imguifuncwrap{IsWindowAppearing}
+    imgui_api_function<bool(), GUIPLUS_IMGUI_STATIC_FUNC(IsWindowAppearing)>
+      IsWindowAppearing;
+
+    /// @var IsWindowCollapsed
+    /// @imguifuncwrap{IsWindowCollapsed}
+    imgui_api_function<bool(), GUIPLUS_IMGUI_STATIC_FUNC(IsWindowCollapsed)>
+      IsWindowCollapsed;
+
+    /// @var IsWindowFocused
+    /// @imguifuncwrap{IsWindowFocused}
+    imgui_api_function<
+      bool(focused_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(IsWindowFocused)>
+      IsWindowFocused;
+
+    /// @var IsWindowHovered
+    /// @imguifuncwrap{IsWindowHovered}
+    imgui_api_function<
+      bool(hovered_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(IsWindowHovered)>
+      IsWindowHovered;
+
+    /// @var GetWindowWidth
+    /// @imguifuncwrap{GetWindowWidth}
+    imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetWindowWidth)>
+      GetWindowWidth;
+
+    /// @var GetWindowHeight
+    /// @imguifuncwrap{GetWindowHeight}
+    imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetWindowHeight)>
+      GetWindowHeight;
+
+    /// @var SetNextWindowPos
+    /// @imguifuncwrap{SetNextWindowPos}
+    imgui_api_function<
+      void(const vec2_type&, cond_type, const vec2_type&),
+      GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowPos)>
+      SetNextWindowPos;
+
+    /// @var SetNextWindowSize
+    /// @imguifuncwrap{SetNextWindowSize}
+    imgui_api_function<
+      void(const vec2_type&, cond_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowSize)>
+      SetNextWindowSize;
+
+    /// @var SetNextWindowContentSize
+    /// @imguifuncwrap{SetNextWindowContentSize}
+    imgui_api_function<
+      void(const vec2_type&),
+      GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowContentSize)>
+      SetNextWindowContentSize;
+
     /// @var DestroyContext
     /// @imguifuncwrap{DestroyContext}
     imgui_api_function<
@@ -217,6 +319,7 @@ basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   , CreateContext{"CreateContext", *this}
   , GetCurrentContext{"GetCurrentContext", *this}
   , SetCurrentContext{"SetCurrentContext", *this}
+  , GetVersion{"GetVersion", *this}
   , GetDrawData{"GetDrawData", *this}
   , GetIO{"GetIO", *this}
   , GetStyle{"GetStyle", *this}
@@ -228,6 +331,20 @@ basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   , ShowDebugLogWindow{"ShowDebugLogWindow", *this}
   , ShowStackToolWindow{"ShowStackToolWindow", *this}
   , ShowAboutWindow{"ShowAboutWindow", *this}
+  , StyleColorsDark{"StyleColorsDark", *this}
+  , StyleColorsLight{"StyleColorsLight", *this}
+  , StyleColorsClassic{"StyleColorsClassic", *this}
+  , Begin{"Begin", *this}
+  , End{"End", *this}
+  , IsWindowAppearing{"IsWindowAppearing", *this}
+  , IsWindowCollapsed{"IsWindowCollapsed", *this}
+  , IsWindowFocused{"IsWindowFocused", *this}
+  , IsWindowHovered{"IsWindowHovered", *this}
+  , GetWindowWidth{"GetWindowWidth", *this}
+  , GetWindowHeight{"GetWindowHeight", *this}
+  , SetNextWindowPos{"SetNextWindowPos", *this}
+  , SetNextWindowSize{"SetNextWindowSize", *this}
+  , SetNextWindowContentSize{"SetNextWindowContentSize", *this}
   , DestroyContext{"DestroyContext", *this} {
     basic_imgui_c_api_check_version();
 }

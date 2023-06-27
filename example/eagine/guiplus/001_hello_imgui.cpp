@@ -89,7 +89,7 @@ static void init_and_run() {
         int width = 1024, height = 768;
 
         if(auto window{glfwCreateWindow(
-             width, height, "GUIplus example", nullptr, nullptr)}) {
+             width, height, "GUIplus ImGui demo", nullptr, nullptr)}) {
             glfwMakeContextCurrent(window);
             run_loop(window, width, height);
         } else {

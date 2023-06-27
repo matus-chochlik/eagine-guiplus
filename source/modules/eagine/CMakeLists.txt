@@ -5,7 +5,9 @@
 
 eagine_add_module(
 	eagine.guiplus PARTITION config
-	IMPORTS eagine.core.types
+	IMPORTS
+		eagine.core.types
+		eagine.core.math
 	PRIVATE_INCLUDE_DIRECTORIES
 		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
 )
