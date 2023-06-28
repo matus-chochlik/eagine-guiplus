@@ -250,6 +250,24 @@ public:
     /// @imguifuncwrap{EndChild}
     imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndChild)> EndChild;
 
+    /// @var BeginGroup
+    /// @imguifuncwrap{BeginGroup}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(BeginGroup)> BeginGroup;
+
+    /// @var EndGroup
+    /// @imguifuncwrap{EndGroup}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndGroup)> EndGroup;
+
+    /// @var BeginDisabled
+    /// @imguifuncwrap{BeginDisabled}
+    imgui_api_function<void(bool), GUIPLUS_IMGUI_STATIC_FUNC(BeginDisabled)>
+      BeginDisabled;
+
+    /// @var EndDisabled
+    /// @imguifuncwrap{EndDisabled}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndDisabled)>
+      EndDisabled;
+
     /// @var IsWindowAppearing
     /// @imguifuncwrap{IsWindowAppearing}
     imgui_api_function<bool(), GUIPLUS_IMGUI_STATIC_FUNC(IsWindowAppearing)>
@@ -382,6 +400,70 @@ public:
     imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetFontSize)>
       GetFontSize;
 
+    /// @var GetCursorPos
+    /// @imguifuncwrap{GetCursorPos}
+    imgui_api_function<vec2_type(), GUIPLUS_IMGUI_STATIC_FUNC(GetCursorPos)>
+      GetCursorPos;
+
+    /// @var GetCursorPosX
+    /// @imguifuncwrap{GetCursorPosX}
+    imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetCursorPosX)>
+      GetCursorPosX;
+
+    /// @var GetCursorPosY
+    /// @imguifuncwrap{GetCursorPosY}
+    imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetCursorPosY)>
+      GetCursorPosY;
+
+    /// @var GetCursorScreenPos
+    /// @imguifuncwrap{GetCursorScreenPos}
+    imgui_api_function<vec2_type(), GUIPLUS_IMGUI_STATIC_FUNC(GetCursorScreenPos)>
+      GetCursorScreenPos;
+
+    /// @var TextUnformatted
+    /// @imguifuncwrap{TextUnformatted}
+    imgui_api_function<
+      void(const char*, const char*),
+      GUIPLUS_IMGUI_STATIC_FUNC(TextUnformatted)>
+      TextUnformatted;
+
+    /// @var Button
+    /// @imguifuncwrap{Button}
+    imgui_api_function<
+      bool(const char*, const vec2_type&),
+      GUIPLUS_IMGUI_STATIC_FUNC(Button)>
+      Button;
+
+    /// @var SmallButton
+    /// @imguifuncwrap{SmallButton}
+    imgui_api_function<bool(const char*), GUIPLUS_IMGUI_STATIC_FUNC(SmallButton)>
+      SmallButton;
+
+    /// @var Checkbox
+    /// @imguifuncwrap{Checkbox}
+    imgui_api_function<
+      bool(const char*, bool*),
+      GUIPLUS_IMGUI_STATIC_FUNC(Checkbox)>
+      Checkbox;
+
+    /// @var RadioButton
+    /// @imguifuncwrap{RadioButton}
+    imgui_api_function<
+      bool(const char*, bool),
+      GUIPLUS_IMGUI_STATIC_FUNC(RadioButton)>
+      RadioButton;
+
+    /// @var ProgressBar
+    /// @imguifuncwrap{ProgressBar}
+    imgui_api_function<
+      void(float, const vec2_type&, const char*),
+      GUIPLUS_IMGUI_STATIC_FUNC(ProgressBar)>
+      ProgressBar;
+
+    /// @var Bullet
+    /// @imguifuncwrap{Bullet}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(Bullet)> Bullet;
+
     /// @var DestroyContext
     /// @imguifuncwrap{DestroyContext}
     imgui_api_function<
@@ -430,6 +512,10 @@ basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   , End{"End", *this}
   , BeginChild{"BeginChild", *this}
   , EndChild{"EndChild", *this}
+  , BeginGroup{"BeginGroup", *this}
+  , EndGroup{"EndGroup", *this}
+  , BeginDisabled{"BeginDisabled", *this}
+  , EndDisabled{"EndDisabled", *this}
   , IsWindowAppearing{"IsWindowAppearing", *this}
   , IsWindowCollapsed{"IsWindowCollapsed", *this}
   , IsWindowFocused{"IsWindowFocused", *this}
@@ -454,6 +540,17 @@ basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   , PopFont{"PopFont", *this}
   , GetFont{"GetFont", *this}
   , GetFontSize{"GetFontSize", *this}
+  , GetCursorPos{"GetCursorPos", *this}
+  , GetCursorPosX{"GetCursorPosX", *this}
+  , GetCursorPosY{"GetCursorPosY", *this}
+  , GetCursorScreenPos{"GetCursorScreenPos", *this}
+  , TextUnformatted{"TextUnformatted", *this}
+  , Button{"Button", *this}
+  , SmallButton{"SmallButton", *this}
+  , Checkbox{"Checkbox", *this}
+  , RadioButton{"RadioButton", *this}
+  , ProgressBar{"ProgressBar", *this}
+  , Bullet{"Bullet", *this}
   , DestroyContext{"DestroyContext", *this} {
     basic_imgui_c_api_check_version();
 }
