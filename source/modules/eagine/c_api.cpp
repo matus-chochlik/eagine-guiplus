@@ -75,6 +75,11 @@ public:
     /// @brief Alias for the API traits policy type passed as template argument.
     using api_traits = ApiTraits;
 
+    template <typename Result, typename... U>
+    constexpr auto check_result(Result res, U&&...) const noexcept {
+        return res;
+    }
+
     /// @brief Alias for ImGui C/C++-API function wrapper template.
     template <
       typename Signature,

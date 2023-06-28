@@ -94,6 +94,31 @@ public:
 
     simple_adapted_function<&imgui_api::Render, void()> render{*this};
 
+    simple_adapted_function<
+      &imgui_api::ShowDemoWindow,
+      void(optional_reference<bool>)>
+      show_demo_window{*this};
+
+    simple_adapted_function<
+      &imgui_api::ShowMetricsWindow,
+      void(optional_reference<bool>)>
+      show_metrics_window{*this};
+
+    simple_adapted_function<
+      &imgui_api::ShowDebugLogWindow,
+      void(optional_reference<bool>)>
+      show_debug_log_window{*this};
+
+    simple_adapted_function<
+      &imgui_api::ShowStackToolWindow,
+      void(optional_reference<bool>)>
+      show_stack_tool_window{*this};
+
+    simple_adapted_function<
+      &imgui_api::ShowAboutWindow,
+      void(optional_reference<bool>)>
+      show_about_window{*this};
+
     c_api::combined<
       simple_adapted_function<
         &imgui_api::DestroyContext,
