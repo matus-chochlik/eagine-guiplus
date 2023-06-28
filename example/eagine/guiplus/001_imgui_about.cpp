@@ -22,47 +22,48 @@ static void run_loop(GLFWwindow* window, int width, int height) {
     const imgui_api gui;
 
     if(gui.create_context) {
-        const ok context{gui.create_context()};
-        const auto cleanup_context{gui.destroy_context.raii(context)};
-        gui.glfw_init_for_opengl(window, true);
-        const auto cleanup_glfw{gui.glfw_shutdown.raii()};
-        gui.opengl3_init("#version 150");
-        const auto cleanup_opengl{gui.opengl3_shutdown.raii()};
+        if(const ok context{gui.create_context()}) {
+            const auto cleanup_context{gui.destroy_context.raii(context)};
+            gui.glfw_init_for_opengl(window, true);
+            const auto cleanup_glfw{gui.glfw_shutdown.raii()};
+            gui.opengl3_init("#version 150");
+            const auto cleanup_opengl{gui.opengl3_shutdown.raii()};
 
-        bool show_window = true;
-        while(show_window) {
-            glfwPollEvents();
+            bool show_window = true;
+            while(show_window) {
+                glfwPollEvents();
 
-            if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-                glfwSetWindowShouldClose(window, 1);
-                break;
+                if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+                    glfwSetWindowShouldClose(window, 1);
+                    break;
+                }
+
+                if(glfwWindowShouldClose(window)) {
+                    break;
+                }
+
+                int new_width, new_height;
+                glfwGetWindowSize(window, &new_width, &new_height);
+                if((width != new_width) or (height != new_height)) {
+                    width = new_width;
+                    height = new_height;
+                }
+
+                glViewport(0, 0, width, height);
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+                gui.opengl3_new_frame();
+                gui.glfw_new_frame();
+                gui.new_frame();
+                gui.show_about_window(show_window);
+                gui.end_frame();
+                gui.render();
+                if(const ok draw_data{gui.get_draw_data()}) {
+                    gui.opengl3_render_draw_data(draw_data);
+                }
+
+                glfwSwapBuffers(window);
             }
-
-            if(glfwWindowShouldClose(window)) {
-                break;
-            }
-
-            int new_width, new_height;
-            glfwGetWindowSize(window, &new_width, &new_height);
-            if((width != new_width) or (height != new_height)) {
-                width = new_width;
-                height = new_height;
-            }
-
-            glViewport(0, 0, width, height);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            gui.opengl3_new_frame();
-            gui.glfw_new_frame();
-            gui.new_frame();
-            gui.show_about_window(show_window);
-            gui.end_frame();
-            gui.render();
-            if(const ok draw_data{gui.get_draw_data()}) {
-                gui.opengl3_render_draw_data(draw_data);
-            }
-
-            glfwSwapBuffers(window);
         }
     } else {
         std::cout << "missing required API" << std::endl;

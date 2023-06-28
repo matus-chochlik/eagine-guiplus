@@ -159,6 +159,32 @@ public:
     simple_adapted_function<&imgui_api::EndDisabled, void()> end_disabled{
       *this};
 
+    simple_adapted_function<
+      &imgui_api::IsWindowAppearing,
+      c_api::collapsed<bool>()>
+      is_window_appearing{*this};
+
+    simple_adapted_function<
+      &imgui_api::IsWindowCollapsed,
+      c_api::collapsed<bool>()>
+      is_window_collapsed{*this};
+
+    simple_adapted_function<
+      &imgui_api::IsWindowFocused,
+      c_api::collapsed<bool>(c_api::enum_bitfield<focused_flag>)>
+      is_window_focused{*this};
+
+    simple_adapted_function<
+      &imgui_api::IsWindowHovered,
+      c_api::collapsed<bool>(c_api::enum_bitfield<hovered_flag>)>
+      is_window_hovered{*this};
+
+    simple_adapted_function<&imgui_api::GetWindowWidth, float()>
+      get_window_width{*this};
+
+    simple_adapted_function<&imgui_api::GetWindowHeight, float()>
+      get_window_height{*this};
+
     c_api::combined<
       simple_adapted_function<&imgui_api::DestroyContext, void(imgui_context)>,
       simple_adapted_function<&imgui_api::DestroyContext, void(c_api::defaulted)>>

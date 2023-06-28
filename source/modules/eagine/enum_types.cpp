@@ -28,5 +28,17 @@ using imgui_int_class = c_api::enum_class<Self, int, "ImGui", Id>;
 export struct window_flag : imgui_int_class<window_flag, "WindowFlag"> {
     using enum_class::enum_class;
 };
+
+/// @brief Typed enumeration for ImGui hovered flags constants.
+/// @ingroup imgui_api_wrap
+export struct hovered_flag : imgui_int_class<hovered_flag, "HoverdFlag"> {
+    using enum_class::enum_class;
+};
+
+/// @brief Typed enumeration for ImGui focused flags constants.
+/// @ingroup imgui_api_wrap
+export struct focused_flag : imgui_int_class<focused_flag, "FocusdFlag"> {
+    using enum_class::enum_class;
+};
 //------------------------------------------------------------------------------
 } // namespace eagine::guiplus
