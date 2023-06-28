@@ -28,48 +28,58 @@ using imgui_lib_tag = static_message_id<"imgui", Id>;
 
 /// @brief Tag type denoting ImGui context object.
 /// @ingroup imgui_api_wrap
-/// @see imgui_context_handle
+/// @see imgui_context
 export using imgui_context_tag = imgui_lib_tag<"Context">;
 
 /// @brief Tag type denoting ImGui draw data object.
 /// @ingroup imgui_api_wrap
-/// @see imgui_draw_data_handle
+/// @see imgui_draw_data
 export using imgui_draw_data_tag = imgui_lib_tag<"DrawData">;
 
 /// @brief Tag type denoting ImGui font object.
 /// @ingroup imgui_api_wrap
-/// @see imgui_font_handle
+/// @see imgui_font
 export using imgui_font_tag = imgui_lib_tag<"Font">;
 
 /// @brief Tag type denoting ImGui font atlas object.
 /// @ingroup imgui_api_wrap
-/// @see imgui_font_atlas_handle
+/// @see imgui_font_atlas
 export using imgui_font_atlas_tag = imgui_lib_tag<"FontAtlas">;
+
+/// @brief Tag type denoting ImGui style object.
+/// @ingroup imgui_api_wrap
+/// @see imgui_style
+export using imgui_style_tag = imgui_lib_tag<"Style">;
 //------------------------------------------------------------------------------
 /// @brief Alias for ImGui context handle wrapper.
 /// @ingroup imgui_api_wrap
-export using imgui_context_handle =
+export using imgui_context =
   c_api::basic_handle<imgui_context_tag, imgui_types::context_type*, nullptr>;
 
 /// @brief Alias for owned ImGui context handle wrapper.
 /// @ingroup imgui_api_wrap
-export using owned_imgui_context_handle = c_api::
+export using owned_imgui_context = c_api::
   basic_owned_handle<imgui_context_tag, imgui_types::context_type*, nullptr>;
 //------------------------------------------------------------------------------
 /// @brief Alias for ImGui draw data handle wrapper.
 /// @ingroup imgui_api_wrap
-export using imgui_draw_data_handle =
+export using imgui_draw_data =
   c_api::basic_handle<imgui_draw_data_tag, imgui_types::draw_data_type*, nullptr>;
 //------------------------------------------------------------------------------
 /// @brief Alias for ImGui font handle wrapper.
 /// @ingroup imgui_api_wrap
-export using imgui_font_handle =
+export using imgui_font =
   c_api::basic_handle<imgui_font_tag, imgui_types::font_type*, nullptr>;
 
 /// @brief Alias for ImGui font atlas handle wrapper.
 /// @ingroup imgui_api_wrap
-export using imgui_font_atlas_handle = c_api::
+export using imgui_font_atlas = c_api::
   basic_handle<imgui_font_atlas_tag, imgui_types::font_atlas_type*, nullptr>;
+//------------------------------------------------------------------------------
+/// @brief Alias for ImGui style handle wrapper.
+/// @ingroup imgui_api_wrap
+export using imgui_style =
+  c_api::basic_handle<imgui_style_tag, imgui_types::style_type*, nullptr>;
 //------------------------------------------------------------------------------
 } // namespace eagine::guiplus
 

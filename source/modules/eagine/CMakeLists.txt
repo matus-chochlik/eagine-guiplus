@@ -13,6 +13,15 @@ eagine_add_module(
 )
 
 eagine_add_module(
+	eagine.guiplus PARTITION enum_types
+	IMPORTS
+		config
+		eagine.core.types
+		eagine.core.identifier
+		eagine.core.c_api
+)
+
+eagine_add_module(
 	eagine.guiplus PARTITION objects
 	IMPORTS
 		config
@@ -50,13 +59,19 @@ eagine_add_module(
 
 eagine_add_module(
 	eagine.guiplus PARTITION constants
-	IMPORTS c_api
+	IMPORTS
+		config enum_types c_api
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.valid_if
+		eagine.core.c_api
 )
 
 eagine_add_module(
 	eagine.guiplus PARTITION api
 	IMPORTS
-		config api_traits result
+		config enum_types
+		api_traits result
 		c_api objects constants
 		eagine.core.types
 		eagine.core.memory

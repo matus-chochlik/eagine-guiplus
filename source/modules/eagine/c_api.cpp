@@ -80,6 +80,14 @@ public:
         return res;
     }
 
+    template <typename Result, typename Info, c_api::result_validity Validity>
+    static constexpr auto collapse(
+      c_api::result<Result, Info, Validity>&& r) noexcept {
+        return r.collapsed(
+          [](bool value) { return value; },
+          [](auto& info) { info.set_unknown_error(); });
+    }
+
     /// @brief Alias for ImGui C/C++-API function wrapper template.
     template <
       typename Signature,

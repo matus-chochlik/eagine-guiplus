@@ -13,6 +13,7 @@ import eagine.core.memory;
 import eagine.core.utility;
 import eagine.core.c_api;
 import :config;
+import :enum_types;
 import :api_traits;
 import :result;
 import :objects;
@@ -51,7 +52,7 @@ public:
 
     simple_adapted_function<
       &imgui_api::OpenGL3_RenderDrawData,
-      void(imgui_draw_data_handle)>
+      void(imgui_draw_data)>
       opengl3_render_draw_data{*this};
 
     simple_adapted_function<
@@ -68,24 +69,22 @@ public:
     c_api::combined<
       simple_adapted_function<
         &imgui_api::CreateContext,
-        owned_imgui_context_handle(imgui_font_atlas_handle)>,
+        imgui_context(imgui_font_atlas)>,
       simple_adapted_function<
         &imgui_api::CreateContext,
-        imgui_context_handle(c_api::defaulted)>>
+        imgui_context(c_api::defaulted)>>
       create_context{*this};
 
-    simple_adapted_function<&imgui_api::GetCurrentContext, imgui_context_handle()>
+    simple_adapted_function<&imgui_api::GetCurrentContext, imgui_context()>
       get_current_context{*this};
 
-    simple_adapted_function<
-      &imgui_api::SetCurrentContext,
-      void(imgui_context_handle)>
+    simple_adapted_function<&imgui_api::SetCurrentContext, void(imgui_context)>
       set_current_context{*this};
 
     simple_adapted_function<&imgui_api::GetVersion, string_view()> get_version{
       *this};
 
-    simple_adapted_function<&imgui_api::GetDrawData, imgui_draw_data_handle()>
+    simple_adapted_function<&imgui_api::GetDrawData, imgui_draw_data()>
       get_draw_data{*this};
 
     simple_adapted_function<&imgui_api::NewFrame, void()> new_frame{*this};
@@ -119,10 +118,49 @@ public:
       void(optional_reference<bool>)>
       show_about_window{*this};
 
+    simple_adapted_function<
+      &imgui_api::StyleColorsDark,
+      void(optional_reference<bool>)>
+      style_colors_dark{*this};
+
+    simple_adapted_function<
+      &imgui_api::StyleColorsLight,
+      void(optional_reference<bool>)>
+      style_colors_light{*this};
+
+    simple_adapted_function<
+      &imgui_api::StyleColorsClassic,
+      void(optional_reference<bool>)>
+      style_colors_classic{*this};
+
     c_api::combined<
       simple_adapted_function<
-        &imgui_api::DestroyContext,
-        void(owned_imgui_context_handle)>,
+        &imgui_api::Begin,
+        c_api::collapsed<bool>(
+          string_view,
+          optional_reference<bool>,
+          c_api::enum_bitfield<window_flag>)>,
+      simple_adapted_function<
+        &imgui_api::Begin,
+        c_api::collapsed<
+          bool>(string_view, optional_reference<bool>, c_api::defaulted)>,
+      simple_adapted_function<
+        &imgui_api::Begin,
+        imgui_context(string_view, c_api::defaulted, c_api::defaulted)>>
+      begin{*this};
+
+    simple_adapted_function<&imgui_api::End, void()> end{*this};
+
+    simple_adapted_function<&imgui_api::BeginGroup, void()> begin_group{*this};
+    simple_adapted_function<&imgui_api::EndGroup, void()> end_group{*this};
+
+    simple_adapted_function<&imgui_api::BeginDisabled, void(bool)>
+      begin_disabled{*this};
+    simple_adapted_function<&imgui_api::EndDisabled, void()> end_disabled{
+      *this};
+
+    c_api::combined<
+      simple_adapted_function<&imgui_api::DestroyContext, void(imgui_context)>,
       simple_adapted_function<&imgui_api::DestroyContext, void(c_api::defaulted)>>
       destroy_context{*this};
 };
