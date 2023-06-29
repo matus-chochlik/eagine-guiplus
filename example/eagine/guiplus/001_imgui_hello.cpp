@@ -57,6 +57,7 @@ static void run_loop(GLFWwindow* window, int width, int height) {
                 gui.new_frame();
                 if(gui.begin("example", show_window)) {
                     gui.text_unformatted("Hello World!");
+                    gui.same_line();
                     if(gui.button("Bye!").value_or(true)) {
                         show_window = false;
                     }

@@ -229,7 +229,12 @@ public:
     simple_adapted_function<&imgui_api::GetWindowHeight, float()>
       get_window_height{*this};
 
-    simple_adapted_function<&imgui_api::SameLine, void()> same_line{*this};
+    c_api::combined<
+      simple_adapted_function<&imgui_api::SameLine, void(float, float)>,
+      simple_adapted_function<
+        &imgui_api::SameLine,
+        void(c_api::substituted<0>, c_api::substituted<-1>)>>
+      same_line{*this};
 
     simple_adapted_function<&imgui_api::TextUnformatted, void(string_view)>
       text_unformatted{*this};

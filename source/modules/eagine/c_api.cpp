@@ -453,9 +453,8 @@ public:
 
     /// @var SameLine
     /// @imguifuncwrap{SameLine}
-    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(SameLine)> SameLine{
-      "SameLine",
-      *this};
+    imgui_api_function<void(float, float), GUIPLUS_IMGUI_STATIC_FUNC(SameLine)>
+      SameLine{"SameLine", *this};
 
     /// @var TextUnformatted
     /// @imguifuncwrap{TextUnformatted}
