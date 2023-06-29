@@ -433,6 +433,10 @@ public:
     imgui_api_function<vec2_type(), GUIPLUS_IMGUI_STATIC_FUNC(GetCursorScreenPos)>
       GetCursorScreenPos;
 
+    /// @var SameLine
+    /// @imguifuncwrap{SameLine}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(SameLine)> SameLine;
+
     /// @var TextUnformatted
     /// @imguifuncwrap{TextUnformatted}
     imgui_api_function<
@@ -557,6 +561,7 @@ basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
   , GetCursorPosX{"GetCursorPosX", *this}
   , GetCursorPosY{"GetCursorPosY", *this}
   , GetCursorScreenPos{"GetCursorScreenPos", *this}
+  , SameLine{"SameLine", *this}
   , TextUnformatted{"TextUnformatted", *this}
   , Button{"Button", *this}
   , SmallButton{"SmallButton", *this}

@@ -76,6 +76,7 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.utility
+		eagine.core.math
 		eagine.core.c_api
 )
 

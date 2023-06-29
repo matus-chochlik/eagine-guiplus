@@ -1,4 +1,4 @@
-/// @example guiplus/001_hello.cpp
+/// @example guiplus/002_imgui_demo.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
@@ -72,7 +72,7 @@ static void init_and_run() {
     if(not glfwInit()) {
         throw std::runtime_error("GLFW initialization error");
     } else {
-        const auto ensure_glfw_cleanup = eagine::finally(glfwTerminate);
+        const auto ensure_glfw_cleanup{eagine::finally(glfwTerminate)};
 
         glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE);
         glfwWindowHint(GLFW_RED_BITS, 8);

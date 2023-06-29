@@ -11,6 +11,7 @@ import std;
 import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.utility;
+import eagine.core.math;
 import eagine.core.c_api;
 import :config;
 import :enum_types;
@@ -20,6 +21,53 @@ import :objects;
 import :constants;
 import :c_api;
 
+namespace eagine::c_api {
+//------------------------------------------------------------------------------
+export template <>
+struct make_args_map<
+  0U,
+  0U,
+  mp_list<const char*, const char*>,
+  mp_list<string_view>> {
+
+    constexpr auto operator()(size_constant<0U> i, const string_view s)
+      const noexcept {
+        return s.data();
+    }
+
+    constexpr auto operator()(size_constant<1U> i, const string_view s)
+      const noexcept {
+        return s.data() + s.size();
+    }
+};
+
+export template <
+  std::size_t CI,
+  std::size_t CppI,
+  bool V,
+  typename... CT,
+  typename... CppT>
+struct make_args_map<
+  CI,
+  CppI,
+  mp_list<const typename guiplus::imgui_types::vec2_type&, CT...>,
+  mp_list<math::vector<float, 2, V>, CppT...>>
+  : make_args_map<CI + 1, CppI + 1, mp_list<CT...>, mp_list<CppT...>> {
+    using make_args_map<CI + 1, CppI + 1, mp_list<CT...>, mp_list<CppT...>>::
+    operator();
+
+    static constexpr auto _conv(math::vector<float, 2, V> v) noexcept ->
+      typename guiplus::imgui_types::vec2_type {
+        return {v.x(), v.y()};
+    }
+
+    template <typename... P>
+    constexpr auto operator()(size_constant<CI> i, P&&... p) const noexcept {
+        return _conv(reorder_arg_map<CI, CppI>{}(i, std::forward<P>(p)...));
+    }
+};
+} // namespace eagine::c_api
+//------------------------------------------------------------------------------
 namespace eagine::guiplus {
 using c_api::adapted_function;
 using c_api::simple_adapted_function;
@@ -159,24 +207,20 @@ public:
     simple_adapted_function<&imgui_api::EndDisabled, void()> end_disabled{
       *this};
 
-    simple_adapted_function<
-      &imgui_api::IsWindowAppearing,
-      c_api::collapsed<bool>()>
+    simple_adapted_function<&imgui_api::IsWindowAppearing, bool()>
       is_window_appearing{*this};
 
-    simple_adapted_function<
-      &imgui_api::IsWindowCollapsed,
-      c_api::collapsed<bool>()>
+    simple_adapted_function<&imgui_api::IsWindowCollapsed, bool()>
       is_window_collapsed{*this};
 
     simple_adapted_function<
       &imgui_api::IsWindowFocused,
-      c_api::collapsed<bool>(c_api::enum_bitfield<focused_flag>)>
+      bool(c_api::enum_bitfield<focused_flag>)>
       is_window_focused{*this};
 
     simple_adapted_function<
       &imgui_api::IsWindowHovered,
-      c_api::collapsed<bool>(c_api::enum_bitfield<hovered_flag>)>
+      bool(c_api::enum_bitfield<hovered_flag>)>
       is_window_hovered{*this};
 
     simple_adapted_function<&imgui_api::GetWindowWidth, float()>
@@ -184,6 +228,26 @@ public:
 
     simple_adapted_function<&imgui_api::GetWindowHeight, float()>
       get_window_height{*this};
+
+    simple_adapted_function<&imgui_api::SameLine, void()> same_line{*this};
+
+    simple_adapted_function<&imgui_api::TextUnformatted, void(string_view)>
+      text_unformatted{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::Button,
+        bool(string_view, math::vector<float, 2, true>)>,
+      simple_adapted_function<
+        &imgui_api::Button,
+        bool(string_view, math::vector<float, 2, false>)>,
+      simple_adapted_function<
+        &imgui_api::Button,
+        bool(string_view, c_api::defaulted)>>
+      button{*this};
+
+    simple_adapted_function<&imgui_api::SmallButton, void(string_view)>
+      small_button{*this};
 
     c_api::combined<
       simple_adapted_function<&imgui_api::DestroyContext, void(imgui_context)>,

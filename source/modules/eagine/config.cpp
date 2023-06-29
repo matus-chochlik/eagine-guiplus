@@ -40,7 +40,10 @@ export struct imgui_types {
 #else
     static constexpr bool has_api = false;
 
-    using vec2_type = math::vector<float, 2, false>;
+    struct vec2_type {
+        constexpr vec2_type() noexcept = default;
+        constexpr vec2_type(float, float) noexcept = default;
+    };
     using glfw_window_type = nothing_t;
     using context_type = nothing_t;
     using font_type = nothing_t;

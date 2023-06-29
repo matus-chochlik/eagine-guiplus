@@ -1,4 +1,4 @@
-/// @example guiplus/001_imgui_about.cpp
+/// @example guiplus/001_imgui_hello.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
@@ -16,7 +16,7 @@ static void run_loop(GLFWwindow* window, int width, int height) {
     using eagine::ok;
     using namespace eagine::guiplus;
 
-    glClearColor(0.3F, 0.3F, 0.9F, 0.0F);
+    glClearColor(0.3F, 0.9F, 0.3F, 0.0F);
     glClearDepth(1);
 
     const imgui_api gui;
@@ -55,7 +55,13 @@ static void run_loop(GLFWwindow* window, int width, int height) {
                 gui.opengl3_new_frame();
                 gui.glfw_new_frame();
                 gui.new_frame();
-                gui.show_about_window(show_window);
+                if(gui.begin("example", show_window)) {
+                    gui.text_unformatted("Hello World!");
+                    if(gui.button("Bye!").value_or(true)) {
+                        show_window = false;
+                    }
+                    gui.end();
+                }
                 gui.end_frame();
                 gui.render();
                 if(const ok draw_data{gui.get_draw_data()}) {

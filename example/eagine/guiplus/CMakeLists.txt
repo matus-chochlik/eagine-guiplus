@@ -48,6 +48,7 @@ function(eagine_example_common EXAMPLE_NAME)
 	eagine_install_example(guiplus-${EXAMPLE_NAME})
 endfunction()
 
+eagine_example_common(001_imgui_hello)
 eagine_example_common(001_imgui_about)
 eagine_example_common(002_imgui_demo)
 
