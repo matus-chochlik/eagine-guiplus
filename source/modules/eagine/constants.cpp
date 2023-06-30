@@ -188,6 +188,105 @@ public:
 #endif
       window_no_bring_to_front_on_focus;
 
+    /// @var window_always_vertical_scrollbar
+    /// @imguiconstwrap{WindowFlags_AlwaysVerticalScrollbar}
+    c_api::opt_constant<
+      mp_list<imgui_window_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiWindowFlags_AlwaysVerticalScrollbar>>
+#else
+      int_type_i>
+#endif
+      window_always_vertical_scrollbar;
+
+    /// @var window_always_horizontal_scrollbar
+    /// @imguiconstwrap{WindowFlags_AlwaysHorizontalScrollbar}
+    c_api::opt_constant<
+      mp_list<imgui_window_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiWindowFlags_AlwaysHorizontalScrollbar>>
+#else
+      int_type_i>
+#endif
+      window_always_horizontal_scrollbar;
+
+    /// @var window_always_use_window_padding
+    /// @imguiconstwrap{WindowFlags_AlwaysUseWindowPadding}
+    c_api::opt_constant<
+      mp_list<imgui_window_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiWindowFlags_AlwaysUseWindowPadding>>
+#else
+      int_type_i>
+#endif
+      window_always_use_window_padding;
+
+    /// @var window_no_nav_inputs
+    /// @imguiconstwrap{WindowFlags_NoNavInputs}
+    c_api::opt_constant<
+      mp_list<imgui_window_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiWindowFlags_NoNavInputs>>
+#else
+      int_type_i>
+#endif
+      window_no_nav_inputs;
+
+    /// @var window_no_nav_focus
+    /// @imguiconstwrap{WindowFlags_NoNavFocus}
+    c_api::opt_constant<
+      mp_list<imgui_window_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiWindowFlags_NoNavFocus>>
+#else
+      int_type_i>
+#endif
+      window_no_nav_focus;
+
+    /// @var window_unsaved_document
+    /// @imguiconstwrap{WindowFlags_UnsavedDocument}
+    c_api::opt_constant<
+      mp_list<imgui_window_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiWindowFlags_UnsavedDocument>>
+#else
+      int_type_i>
+#endif
+      window_unsaved_document;
+
+    /// @var window_no_nav
+    /// @imguiconstwrap{WindowFlags_NoNav}
+    c_api::opt_constant<
+      mp_list<imgui_window_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiWindowFlags_NoNav>>
+#else
+      int_type_i>
+#endif
+      window_no_nav;
+
+    /// @var window_no_decoration
+    /// @imguiconstwrap{WindowFlags_NoDecoration}
+    c_api::opt_constant<
+      mp_list<imgui_window_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiWindowFlags_NoDecoration>>
+#else
+      int_type_i>
+#endif
+      window_no_decoration;
+
+    /// @var window_no_inputs
+    /// @imguiconstwrap{WindowFlags_NoInputs}
+    c_api::opt_constant<
+      mp_list<imgui_window_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiWindowFlags_NoInputs>>
+#else
+      int_type_i>
+#endif
+      window_no_inputs;
+
     /// @var viewport_is_platform_window
     /// @imguiconstwrap{ViewportFlags_IsPlatformWindow}
     c_api::opt_constant<
@@ -240,6 +339,15 @@ basic_imgui_constants<ApiTraits>::basic_imgui_constants(
   , window_horizontal_scrollbar{"WindowFlags_HorizontalScrollbar", traits, api}
   , window_no_focus_on_appearing{"WindowFlags_NoFocusOnAppearing", traits, api}
   , window_no_bring_to_front_on_focus{"WindowFlags_NoBringToFrontOnFocus", traits, api}
+  , window_always_vertical_scrollbar{"WindowFlags_AlwaysVerticalScrollbar", traits, api}
+  , window_always_horizontal_scrollbar{"WindowFlags_AlwaysHorizontalScrollbar", traits, api}
+  , window_always_use_window_padding{"WindowFlags_AlwaysUseWindowPadding", traits, api}
+  , window_no_nav_inputs{"WindowFlags_NoNavInputs", traits, api}
+  , window_no_nav_focus{"WindowFlags_NoNavFocus", traits, api}
+  , window_unsaved_document{"WindowFlags_UnsavedDocument", traits, api}
+  , window_no_nav{"WindowFlags_NoNav", traits, api}
+  , window_no_decoration{"WindowFlags_NoDecoration", traits, api}
+  , window_no_inputs{"WindowFlags_NoInputs", traits, api}
   , viewport_is_platform_window{"ViewportFlags_IsPlatformWindow", traits, api}
   , viewport_is_platform_monitor{"ViewportFlags_IsPlatformMonitor", traits, api}
   , viewport_owned_by_app{"ViewportFlags_OwnedByApp", traits, api} {}
