@@ -34,9 +34,12 @@ export struct imgui_types {
     using io_type = ImGuiIO;
     using style_type = ImGuiStyle;
     using cond_type = ImGuiCond;
+    using mouse_button_type = ImGuiMouseButton;
     using window_flags_type = ImGuiWindowFlags;
     using focused_flags_type = ImGuiFocusedFlags;
     using hovered_flags_type = ImGuiHoveredFlags;
+    using selectable_flags_type = ImGuiSelectableFlags;
+    using combo_flags_type = ImGuiComboFlags;
 #else
     static constexpr bool has_api = false;
 
@@ -52,9 +55,12 @@ export struct imgui_types {
     using io_type = nothing_t;
     using style_type = nothing_t;
     using cond_type = nothing_t;
-    using window_flags_type = nothing_t;
-    using focused_flags_type = nothing_t;
-    using hovered_flags_type = nothing_t;
+    using mouse_button_type = nothing_t;
+    using window_flags_type = int;
+    using focused_flags_type = int;
+    using hovered_flags_type = int;
+    using selectable_flags_type = int;
+    using combo_flags_type = int;
 #endif
 };
 //------------------------------------------------------------------------------

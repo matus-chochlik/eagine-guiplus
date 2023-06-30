@@ -23,6 +23,13 @@ namespace eagine::guiplus {
 export template <typename Self, identifier_value Id>
 using imgui_int_class = c_api::enum_class<Self, int, "ImGui", Id>;
 //------------------------------------------------------------------------------
+/// @brief Typed enumeration for ImGui mouse button constants.
+/// @ingroup imgui_api_wrap
+export struct mouse_button_flag
+  : imgui_int_class<mouse_button_flag, "MouseButtn"> {
+    using enum_class::enum_class;
+};
+//------------------------------------------------------------------------------
 /// @brief Typed enumeration for ImGui window flags constants.
 /// @ingroup imgui_api_wrap
 export struct window_flag : imgui_int_class<window_flag, "WindowFlag"> {
@@ -38,6 +45,18 @@ export struct hovered_flag : imgui_int_class<hovered_flag, "HoverdFlag"> {
 /// @brief Typed enumeration for ImGui focused flags constants.
 /// @ingroup imgui_api_wrap
 export struct focused_flag : imgui_int_class<focused_flag, "FocusdFlag"> {
+    using enum_class::enum_class;
+};
+
+/// @brief Typed enumeration for ImGui selectable flags constants.
+/// @ingroup imgui_api_wrap
+export struct selectable_flag : imgui_int_class<selectable_flag, "SlctblFlag"> {
+    using enum_class::enum_class;
+};
+
+/// @brief Typed enumeration for ImGui combo flags constants.
+/// @ingroup imgui_api_wrap
+export struct combo_flag : imgui_int_class<combo_flag, "ComboFlag"> {
     using enum_class::enum_class;
 };
 //------------------------------------------------------------------------------

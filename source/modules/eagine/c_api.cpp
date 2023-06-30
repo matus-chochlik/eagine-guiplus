@@ -71,6 +71,10 @@ public:
     using focused_flags_type = typename imgui_types::focused_flags_type;
     /// @brief The hover flags type.
     using hovered_flags_type = typename imgui_types::hovered_flags_type;
+    /// @brief The selectable item flags type.
+    using selectable_flags_type = typename imgui_types::selectable_flags_type;
+    /// @brief The combo item flags type.
+    using combo_flags_type = typename imgui_types::combo_flags_type;
 
     /// @brief Alias for the API traits policy type passed as template argument.
     using api_traits = ApiTraits;
@@ -295,6 +299,26 @@ public:
     imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndDisabled)>
       EndDisabled{"EndDisabled", *this};
 
+    /// @var BeginPopup
+    /// @imguifuncwrap{BeginPopup}
+    imgui_api_function<
+      bool(const char* name, window_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(BeginPopup)>
+      BeginPopup{"BeginPopup", *this};
+
+    /// @var BeginPopupModal
+    /// @imguifuncwrap{BeginPopupModal}
+    imgui_api_function<
+      bool(const char* name, bool*, window_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(BeginPopupModal)>
+      BeginPopupModal{"BeginPopupModal", *this};
+
+    /// @var EndPopup
+    /// @imguifuncwrap{EndPopup}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndPopup)> EndPopup{
+      "EndPopup",
+      *this};
+
     /// @var IsWindowAppearing
     /// @imguifuncwrap{IsWindowAppearing}
     imgui_api_function<bool(), GUIPLUS_IMGUI_STATIC_FUNC(IsWindowAppearing)>
@@ -451,10 +475,50 @@ public:
     imgui_api_function<vec2_type(), GUIPLUS_IMGUI_STATIC_FUNC(GetCursorScreenPos)>
       GetCursorScreenPos{"GetCursorScreenPos", *this};
 
+    /// @var Spacing
+    /// @imguifuncwrap{Spacing}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(Spacing)> Spacing{
+      "Spacing",
+      *this};
+
+    /// @var Separator
+    /// @imguifuncwrap{Separator}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(Separator)> Separator{
+      "Separator",
+      *this};
+
+    /// @var NewLine
+    /// @imguifuncwrap{NewLine}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(NewLine)> NewLine{
+      "NewLine",
+      *this};
+
     /// @var SameLine
     /// @imguifuncwrap{SameLine}
     imgui_api_function<void(float, float), GUIPLUS_IMGUI_STATIC_FUNC(SameLine)>
       SameLine{"SameLine", *this};
+
+    /// @var Indent
+    /// @imguifuncwrap{Indent}
+    imgui_api_function<void(float), GUIPLUS_IMGUI_STATIC_FUNC(Indent)> Indent{
+      "Indent",
+      *this};
+
+    /// @var Unindent
+    /// @imguifuncwrap{Unindent}
+    imgui_api_function<void(float), GUIPLUS_IMGUI_STATIC_FUNC(Unindent)>
+      Unindent{"Unindent", *this};
+
+    /// @var BeginTooltip
+    /// @imguifuncwrap{BeginTooltip}
+    imgui_api_function<bool(), GUIPLUS_IMGUI_STATIC_FUNC(BeginTooltip)>
+      BeginTooltip{"BeginTooltip", *this};
+
+    /// @var EndTooltip
+    /// @imguifuncwrap{EndTooltip}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndTooltip)> EndTooltip{
+      "EndTooltip",
+      *this};
 
     /// @var TextUnformatted
     /// @imguifuncwrap{TextUnformatted}
@@ -500,6 +564,26 @@ public:
     /// @imguifuncwrap{Bullet}
     imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(Bullet)> Bullet{
       "Bullet",
+      *this};
+
+    /// @var Selectable
+    /// @imguifuncwrap{Selectable}
+    imgui_api_function<
+      bool(const char*, bool, selectable_flags_type, const vec2_type&),
+      GUIPLUS_IMGUI_STATIC_FUNC(Selectable)>
+      Selectable{"Selectable", *this};
+
+    /// @var BeginCombo
+    /// @imguifuncwrap{BeginCombo}
+    imgui_api_function<
+      bool(const char*, const char*, combo_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(BeginCombo)>
+      BeginCombo{"BeginCombo", *this};
+
+    /// @var EndCombo
+    /// @imguifuncwrap{EndCombo}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndCombo)> EndCombo{
+      "EndCombo",
       *this};
 
     /// @var DestroyContext

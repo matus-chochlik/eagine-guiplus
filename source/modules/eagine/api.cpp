@@ -251,8 +251,47 @@ public:
         bool(string_view, c_api::defaulted)>>
       button{*this};
 
-    simple_adapted_function<&imgui_api::SmallButton, void(string_view)>
+    simple_adapted_function<&imgui_api::SmallButton, bool(string_view)>
       small_button{*this};
+
+    simple_adapted_function<
+      &imgui_api::Checkbox,
+      bool(string_view, optional_reference<bool>)>
+      checkbox{*this};
+
+    simple_adapted_function<&imgui_api::RadioButton, bool(string_view, bool)>
+      radio_button{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::Selectable,
+        bool(
+          string_view,
+          bool,
+          c_api::enum_bitfield<selectable_flag>,
+          math::vector<float, 2, true>)>,
+      simple_adapted_function<
+        &imgui_api::Selectable,
+        bool(
+          string_view,
+          bool,
+          c_api::enum_bitfield<selectable_flag>,
+          math::vector<float, 2, false>)>,
+      simple_adapted_function<
+        &imgui_api::Selectable,
+        bool(
+          string_view,
+          bool,
+          c_api::enum_bitfield<selectable_flag>,
+          c_api::defaulted)>>
+      selectable{*this};
+
+    simple_adapted_function<
+      &imgui_api::BeginCombo,
+      bool(string_view, string_view, bool)>
+      begin_combo{*this};
+
+    simple_adapted_function<&imgui_api::EndCombo, void()> end_combo{*this};
 
     c_api::combined<
       simple_adapted_function<&imgui_api::DestroyContext, void(imgui_context)>,
