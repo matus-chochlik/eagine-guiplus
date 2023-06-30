@@ -25,38 +25,50 @@ using imgui_int_class = c_api::enum_class<Self, int, "ImGui", Id>;
 //------------------------------------------------------------------------------
 /// @brief Typed enumeration for ImGui mouse button constants.
 /// @ingroup imgui_api_wrap
-export struct mouse_button_flag
-  : imgui_int_class<mouse_button_flag, "MouseButtn"> {
+export struct imgui_mouse_button_flag
+  : imgui_int_class<imgui_mouse_button_flag, "MouseButtn"> {
     using enum_class::enum_class;
 };
 //------------------------------------------------------------------------------
 /// @brief Typed enumeration for ImGui window flags constants.
 /// @ingroup imgui_api_wrap
-export struct window_flag : imgui_int_class<window_flag, "WindowFlag"> {
+export struct imgui_window_flag
+  : imgui_int_class<imgui_window_flag, "WindowFlag"> {
     using enum_class::enum_class;
 };
 
 /// @brief Typed enumeration for ImGui hovered flags constants.
 /// @ingroup imgui_api_wrap
-export struct hovered_flag : imgui_int_class<hovered_flag, "HoverdFlag"> {
+export struct imgui_hovered_flag
+  : imgui_int_class<imgui_hovered_flag, "HoverdFlag"> {
     using enum_class::enum_class;
 };
 
 /// @brief Typed enumeration for ImGui focused flags constants.
 /// @ingroup imgui_api_wrap
-export struct focused_flag : imgui_int_class<focused_flag, "FocusdFlag"> {
+export struct imgui_focused_flag
+  : imgui_int_class<imgui_focused_flag, "FocusdFlag"> {
     using enum_class::enum_class;
 };
 
 /// @brief Typed enumeration for ImGui selectable flags constants.
 /// @ingroup imgui_api_wrap
-export struct selectable_flag : imgui_int_class<selectable_flag, "SlctblFlag"> {
+export struct imgui_selectable_flag
+  : imgui_int_class<imgui_selectable_flag, "SlctblFlag"> {
     using enum_class::enum_class;
 };
 
 /// @brief Typed enumeration for ImGui combo flags constants.
 /// @ingroup imgui_api_wrap
-export struct combo_flag : imgui_int_class<combo_flag, "ComboFlag"> {
+export struct imgui_combo_flag
+  : imgui_int_class<imgui_combo_flag, "ComboFlag"> {
+    using enum_class::enum_class;
+};
+
+/// @brief Typed enumeration for ImGui viewport flags constants.
+/// @ingroup imgui_api_wrap
+export struct imgui_viewport_flag
+  : imgui_int_class<imgui_viewport_flag, "VwportFlag"> {
     using enum_class::enum_class;
 };
 //------------------------------------------------------------------------------

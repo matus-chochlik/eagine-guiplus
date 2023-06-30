@@ -187,7 +187,7 @@ public:
         c_api::collapsed<bool>(
           string_view,
           optional_reference<bool>,
-          c_api::enum_bitfield<window_flag>)>,
+          c_api::enum_bitfield<imgui_window_flag>)>,
       simple_adapted_function<
         &imgui_api::Begin,
         c_api::collapsed<
@@ -215,12 +215,12 @@ public:
 
     simple_adapted_function<
       &imgui_api::IsWindowFocused,
-      bool(c_api::enum_bitfield<focused_flag>)>
+      bool(c_api::enum_bitfield<imgui_focused_flag>)>
       is_window_focused{*this};
 
     simple_adapted_function<
       &imgui_api::IsWindowHovered,
-      bool(c_api::enum_bitfield<hovered_flag>)>
+      bool(c_api::enum_bitfield<imgui_hovered_flag>)>
       is_window_hovered{*this};
 
     simple_adapted_function<&imgui_api::GetWindowWidth, float()>
@@ -268,21 +268,21 @@ public:
         bool(
           string_view,
           bool,
-          c_api::enum_bitfield<selectable_flag>,
+          c_api::enum_bitfield<imgui_selectable_flag>,
           math::vector<float, 2, true>)>,
       simple_adapted_function<
         &imgui_api::Selectable,
         bool(
           string_view,
           bool,
-          c_api::enum_bitfield<selectable_flag>,
+          c_api::enum_bitfield<imgui_selectable_flag>,
           math::vector<float, 2, false>)>,
       simple_adapted_function<
         &imgui_api::Selectable,
         bool(
           string_view,
           bool,
-          c_api::enum_bitfield<selectable_flag>,
+          c_api::enum_bitfield<imgui_selectable_flag>,
           c_api::defaulted)>>
       selectable{*this};
 
