@@ -55,10 +55,10 @@ static void run_loop(GLFWwindow* window, int width, int height) {
                 gui.opengl3_new_frame();
                 gui.glfw_new_frame();
                 gui.new_frame();
-                if(gui.begin("example", show_window)) {
+                if(gui.begin("example", show_window).or_false()) {
                     gui.text_unformatted("Hello World!");
                     gui.same_line();
-                    if(gui.button("Bye!").value_or(true)) {
+                    if(gui.button("Bye!").or_true()) {
                         show_window = false;
                     }
                     gui.end();

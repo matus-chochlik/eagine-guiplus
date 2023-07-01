@@ -64,14 +64,14 @@ static void run_loop(GLFWwindow* window, int width, int height) {
                 gui.opengl3_new_frame();
                 gui.glfw_new_frame();
                 gui.new_frame();
-                if(gui.begin("example", show_window)) {
-                    gui.text_unformatted("Select background!");
+                if(gui.begin("example", show_window).or_false()) {
+                    gui.text_unformatted("Select background:");
                     gui.new_line();
-                    if(gui.begin_combo("background", color_name)) {
+                    if(gui.begin_combo("background", color_name).or_false()) {
                         for(const auto i : integer_range(colors.size())) {
                             const bool is_selected{i == color_index};
-                            if(gui.selectable(
-                                 std::get<0>(colors[i]), is_selected)) {
+                            const auto name{std::get<0>(colors[i])};
+                            if(gui.selectable(name, is_selected).or_false()) {
                                 color_index = i;
                             }
                             if(is_selected) {

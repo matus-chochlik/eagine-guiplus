@@ -186,14 +186,13 @@ public:
     c_api::combined<
       simple_adapted_function<
         &imgui_api::Begin,
-        c_api::collapsed<bool>(
+        bool(
           string_view,
           optional_reference<bool>,
           c_api::enum_bitfield<imgui_window_flag>)>,
       simple_adapted_function<
         &imgui_api::Begin,
-        c_api::collapsed<
-          bool>(string_view, optional_reference<bool>, c_api::defaulted)>,
+        bool(string_view, optional_reference<bool>, c_api::defaulted)>,
       simple_adapted_function<
         &imgui_api::Begin,
         imgui_context(string_view, c_api::defaulted, c_api::defaulted)>>
@@ -230,6 +229,19 @@ public:
 
     simple_adapted_function<&imgui_api::GetWindowHeight, float()>
       get_window_height{*this};
+
+    simple_adapted_function<&imgui_api::PushItemWidth, void(float)>
+      push_item_width{*this};
+    simple_adapted_function<&imgui_api::PopItemWidth, void()> pop_item_width{
+      *this};
+
+    simple_adapted_function<&imgui_api::GetFontSize, float()> get_font_size{
+      *this};
+
+    simple_adapted_function<&imgui_api::GetCursorPosX, float()> get_cursor_pos_x{
+      *this};
+    simple_adapted_function<&imgui_api::GetCursorPosY, float()> get_cursor_pos_y{
+      *this};
 
     simple_adapted_function<&imgui_api::Spacing, void()> spacing{*this};
 

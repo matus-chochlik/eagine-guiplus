@@ -444,6 +444,16 @@ public:
       "PopFont",
       *this};
 
+    /// @var PushItemWidth
+    /// @imguifuncwrap{PushItemWidth}
+    imgui_api_function<void(float), GUIPLUS_IMGUI_STATIC_FUNC(PushItemWidth)>
+      PushItemWidth{"PushItemWidth", *this};
+
+    /// @var PopItemWidth
+    /// @imguifuncwrap{PopItemWidth}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(PopItemWidth)>
+      PopItemWidth{"PopItemWidth", *this};
+
     /// @var GetFont
     /// @imguifuncwrap{GetFont}
     imgui_api_function<font_type*(), GUIPLUS_IMGUI_STATIC_FUNC(GetFont)> GetFont{
