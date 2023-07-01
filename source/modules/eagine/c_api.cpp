@@ -566,6 +566,11 @@ public:
       "Bullet",
       *this};
 
+    /// @var SetItemDefaultFocus
+    /// @imguifuncwrap{SetItemDefaultFocus}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(SetItemDefaultFocus)>
+      SetItemDefaultFocus{"SetItemDefaultFocus", *this};
+
     /// @var Selectable
     /// @imguifuncwrap{Selectable}
     imgui_api_function<

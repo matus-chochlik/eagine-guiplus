@@ -83,6 +83,8 @@ public:
     using glfw_window_type = typename imgui_types::glfw_window_type;
     using context_type = typename imgui_types::context_type;
     using font_atlas_type = typename imgui_types::font_atlas_type;
+    using selectable_flags_type = typename imgui_types::selectable_flags_type;
+    using combo_flags_type = typename imgui_types::combo_flags_type;
 
     basic_imgui_operations(api_traits& traits)
       : imgui_api{traits} {}
@@ -229,12 +231,22 @@ public:
     simple_adapted_function<&imgui_api::GetWindowHeight, float()>
       get_window_height{*this};
 
+    simple_adapted_function<&imgui_api::Spacing, void()> spacing{*this};
+
+    simple_adapted_function<&imgui_api::Separator, void()> separator{*this};
+
+    simple_adapted_function<&imgui_api::NewLine, void()> new_line{*this};
+
     c_api::combined<
       simple_adapted_function<&imgui_api::SameLine, void(float, float)>,
       simple_adapted_function<
         &imgui_api::SameLine,
         void(c_api::substituted<0>, c_api::substituted<-1>)>>
       same_line{*this};
+
+    simple_adapted_function<&imgui_api::Indent, void(float)> indent{*this};
+
+    simple_adapted_function<&imgui_api::Unindent, void(float)> unindent{*this};
 
     simple_adapted_function<&imgui_api::TextUnformatted, void(string_view)>
       text_unformatted{*this};
@@ -262,6 +274,9 @@ public:
     simple_adapted_function<&imgui_api::RadioButton, bool(string_view, bool)>
       radio_button{*this};
 
+    simple_adapted_function<&imgui_api::SetItemDefaultFocus, void()>
+      set_item_default_focus{*this};
+
     c_api::combined<
       simple_adapted_function<
         &imgui_api::Selectable,
@@ -283,12 +298,34 @@ public:
           string_view,
           bool,
           c_api::enum_bitfield<imgui_selectable_flag>,
-          c_api::defaulted)>>
+          c_api::defaulted)>,
+      adapted_function<
+        &imgui_api::Selectable,
+        bool(string_view, bool),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0, 2>,
+          c_api::get_data_map<1, 1>,
+          c_api::defaulted_arg_map<selectable_flags_type, 3>,
+          c_api::defaulted_arg_map<vec2_type, 4>>>>
       selectable{*this};
 
-    simple_adapted_function<
-      &imgui_api::BeginCombo,
-      bool(string_view, string_view, bool)>
+    c_api::combined<
+      adapted_function<
+        &imgui_api::BeginCombo,
+        bool(string_view, string_view, c_api::enum_bitfield<imgui_combo_flag>),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0>,
+          c_api::get_data_map<1, 1>,
+          c_api::get_data_map<2, 2>,
+          c_api::convert<combo_flags_type, c_api::trivial_arg_map<3>>>>,
+      adapted_function<
+        &imgui_api::BeginCombo,
+        bool(string_view, string_view),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0>,
+          c_api::get_data_map<1, 1>,
+          c_api::get_data_map<2, 2>,
+          c_api::defaulted_arg_map<combo_flags_type, 3>>>>
       begin_combo{*this};
 
     simple_adapted_function<&imgui_api::EndCombo, void()> end_combo{*this};
