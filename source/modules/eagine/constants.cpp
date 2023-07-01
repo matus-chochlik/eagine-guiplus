@@ -27,16 +27,21 @@ namespace eagine::guiplus {
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 struct basic_imgui_constants {
+    struct imgui_tag {};
+
 public:
     using int_type_i = std::type_identity<int>;
     template <int value>
     using int_type_c = std::integral_constant<int, value>;
 
+    template <typename ClassList, typename Constant>
+    using opt_constant = c_api::opt_constant<ClassList, Constant, imgui_tag>;
+
     basic_imgui_constants(ApiTraits&, basic_imgui_c_api<ApiTraits>&);
 
     /// @var window_no_title_bar
     /// @imguiconstwrap{WindowFlags_NoTitleBar}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoTitleBar>>
@@ -47,7 +52,7 @@ public:
 
     /// @var window_no_resize
     /// @imguiconstwrap{WindowFlags_NoResize}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoResize>>
@@ -58,7 +63,7 @@ public:
 
     /// @var window_no_move
     /// @imguiconstwrap{WindowFlags_NoMove}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoMove>>
@@ -69,7 +74,7 @@ public:
 
     /// @var window_no_scrollbar
     /// @imguiconstwrap{WindowFlags_NoScrollbar}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoScrollbar>>
@@ -80,7 +85,7 @@ public:
 
     /// @var window_no_scroll_with_mouse
     /// @imguiconstwrap{WindowFlags_NoScrollWithMouse}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoScrollWithMouse>>
@@ -91,7 +96,7 @@ public:
 
     /// @var window_no_collapse
     /// @imguiconstwrap{WindowFlags_NoCollapse}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoCollapse>>
@@ -102,7 +107,7 @@ public:
 
     /// @var window_always_auto_resize
     /// @imguiconstwrap{WindowFlags_AlwaysAutoResize}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_AlwaysAutoResize>>
@@ -113,7 +118,7 @@ public:
 
     /// @var window_no_background
     /// @imguiconstwrap{WindowFlags_NoBackground}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoBackground>>
@@ -124,7 +129,7 @@ public:
 
     /// @var window_no_saved_settings
     /// @imguiconstwrap{WindowFlags_NoSavedSettings}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoSavedSettings>>
@@ -135,7 +140,7 @@ public:
 
     /// @var window_no_mouse_inputs
     /// @imguiconstwrap{WindowFlags_NoMouseInputs}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoMouseInputs>>
@@ -146,7 +151,7 @@ public:
 
     /// @var window_menu_bar
     /// @imguiconstwrap{WindowFlags_MenuBar}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_MenuBar>>
@@ -157,7 +162,7 @@ public:
 
     /// @var window_horizontal_scrollbar
     /// @imguiconstwrap{WindowFlags_HorizontalScrollbar}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_HorizontalScrollbar>>
@@ -168,7 +173,7 @@ public:
 
     /// @var window_no_focus_on_appearing
     /// @imguiconstwrap{WindowFlags_NoFocusOnAppearing}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoFocusOnAppearing>>
@@ -179,7 +184,7 @@ public:
 
     /// @var window_no_bring_to_front_on_focus
     /// @imguiconstwrap{WindowFlags_NoBringToFrontOnFocus}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoBringToFrontOnFocus>>
@@ -190,7 +195,7 @@ public:
 
     /// @var window_always_vertical_scrollbar
     /// @imguiconstwrap{WindowFlags_AlwaysVerticalScrollbar}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_AlwaysVerticalScrollbar>>
@@ -201,7 +206,7 @@ public:
 
     /// @var window_always_horizontal_scrollbar
     /// @imguiconstwrap{WindowFlags_AlwaysHorizontalScrollbar}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_AlwaysHorizontalScrollbar>>
@@ -212,7 +217,7 @@ public:
 
     /// @var window_always_use_window_padding
     /// @imguiconstwrap{WindowFlags_AlwaysUseWindowPadding}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_AlwaysUseWindowPadding>>
@@ -223,7 +228,7 @@ public:
 
     /// @var window_no_nav_inputs
     /// @imguiconstwrap{WindowFlags_NoNavInputs}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoNavInputs>>
@@ -234,7 +239,7 @@ public:
 
     /// @var window_no_nav_focus
     /// @imguiconstwrap{WindowFlags_NoNavFocus}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoNavFocus>>
@@ -245,7 +250,7 @@ public:
 
     /// @var window_unsaved_document
     /// @imguiconstwrap{WindowFlags_UnsavedDocument}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_UnsavedDocument>>
@@ -256,7 +261,7 @@ public:
 
     /// @var window_no_nav
     /// @imguiconstwrap{WindowFlags_NoNav}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoNav>>
@@ -267,7 +272,7 @@ public:
 
     /// @var window_no_decoration
     /// @imguiconstwrap{WindowFlags_NoDecoration}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoDecoration>>
@@ -278,7 +283,7 @@ public:
 
     /// @var window_no_inputs
     /// @imguiconstwrap{WindowFlags_NoInputs}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiWindowFlags_NoInputs>>
@@ -289,7 +294,7 @@ public:
 
     /// @var viewport_is_platform_window
     /// @imguiconstwrap{ViewportFlags_IsPlatformWindow}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_viewport_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiViewportFlags_IsPlatformWindow>>
@@ -300,7 +305,7 @@ public:
 
     /// @var viewport_is_platform_monitor
     /// @imguiconstwrap{ViewportFlags_IsPlatformMonitor}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_viewport_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiViewportFlags_IsPlatformMonitor>>
@@ -311,7 +316,7 @@ public:
 
     /// @var viewport_owned_by_app
     /// @imguiconstwrap{ViewportFlags_OwnedByApp}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<imgui_viewport_flag>,
 #if EAGINE_HAS_IMGUI
       int_type_c<ImGuiViewportFlags_OwnedByApp>>

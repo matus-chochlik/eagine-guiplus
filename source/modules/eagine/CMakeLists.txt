@@ -28,6 +28,8 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.identifier
 		eagine.core.c_api
+	PRIVATE_INCLUDE_DIRECTORIES
+		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
 )
 
 eagine_add_module(
@@ -65,6 +67,8 @@ eagine_add_module(
 		eagine.core.memory
 		eagine.core.valid_if
 		eagine.core.c_api
+	PRIVATE_INCLUDE_DIRECTORIES
+		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
 )
 
 eagine_add_module(
