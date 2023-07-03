@@ -26,6 +26,27 @@ include(EAGineCoreCommon)
 find_package(EAGineGLEW)
 find_package(EAGineGLFW3)
 
+add_library(
+	imgui
+	submodules/imgui/imgui.cpp
+	submodules/imgui/imgui_draw.cpp
+	submodules/imgui/imgui_widgets.cpp
+	submodules/imgui/imgui_tables.cpp
+	submodules/imgui/imgui_demo.cpp
+	submodules/imgui/backends/imgui_impl_glfw.cpp
+	submodules/imgui/backends/imgui_impl_opengl3.cpp
+)
+target_include_directories(
+	imgui
+	PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/submodules/imgui>"
+)
+if(UNIX AND NOT APPLE)
+	target_link_libraries(
+		imgui
+		PUBLIC dl
+	)
+endif()
+
 add_subdirectory(source)
 add_subdirectory(example)
 add_subdirectory(deploy)

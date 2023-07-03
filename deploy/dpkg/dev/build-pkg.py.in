@@ -22,6 +22,10 @@ for path in [cpp_prefix, bin_prefix, lib_prefix, cmk_prefix, deb_dir]:
     if not os.path.exists(path):
         os.makedirs(path)
 # ------------------------------------------------------------------------------
+with open(os.path.join("@CMAKE_CURRENT_BINARY_DIR@", "build-pkg.json"), "rb") as build_pkg_json:
+    info = json.load(build_pkg_json)
+    shutil.copy2(info["imgui_lib"], lib_prefix)
+# ------------------------------------------------------------------------------
 def copy_module_files(build_dir, info):
     for cppm in info["interfaces"]:
         dest = os.path.join(cpp_prefix, cppm)
@@ -41,6 +45,11 @@ def copy_module_files(build_dir, info):
 with open(os.path.join("@CMAKE_CURRENT_BINARY_DIR@", "guiplus.json"), "rb") as module_json:
     info = json.load(module_json)
     copy_module_files(info["build_directory"], info["module"])
+# ------------------------------------------------------------------------------
+for cmake_file in ["module-eagine.guiplus-link_glfw3.cmake"]:
+    shutil.copy2(
+        os.path.join("@CMAKE_CURRENT_SOURCE_DIR@", cmake_file),
+        os.path.join(cmk_prefix, "@CMAKE_BUILD_TYPE@", cmake_file))
 # ------------------------------------------------------------------------------
 def dir_file_size(path):
     total_size = 0

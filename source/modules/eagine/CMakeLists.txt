@@ -91,8 +91,10 @@ eagine_add_module(
 	IMPORTS
 		eagine.core.memory
 	PRIVATE_LINK_LIBRARIES
-		eagine-guiplus-imgui
+		imgui
 		EAGine::Deps::GLFW3
+	INTERFACE_LINK_LIBRARIES
+		imgui
 )
 
 eagine_add_module_tests(
