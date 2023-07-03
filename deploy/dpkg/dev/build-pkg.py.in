@@ -57,7 +57,7 @@ Package: eagine-guiplus-dev
 Version: %s
 Architecture: %s
 Installed-Size: %d
-Depends: eagine-core-dev
+Depends: libglew-dev,libglfw3-dev,eagine-core-dev
 Maintainer: Matus Chochlik <chochlik@gmail.com>
 Description: C++ wrapper for ImGui.
 """ % (
