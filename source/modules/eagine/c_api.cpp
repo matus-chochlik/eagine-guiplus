@@ -608,7 +608,10 @@ public:
       GUIPLUS_IMGUI_STATIC_FUNC(DestroyContext)>
       DestroyContext{"DestroyContext", *this};
 
-    basic_imgui_c_api(api_traits& traits);
+    basic_imgui_c_api(api_traits& traits)
+      : _traits{traits} {
+        basic_imgui_c_api_check_version();
+    }
 
     auto traits() noexcept -> api_traits& {
         return _traits;
@@ -616,11 +619,5 @@ public:
 
 private:
 };
-//------------------------------------------------------------------------------
-template <typename ApiTraits>
-basic_imgui_c_api<ApiTraits>::basic_imgui_c_api(api_traits& traits)
-  : _traits{traits} {
-    basic_imgui_c_api_check_version();
-}
 //------------------------------------------------------------------------------
 } // namespace eagine::guiplus
