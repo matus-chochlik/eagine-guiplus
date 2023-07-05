@@ -381,6 +381,51 @@ public:
           c_api::defaulted_arg_map<combo_flags_type, 3>>>>
       begin_combo{*this};
 
+    c_api::combined<
+      adapted_function<
+        &imgui_api::PlotHistogram,
+        void(string_view, span<const float>, float, float, vec2_type),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0>,
+          c_api::get_data_map<1, 1>,
+          c_api::get_data_map<2, 2>,
+          c_api::get_size_map<3, 2>,
+          c_api::substituted_arg_map<0, 4>,
+          c_api::defaulted_arg_map<const char*, 5>,
+          c_api::reorder_arg_map<6, 3>,
+          c_api::reorder_arg_map<7, 4>,
+          c_api::reorder_arg_map<8, 5>,
+          c_api::substituted_arg_map<sizeof(float), 9>>>,
+      adapted_function<
+        &imgui_api::PlotHistogram,
+        void(string_view, span<const float>, float, float),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0>,
+          c_api::get_data_map<1, 1>,
+          c_api::get_data_map<2, 2>,
+          c_api::get_size_map<3, 2>,
+          c_api::substituted_arg_map<0, 4>,
+          c_api::defaulted_arg_map<const char*, 5>,
+          c_api::reorder_arg_map<6, 3>,
+          c_api::reorder_arg_map<7, 4>,
+          c_api::defaulted_arg_map<vec2_type, 8>,
+          c_api::substituted_arg_map<sizeof(float), 9>>>,
+      adapted_function<
+        &imgui_api::PlotHistogram,
+        void(string_view, span<const float>),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0>,
+          c_api::get_data_map<1, 1>,
+          c_api::get_data_map<2, 2>,
+          c_api::get_size_map<3, 2>,
+          c_api::substituted_arg_map<0, 4>,
+          c_api::defaulted_arg_map<const char*, 5>,
+          c_api::substituted_arg_map<0, 6>,
+          c_api::substituted_arg_map<1, 7>,
+          c_api::defaulted_arg_map<vec2_type, 8>,
+          c_api::substituted_arg_map<sizeof(float), 9>>>>
+      plot_histogram{*this};
+
     simple_adapted_function<&imgui_api::EndCombo, void()> end_combo{*this};
 
     c_api::combined<

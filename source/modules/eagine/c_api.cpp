@@ -616,6 +616,22 @@ public:
       "EndCombo",
       *this};
 
+    /// @var PlotHistogram
+    /// @imguifuncwrap{PlotHistogram}
+    imgui_api_function<
+      void(
+        const char*,
+        const float*,
+        int,
+        int,
+        const char*,
+        float,
+        float,
+        vec2_type,
+        int),
+      GUIPLUS_IMGUI_STATIC_FUNC(PlotHistogram)>
+      PlotHistogram{"PlotHistogram", *this};
+
     /// @var DestroyContext
     /// @imguifuncwrap{DestroyContext}
     imgui_api_function<
