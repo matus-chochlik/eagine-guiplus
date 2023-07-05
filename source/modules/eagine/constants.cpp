@@ -27,15 +27,13 @@ namespace eagine::guiplus {
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 struct basic_imgui_constants {
-    struct imgui_tag {};
-
 public:
     using int_type_i = std::type_identity<int>;
     template <int value>
     using int_type_c = std::integral_constant<int, value>;
 
-    template <typename ClassList, typename Constant>
-    using opt_constant = c_api::opt_constant<ClassList, Constant, imgui_tag>;
+    template <typename ClassList, typename Constant, typename Tag = nothing_t>
+    using opt_constant = c_api::opt_constant<ClassList, Constant, Tag>;
 
     basic_imgui_constants(ApiTraits&, basic_imgui_c_api<ApiTraits>&);
 
