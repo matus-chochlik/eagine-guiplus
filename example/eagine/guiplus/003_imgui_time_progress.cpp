@@ -1,4 +1,4 @@
-/// @example guiplus/001_imgui_hello.cpp
+/// @example guiplus/003_time_progress.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
@@ -17,13 +17,7 @@ static void run_loop(GLFWwindow* window, int width, int height) {
     using eagine::ok;
     using namespace eagine::guiplus;
 
-    std::array<std::tuple<std::string_view, float, float, float>, 3> colors{
-      {{"red", 0.9F, 0.3F, 0.3F},
-       {"green", 0.3F, 0.9F, 0.3F},
-       {"blue", 0.3F, 0.3F, 0.9F}}};
-
-    std::size_t color_index{0};
-
+    glClearColor(0.3F, 0.3F, 0.9F, 0.0F);
     glClearDepth(1);
 
     const imgui_api gui;
@@ -57,29 +51,27 @@ static void run_loop(GLFWwindow* window, int width, int height) {
                 }
 
                 glViewport(0, 0, width, height);
-                auto [color_name, r, g, b] = colors[color_index];
-                glClearColor(r, g, b, 0.F);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
                 gui.opengl3_new_frame();
                 gui.glfw_new_frame();
                 gui.new_frame();
-                if(gui.begin("example", show_window).or_false()) {
-                    gui.text_unformatted("Select background:");
+                gui.set_next_window_size({400, 160});
+                if(gui.begin("time progress", show_window).or_false()) {
+                    using namespace std::chrono;
+                    const auto now{system_clock::now()};
+
+                    const duration<float> sec{now - floor<seconds>(now)};
+                    gui.progress_bar(sec / std::chrono::seconds{1}, "seconds");
+
                     gui.new_line();
-                    if(gui.begin_combo("background", color_name).or_false()) {
-                        for(const auto i : integer_range(colors.size())) {
-                            const bool is_selected{i == color_index};
-                            const auto name{std::get<0>(colors[i])};
-                            if(gui.selectable(name, is_selected).or_false()) {
-                                color_index = i;
-                            }
-                            if(is_selected) {
-                                gui.set_item_default_focus();
-                            }
-                        }
-                        gui.end_combo();
-                    }
+                    const duration<float> min{now - floor<minutes>(now)};
+                    gui.progress_bar(min / std::chrono::minutes{1}, "minutes");
+
+                    gui.new_line();
+                    const duration<float> hrs{now - floor<hours>(now)};
+                    gui.progress_bar(hrs / std::chrono::hours{1}, "hours");
+
                     gui.end();
                 }
                 gui.end_frame();

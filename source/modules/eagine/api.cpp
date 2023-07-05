@@ -230,6 +230,11 @@ public:
     simple_adapted_function<&imgui_api::GetWindowHeight, float()>
       get_window_height{*this};
 
+    simple_adapted_function<
+      &imgui_api::SetNextWindowSize,
+      void(const vec2_type&, c_api::defaulted)>
+      set_next_window_size{*this};
+
     simple_adapted_function<&imgui_api::PushItemWidth, void(float)>
       push_item_width{*this};
     simple_adapted_function<&imgui_api::PopItemWidth, void()> pop_item_width{
@@ -252,6 +257,8 @@ public:
 
     simple_adapted_function<&imgui_api::Separator, void()> separator{*this};
 
+    simple_adapted_function<&imgui_api::Bullet, void()> bullet{*this};
+
     simple_adapted_function<&imgui_api::NewLine, void()> new_line{*this};
 
     c_api::combined<
@@ -272,6 +279,27 @@ public:
       begin_item_tooltip{*this};
 
     simple_adapted_function<&imgui_api::EndTooltip, void()> end_tooltip{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::ProgressBar,
+        void(float, math::vector<float, 2, true>, string_view)>,
+      simple_adapted_function<
+        &imgui_api::ProgressBar,
+        void(float, math::vector<float, 2, false>, string_view)>,
+      simple_adapted_function<
+        &imgui_api::ProgressBar,
+        bool(
+          float,
+          c_api::substituted<vec2_type(-std::numeric_limits<float>::min(), 0.F)>,
+          string_view)>,
+      simple_adapted_function<
+        &imgui_api::ProgressBar,
+        bool(
+          float,
+          c_api::substituted<vec2_type(-std::numeric_limits<float>::min(), 0.F)>,
+          c_api::defaulted)>>
+      progress_bar{*this};
 
     simple_adapted_function<&imgui_api::TextUnformatted, void(string_view)>
       text_unformatted{*this};

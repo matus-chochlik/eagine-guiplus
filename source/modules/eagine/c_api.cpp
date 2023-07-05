@@ -507,6 +507,12 @@ public:
       "Separator",
       *this};
 
+    /// @var Bullet
+    /// @imguifuncwrap{Bullet}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(Bullet)> Bullet{
+      "Bullet",
+      *this};
+
     /// @var NewLine
     /// @imguifuncwrap{NewLine}
     imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(NewLine)> NewLine{
@@ -545,6 +551,13 @@ public:
       "EndTooltip",
       *this};
 
+    /// @var ProgressBar
+    /// @imguifuncwrap{ProgressBar}
+    imgui_api_function<
+      void(float, const vec2_type&, const char*),
+      GUIPLUS_IMGUI_STATIC_FUNC(ProgressBar)>
+      ProgressBar{"ProgressBar", *this};
+
     /// @var TextUnformatted
     /// @imguifuncwrap{TextUnformatted}
     imgui_api_function<
@@ -577,19 +590,6 @@ public:
       bool(const char*, bool),
       GUIPLUS_IMGUI_STATIC_FUNC(RadioButton)>
       RadioButton{"RadioButton", *this};
-
-    /// @var ProgressBar
-    /// @imguifuncwrap{ProgressBar}
-    imgui_api_function<
-      void(float, const vec2_type&, const char*),
-      GUIPLUS_IMGUI_STATIC_FUNC(ProgressBar)>
-      ProgressBar{"ProgressBar", *this};
-
-    /// @var Bullet
-    /// @imguifuncwrap{Bullet}
-    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(Bullet)> Bullet{
-      "Bullet",
-      *this};
 
     /// @var SetItemDefaultFocus
     /// @imguifuncwrap{SetItemDefaultFocus}

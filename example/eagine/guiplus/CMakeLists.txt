@@ -51,5 +51,5 @@ endfunction()
 eagine_example_common(001_imgui_hello)
 eagine_example_common(001_imgui_about)
 eagine_example_common(002_imgui_demo)
-eagine_example_common(003_imgui_background)
-
+eagine_example_common(003_imgui_time_progress)
+eagine_example_common(004_imgui_background)
