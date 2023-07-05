@@ -454,6 +454,16 @@ public:
     imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(PopItemWidth)>
       PopItemWidth{"PopItemWidth", *this};
 
+    /// @var PushTextWrapPos
+    /// @imguifuncwrap{PushTextWrapPos}
+    imgui_api_function<void(float), GUIPLUS_IMGUI_STATIC_FUNC(PushTextWrapPos)>
+      PushTextWrapPos{"PushTextWrapPos", *this};
+
+    /// @var PopTextWrapPos
+    /// @imguifuncwrap{PopTextWrapPos}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(PopTextWrapPos)>
+      PopTextWrapPos{"PopTextWrapPos", *this};
+
     /// @var GetFont
     /// @imguifuncwrap{GetFont}
     imgui_api_function<font_type*(), GUIPLUS_IMGUI_STATIC_FUNC(GetFont)> GetFont{
@@ -523,6 +533,11 @@ public:
     /// @imguifuncwrap{BeginTooltip}
     imgui_api_function<bool(), GUIPLUS_IMGUI_STATIC_FUNC(BeginTooltip)>
       BeginTooltip{"BeginTooltip", *this};
+
+    /// @var BeginItemTooltip
+    /// @imguifuncwrap{BeginItemTooltip}
+    imgui_api_function<bool(), GUIPLUS_IMGUI_STATIC_FUNC(BeginItemTooltip)>
+      BeginItemTooltip{"BeginItemTooltip", *this};
 
     /// @var EndTooltip
     /// @imguifuncwrap{EndTooltip}

@@ -235,6 +235,11 @@ public:
     simple_adapted_function<&imgui_api::PopItemWidth, void()> pop_item_width{
       *this};
 
+    simple_adapted_function<&imgui_api::PushTextWrapPos, void(float)>
+      push_text_wrap_pos{*this};
+    simple_adapted_function<&imgui_api::PopTextWrapPos, void()>
+      pop_text_wrap_pos{*this};
+
     simple_adapted_function<&imgui_api::GetFontSize, float()> get_font_size{
       *this};
 
@@ -259,6 +264,14 @@ public:
     simple_adapted_function<&imgui_api::Indent, void(float)> indent{*this};
 
     simple_adapted_function<&imgui_api::Unindent, void(float)> unindent{*this};
+
+    simple_adapted_function<&imgui_api::BeginTooltip, bool()> begin_tooltip{
+      *this};
+
+    simple_adapted_function<&imgui_api::BeginItemTooltip, bool()>
+      begin_item_tooltip{*this};
+
+    simple_adapted_function<&imgui_api::EndTooltip, void()> end_tooltip{*this};
 
     simple_adapted_function<&imgui_api::TextUnformatted, void(string_view)>
       text_unformatted{*this};
@@ -368,6 +381,17 @@ public:
 
     basic_imgui_api()
       : basic_imgui_api{ApiTraits{}} {}
+
+    void help_marker(const string_view text) const noexcept {
+        this->text_unformatted("(?)");
+        if(this->begin_item_tooltip().or_false()) {
+            this->push_text_wrap_pos(
+              this->get_font_size().value_or(13.F) * 35.F);
+            this->text_unformatted(text);
+            this->pop_text_wrap_pos();
+            this->end_tooltip();
+        }
+    }
 };
 //------------------------------------------------------------------------------
 export template <std::size_t I, typename ApiTraits>

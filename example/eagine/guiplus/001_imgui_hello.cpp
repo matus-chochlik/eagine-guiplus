@@ -57,10 +57,12 @@ static void run_loop(GLFWwindow* window, int width, int height) {
                 gui.new_frame();
                 if(gui.begin("example", show_window).or_false()) {
                     gui.text_unformatted("Hello World!");
-                    gui.same_line();
+                    gui.new_line();
                     if(gui.button("Bye!").or_true()) {
                         show_window = false;
                     }
+                    gui.same_line();
+                    gui.help_marker("closes this window");
                     gui.end();
                 }
                 gui.end_frame();
