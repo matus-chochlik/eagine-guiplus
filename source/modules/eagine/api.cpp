@@ -519,4 +519,12 @@ struct tuple_element<1, eagine::guiplus::basic_imgui_api<ApiTraits>> {
 };
 //------------------------------------------------------------------------------
 } // namespace std
+namespace eagine::guiplus {
+//------------------------------------------------------------------------------
+export template <typename ApiTraits>
+using basic_imgui_api_reference =
+  c_api::basic_api_reference<basic_imgui_api<ApiTraits>>;
+
+export using imgui_api_reference = basic_imgui_api_reference<imgui_api_traits>;
+} // namespace eagine::guiplus
 
