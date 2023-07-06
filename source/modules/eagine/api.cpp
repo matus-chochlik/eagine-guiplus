@@ -455,6 +455,26 @@ public:
     basic_imgui_api()
       : basic_imgui_api{ApiTraits{}} {}
 
+    auto set_config_flags(const c_api::enum_bitfield<imgui_config_flag> flags)
+      const noexcept -> bool {
+        if(this->GetIO) {
+            // NOLINTNEXTLINE(hicpp-signed-bitwise)
+            this->GetIO().ConfigFlags |= static_cast<int>(flags);
+            return true;
+        }
+        return false;
+    }
+
+    auto unset_config_flags(const c_api::enum_bitfield<imgui_config_flag> flags)
+      const noexcept -> bool {
+        if(this->GetIO) {
+            // NOLINTNEXTLINE(hicpp-signed-bitwise)
+            this->GetIO().ConfigFlags &= ~static_cast<int>(flags);
+            return true;
+        }
+        return false;
+    }
+
     void help_marker(const string_view text) const noexcept {
         this->text_unformatted("(?)");
         if(this->begin_item_tooltip().or_false()) {

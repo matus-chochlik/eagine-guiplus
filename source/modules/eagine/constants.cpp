@@ -37,6 +37,94 @@ public:
 
     basic_imgui_constants(ApiTraits&, basic_imgui_c_api<ApiTraits>&);
 
+    /// @var config_nav_enable_keyboard
+    /// @imguiconstwrap{ConfigFlags_NavEnableKeyboard}
+    opt_constant<
+      mp_list<imgui_config_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiConfigFlags_NavEnableKeyboard>>
+#else
+      int_type_i>
+#endif
+      config_nav_enable_keyboard;
+
+    /// @var config_nav_enable_gamepad
+    /// @imguiconstwrap{ConfigFlags_NavEnableGamepad}
+    opt_constant<
+      mp_list<imgui_config_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiConfigFlags_NavEnableGamepad>>
+#else
+      int_type_i>
+#endif
+      config_nav_enable_gamepad;
+
+    /// @var config_nav_enable_set_mouse_pos
+    /// @imguiconstwrap{ConfigFlags_NavEnableSetMousePos}
+    opt_constant<
+      mp_list<imgui_config_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiConfigFlags_NavEnableSetMousePos>>
+#else
+      int_type_i>
+#endif
+      config_nav_enable_set_mouse_pos;
+
+    /// @var config_nav_no_capture_keyboard
+    /// @imguiconstwrap{ConfigFlags_NavNoCaptureKeyboard}
+    opt_constant<
+      mp_list<imgui_config_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiConfigFlags_NavNoCaptureKeyboard>>
+#else
+      int_type_i>
+#endif
+      config_nav_no_capture_keyboard;
+
+    /// @var config_no_mouse
+    /// @imguiconstwrap{ConfigFlags_NavNoMouse}
+    opt_constant<
+      mp_list<imgui_config_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiConfigFlags_NoMouse>>
+#else
+      int_type_i>
+#endif
+      config_no_mouse;
+
+    /// @var config_no_mouse_cursor_change
+    /// @imguiconstwrap{ConfigFlags_NoMouseCursorChange}
+    opt_constant<
+      mp_list<imgui_config_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiConfigFlags_NoMouseCursorChange>>
+#else
+      int_type_i>
+#endif
+      config_no_mouse_cursor_change;
+
+    /// @var config_nav_is_srgb
+    /// @imguiconstwrap{ConfigFlags_IsSRGB}
+    opt_constant<
+      mp_list<imgui_config_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiConfigFlags_IsSRGB>>
+#else
+      int_type_i>
+#endif
+      config_nav_is_srgb;
+
+    /// @var config_nav_is_touch_screen
+    /// @imguiconstwrap{ConfigFlags_IsTouchScreen}
+    opt_constant<
+      mp_list<imgui_config_flag>,
+#if EAGINE_HAS_IMGUI
+      int_type_c<ImGuiConfigFlags_IsTouchScreen>>
+#else
+      int_type_i>
+#endif
+      config_nav_is_touch_screen;
+
     /// @var window_no_title_bar
     /// @imguiconstwrap{WindowFlags_NoTitleBar}
     opt_constant<
@@ -328,7 +416,15 @@ template <typename ApiTraits>
 basic_imgui_constants<ApiTraits>::basic_imgui_constants(
   ApiTraits& traits,
   basic_imgui_c_api<ApiTraits>& api)
-  : window_no_title_bar{"WindowFlags_NoTitleBar", traits, api}
+  : config_nav_enable_keyboard{"ConfigFlags_NavEnableKeyboard", traits, api}
+  , config_nav_enable_gamepad{"ConfigFlags_NavEnableGamepad", traits, api}
+  , config_nav_enable_set_mouse_pos{"ConfigFlags_NavEnableSetMousePos", traits, api}
+  , config_nav_no_capture_keyboard{"ConfigFlags_NavNoCaptureKeyboard", traits, api}
+  , config_no_mouse{"ConfigFlags_NoMouse", traits, api}
+  , config_no_mouse_cursor_change{"ConfigFlags_NoMouseCursorChange", traits, api}
+  , config_nav_is_srgb{"ConfigFlags_IsSRGB", traits, api}
+  , config_nav_is_touch_screen{"ConfigFlags_IsTouchScreen", traits, api}
+  , window_no_title_bar{"WindowFlags_NoTitleBar", traits, api}
   , window_no_resize{"WindowFlags_NoResize", traits, api}
   , window_no_move{"WindowFlags_NoMove", traits, api}
   , window_no_scrollbar{"WindowFlags_NoScrollbar", traits, api}

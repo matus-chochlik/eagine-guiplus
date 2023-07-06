@@ -30,6 +30,13 @@ export struct imgui_mouse_button_flag
     using enum_class::enum_class;
 };
 //------------------------------------------------------------------------------
+/// @brief Typed enumeration for ImGui config flags constants.
+/// @ingroup imgui_api_wrap
+export struct imgui_config_flag
+  : imgui_int_class<imgui_config_flag, "ConfigFlag"> {
+    using enum_class::enum_class;
+};
+
 /// @brief Typed enumeration for ImGui window flags constants.
 /// @ingroup imgui_api_wrap
 export struct imgui_window_flag
