@@ -168,19 +168,15 @@ public:
       void(optional_reference<bool>)>
       show_about_window{*this};
 
-    simple_adapted_function<
-      &imgui_api::StyleColorsDark,
-      void(optional_reference<bool>)>
+    simple_adapted_function<&imgui_api::StyleColorsDark, void(c_api::defaulted)>
       style_colors_dark{*this};
 
-    simple_adapted_function<
-      &imgui_api::StyleColorsLight,
-      void(optional_reference<bool>)>
+    simple_adapted_function<&imgui_api::StyleColorsLight, void(c_api::defaulted)>
       style_colors_light{*this};
 
     simple_adapted_function<
       &imgui_api::StyleColorsClassic,
-      void(optional_reference<bool>)>
+      void(c_api::defaulted)>
       style_colors_classic{*this};
 
     c_api::combined<
@@ -219,10 +215,19 @@ public:
       bool(c_api::enum_bitfield<imgui_focused_flag>)>
       is_window_focused{*this};
 
-    simple_adapted_function<
-      &imgui_api::IsWindowHovered,
-      bool(c_api::enum_bitfield<imgui_hovered_flag>)>
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::IsWindowHovered,
+        bool(c_api::enum_bitfield<imgui_hovered_flag>)>,
+      simple_adapted_function<&imgui_api::IsWindowHovered, bool(c_api::defaulted)>>
       is_window_hovered{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::IsItemHovered,
+        bool(c_api::enum_bitfield<imgui_hovered_flag>)>,
+      simple_adapted_function<&imgui_api::IsItemHovered, bool(c_api::defaulted)>>
+      is_item_hovered{*this};
 
     simple_adapted_function<&imgui_api::GetWindowWidth, float()>
       get_window_width{*this};
@@ -455,24 +460,57 @@ public:
     basic_imgui_api()
       : basic_imgui_api{ApiTraits{}} {}
 
+    template <typename... Args>
+    auto format_append_into(
+      std::string& dest,
+      const string_view format_str,
+      Args&&... args) const noexcept -> std::string& {
+        std::vformat_to(
+          std::back_inserter(dest),
+          format_str,
+          std::make_format_args(std::forward<Args>(args)...));
+        return dest;
+    }
+
+    template <typename... Args>
+    auto format_into(
+      std::string& dest,
+      const string_view format_str,
+      Args&&... args) const noexcept -> std::string& {
+        dest.clear();
+        return format_append_into(
+          dest, format_str, std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    auto text_buffered(
+      std::string& dest,
+      const string_view format_str,
+      Args&&... args) const noexcept -> bool {
+        return bool(this->text_unformatted(
+          format_into(dest, format_str, std::forward<Args>(args)...)));
+    }
+
     auto set_config_flags(const c_api::enum_bitfield<imgui_config_flag> flags)
       const noexcept -> bool {
-        if(this->GetIO) {
-            // NOLINTNEXTLINE(hicpp-signed-bitwise)
-            this->GetIO().ConfigFlags |= static_cast<int>(flags);
-            return true;
-        }
-        return false;
+        return this->GetIO()
+          .and_then([&](auto& io) -> tribool {
+              // NOLINTNEXTLINE(hicpp-signed-bitwise)
+              io.ConfigFlags |= static_cast<int>(flags);
+              return true;
+          })
+          .or_false();
     }
 
     auto unset_config_flags(const c_api::enum_bitfield<imgui_config_flag> flags)
       const noexcept -> bool {
-        if(this->GetIO) {
-            // NOLINTNEXTLINE(hicpp-signed-bitwise)
-            this->GetIO().ConfigFlags &= ~static_cast<int>(flags);
-            return true;
-        }
-        return false;
+        return this->GetIO()
+          .and_then([&](auto& io) -> tribool {
+              // NOLINTNEXTLINE(hicpp-signed-bitwise)
+              io.ConfigFlags &= ~static_cast<int>(flags);
+              return true;
+          })
+          .or_false();
     }
 
     void help_marker(const string_view text) const noexcept {

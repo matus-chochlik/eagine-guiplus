@@ -343,6 +343,13 @@ public:
       GUIPLUS_IMGUI_STATIC_FUNC(IsWindowHovered)>
       IsWindowHovered{"IsWindowHovered", *this};
 
+    /// @var IsItemHovered
+    /// @imguifuncwrap{IsItemHovered}
+    imgui_api_function<
+      bool(hovered_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(IsItemHovered)>
+      IsItemHovered{"IsItemHovered", *this};
+
     /// @var GetWindowWidth
     /// @imguifuncwrap{GetWindowWidth}
     imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetWindowWidth)>
