@@ -78,5 +78,12 @@ export struct imgui_viewport_flag
   : imgui_int_class<imgui_viewport_flag, "VwportFlag"> {
     using enum_class::enum_class;
 };
+
+/// @brief Typed enumeration for ImGui slider flags constants.
+/// @ingroup imgui_api_wrap
+export struct imgui_slider_flag
+  : imgui_int_class<imgui_slider_flag, "SliderFlag"> {
+    using enum_class::enum_class;
+};
 //------------------------------------------------------------------------------
 } // namespace eagine::guiplus

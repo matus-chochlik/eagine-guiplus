@@ -332,6 +332,48 @@ public:
     simple_adapted_function<&imgui_api::RadioButton, bool(string_view, bool)>
       radio_button{*this};
 
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::SliderFloat,
+        bool(
+          string_view,
+          optional_reference<float>,
+          float,
+          float,
+          string_view,
+          c_api::enum_bitfield<imgui_slider_flag>)>,
+      simple_adapted_function<
+        &imgui_api::SliderFloat,
+        bool(
+          string_view,
+          optional_reference<float>,
+          float,
+          float,
+          c_api::defaulted,
+          c_api::defaulted)>>
+      slider_float{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::SliderInt,
+        bool(
+          string_view,
+          optional_reference<int>,
+          int,
+          int,
+          string_view,
+          c_api::enum_bitfield<imgui_slider_flag>)>,
+      simple_adapted_function<
+        &imgui_api::SliderInt,
+        bool(
+          string_view,
+          optional_reference<int>,
+          int,
+          int,
+          c_api::defaulted,
+          c_api::defaulted)>>
+      slider_int{*this};
+
     simple_adapted_function<&imgui_api::SetItemDefaultFocus, void()>
       set_item_default_focus{*this};
 

@@ -39,6 +39,7 @@ export struct imgui_types {
     using focused_flags_type = ImGuiFocusedFlags;
     using hovered_flags_type = ImGuiHoveredFlags;
     using selectable_flags_type = ImGuiSelectableFlags;
+    using slider_flags_type = ImGuiSliderFlags;
     using combo_flags_type = ImGuiComboFlags;
 #else
     static constexpr bool has_api = false;
@@ -60,6 +61,7 @@ export struct imgui_types {
     using focused_flags_type = int;
     using hovered_flags_type = int;
     using selectable_flags_type = int;
+    using slider_flags_type = int;
     using combo_flags_type = int;
 #endif
 };

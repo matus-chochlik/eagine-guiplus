@@ -73,6 +73,8 @@ public:
     using hovered_flags_type = typename imgui_types::hovered_flags_type;
     /// @brief The selectable item flags type.
     using selectable_flags_type = typename imgui_types::selectable_flags_type;
+    /// @brief The slider item flags type.
+    using slider_flags_type = typename imgui_types::slider_flags_type;
     /// @brief The combo item flags type.
     using combo_flags_type = typename imgui_types::combo_flags_type;
 
@@ -597,6 +599,20 @@ public:
       bool(const char*, bool),
       GUIPLUS_IMGUI_STATIC_FUNC(RadioButton)>
       RadioButton{"RadioButton", *this};
+
+    /// @var SliderFloat
+    /// @imguifuncwrap{SliderFloat}
+    imgui_api_function<
+      bool(const char*, float*, float, float, const char*, slider_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(SliderFloat)>
+      SliderFloat{"SliderFloat", *this};
+
+    /// @var SliderInt
+    /// @imguifuncwrap{SliderInt}
+    imgui_api_function<
+      bool(const char*, int*, int, int, const char*, slider_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(SliderInt)>
+      SliderInt{"SliderInt", *this};
 
     /// @var SetItemDefaultFocus
     /// @imguifuncwrap{SetItemDefaultFocus}
