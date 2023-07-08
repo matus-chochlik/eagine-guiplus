@@ -23,14 +23,23 @@ import :config;
 import :enum_types;
 import :c_api;
 
-namespace eagine::guiplus {
+namespace eagine {
+//------------------------------------------------------------------------------
+export template <>
+struct within_limits<guiplus::imgui_window_flag, guiplus::imgui_types::enum_type> {
+    auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
+};
+//------------------------------------------------------------------------------
+namespace guiplus {
+export auto imgui_enum_by_name(const string_view name) noexcept
+  -> optionally_valid<imgui_types::enum_type>;
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 struct basic_imgui_constants {
 public:
-    using int_type_i = std::type_identity<int>;
+    using enum_type_i = std::type_identity<int>;
     template <int value>
-    using int_type_c = std::integral_constant<int, value>;
+    using enum_type_c = std::integral_constant<int, value>;
 
     template <typename ClassList, typename Constant, typename Tag = nothing_t>
     using opt_constant = c_api::opt_constant<ClassList, Constant, Tag>;
@@ -42,9 +51,9 @@ public:
     opt_constant<
       mp_list<imgui_config_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiConfigFlags_NavEnableKeyboard>>
+      enum_type_c<ImGuiConfigFlags_NavEnableKeyboard>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       config_nav_enable_keyboard;
 
@@ -53,9 +62,9 @@ public:
     opt_constant<
       mp_list<imgui_config_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiConfigFlags_NavEnableGamepad>>
+      enum_type_c<ImGuiConfigFlags_NavEnableGamepad>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       config_nav_enable_gamepad;
 
@@ -64,9 +73,9 @@ public:
     opt_constant<
       mp_list<imgui_config_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiConfigFlags_NavEnableSetMousePos>>
+      enum_type_c<ImGuiConfigFlags_NavEnableSetMousePos>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       config_nav_enable_set_mouse_pos;
 
@@ -75,9 +84,9 @@ public:
     opt_constant<
       mp_list<imgui_config_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiConfigFlags_NavNoCaptureKeyboard>>
+      enum_type_c<ImGuiConfigFlags_NavNoCaptureKeyboard>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       config_nav_no_capture_keyboard;
 
@@ -86,9 +95,9 @@ public:
     opt_constant<
       mp_list<imgui_config_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiConfigFlags_NoMouse>>
+      enum_type_c<ImGuiConfigFlags_NoMouse>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       config_no_mouse;
 
@@ -97,9 +106,9 @@ public:
     opt_constant<
       mp_list<imgui_config_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiConfigFlags_NoMouseCursorChange>>
+      enum_type_c<ImGuiConfigFlags_NoMouseCursorChange>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       config_no_mouse_cursor_change;
 
@@ -108,9 +117,9 @@ public:
     opt_constant<
       mp_list<imgui_config_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiConfigFlags_IsSRGB>>
+      enum_type_c<ImGuiConfigFlags_IsSRGB>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       config_nav_is_srgb;
 
@@ -119,9 +128,9 @@ public:
     opt_constant<
       mp_list<imgui_config_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiConfigFlags_IsTouchScreen>>
+      enum_type_c<ImGuiConfigFlags_IsTouchScreen>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       config_nav_is_touch_screen;
 
@@ -130,9 +139,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoTitleBar>>
+      enum_type_c<ImGuiWindowFlags_NoTitleBar>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_title_bar;
 
@@ -141,9 +150,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoResize>>
+      enum_type_c<ImGuiWindowFlags_NoResize>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_resize;
 
@@ -152,9 +161,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoMove>>
+      enum_type_c<ImGuiWindowFlags_NoMove>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_move;
 
@@ -163,9 +172,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoScrollbar>>
+      enum_type_c<ImGuiWindowFlags_NoScrollbar>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_scrollbar;
 
@@ -174,9 +183,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoScrollWithMouse>>
+      enum_type_c<ImGuiWindowFlags_NoScrollWithMouse>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_scroll_with_mouse;
 
@@ -185,9 +194,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoCollapse>>
+      enum_type_c<ImGuiWindowFlags_NoCollapse>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_collapse;
 
@@ -196,9 +205,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_AlwaysAutoResize>>
+      enum_type_c<ImGuiWindowFlags_AlwaysAutoResize>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_always_auto_resize;
 
@@ -207,9 +216,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoBackground>>
+      enum_type_c<ImGuiWindowFlags_NoBackground>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_background;
 
@@ -218,9 +227,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoSavedSettings>>
+      enum_type_c<ImGuiWindowFlags_NoSavedSettings>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_saved_settings;
 
@@ -229,9 +238,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoMouseInputs>>
+      enum_type_c<ImGuiWindowFlags_NoMouseInputs>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_mouse_inputs;
 
@@ -240,9 +249,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_MenuBar>>
+      enum_type_c<ImGuiWindowFlags_MenuBar>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_menu_bar;
 
@@ -251,9 +260,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_HorizontalScrollbar>>
+      enum_type_c<ImGuiWindowFlags_HorizontalScrollbar>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_horizontal_scrollbar;
 
@@ -262,9 +271,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoFocusOnAppearing>>
+      enum_type_c<ImGuiWindowFlags_NoFocusOnAppearing>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_focus_on_appearing;
 
@@ -273,9 +282,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoBringToFrontOnFocus>>
+      enum_type_c<ImGuiWindowFlags_NoBringToFrontOnFocus>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_bring_to_front_on_focus;
 
@@ -284,9 +293,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_AlwaysVerticalScrollbar>>
+      enum_type_c<ImGuiWindowFlags_AlwaysVerticalScrollbar>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_always_vertical_scrollbar;
 
@@ -295,9 +304,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_AlwaysHorizontalScrollbar>>
+      enum_type_c<ImGuiWindowFlags_AlwaysHorizontalScrollbar>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_always_horizontal_scrollbar;
 
@@ -306,9 +315,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_AlwaysUseWindowPadding>>
+      enum_type_c<ImGuiWindowFlags_AlwaysUseWindowPadding>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_always_use_window_padding;
 
@@ -317,9 +326,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoNavInputs>>
+      enum_type_c<ImGuiWindowFlags_NoNavInputs>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_nav_inputs;
 
@@ -328,9 +337,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoNavFocus>>
+      enum_type_c<ImGuiWindowFlags_NoNavFocus>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_nav_focus;
 
@@ -339,9 +348,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_UnsavedDocument>>
+      enum_type_c<ImGuiWindowFlags_UnsavedDocument>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_unsaved_document;
 
@@ -350,9 +359,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoNav>>
+      enum_type_c<ImGuiWindowFlags_NoNav>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_nav;
 
@@ -361,9 +370,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoDecoration>>
+      enum_type_c<ImGuiWindowFlags_NoDecoration>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_decoration;
 
@@ -372,9 +381,9 @@ public:
     opt_constant<
       mp_list<imgui_window_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiWindowFlags_NoInputs>>
+      enum_type_c<ImGuiWindowFlags_NoInputs>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       window_no_inputs;
 
@@ -383,9 +392,9 @@ public:
     opt_constant<
       mp_list<imgui_viewport_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiViewportFlags_IsPlatformWindow>>
+      enum_type_c<ImGuiViewportFlags_IsPlatformWindow>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       viewport_is_platform_window;
 
@@ -394,9 +403,9 @@ public:
     opt_constant<
       mp_list<imgui_viewport_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiViewportFlags_IsPlatformMonitor>>
+      enum_type_c<ImGuiViewportFlags_IsPlatformMonitor>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       viewport_is_platform_monitor;
 
@@ -405,9 +414,9 @@ public:
     opt_constant<
       mp_list<imgui_viewport_flag>,
 #if EAGINE_HAS_IMGUI
-      int_type_c<ImGuiViewportFlags_OwnedByApp>>
+      enum_type_c<ImGuiViewportFlags_OwnedByApp>>
 #else
-      int_type_i>
+      enum_type_i>
 #endif
       viewport_owned_by_app;
 };
@@ -451,5 +460,6 @@ basic_imgui_constants<ApiTraits>::basic_imgui_constants(
   , viewport_is_platform_monitor{"ViewportFlags_IsPlatformMonitor", traits, api}
   , viewport_owned_by_app{"ViewportFlags_OwnedByApp", traits, api} {}
 //------------------------------------------------------------------------------
-} // namespace eagine::guiplus
+} // namespace guiplus
+} // namespace eagine
 

@@ -8,9 +8,11 @@
 export module eagine.guiplus;
 
 export import :config;
+export import :enum_types;
 export import :objects;
+export import :constants;
+export import :from_string;
 export import :result;
 export import :api_traits;
 export import :c_api;
-export import :constants;
 export import :api;

@@ -72,6 +72,16 @@ eagine_add_module(
 )
 
 eagine_add_module(
+	eagine.guiplus PARTITION from_string
+	IMPORTS
+		enum_types constants
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.string
+		eagine.core.valid_if
+)
+
+eagine_add_module(
 	eagine.guiplus PARTITION api
 	IMPORTS
 		config enum_types
@@ -87,9 +97,15 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus
 	SOURCES
+		constants
 		c_api
 	IMPORTS
+		eagine.core.types
 		eagine.core.memory
+		eagine.core.container
+		eagine.core.valid_if
+	PRIVATE_INCLUDE_DIRECTORIES
+		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
 	PRIVATE_LINK_LIBRARIES
 		imgui
 		EAGine::Deps::GLFW3
@@ -100,6 +116,7 @@ eagine_add_module(
 eagine_add_module_tests(
 	eagine.guiplus
 	UNITS
+		constants
 	IMPORTS
 		eagine.core
 )

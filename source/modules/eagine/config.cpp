@@ -34,6 +34,7 @@ export struct imgui_types {
     using io_type = ImGuiIO;
     using style_type = ImGuiStyle;
     using cond_type = ImGuiCond;
+    using enum_type = int;
     using mouse_button_type = ImGuiMouseButton;
     using window_flags_type = ImGuiWindowFlags;
     using focused_flags_type = ImGuiFocusedFlags;
@@ -56,6 +57,7 @@ export struct imgui_types {
     using io_type = nothing_t;
     using style_type = nothing_t;
     using cond_type = nothing_t;
+    using enum_type = int;
     using mouse_button_type = nothing_t;
     using window_flags_type = int;
     using focused_flags_type = int;
