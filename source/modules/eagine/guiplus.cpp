@@ -16,3 +16,16 @@ export import :result;
 export import :api_traits;
 export import :c_api;
 export import :api;
+
+namespace eagine::guiplus {
+//------------------------------------------------------------------------------
+export template <typename ImGuiApiTraits>
+class basic_gui_utils {
+public:
+    basic_imgui_api<ImGuiApiTraits> imgui;
+};
+//------------------------------------------------------------------------------
+export using gui_utils = basic_gui_utils<imgui_api_traits>;
+//------------------------------------------------------------------------------
+} // namespace eagine::guiplus
+
