@@ -13,7 +13,7 @@ import eagine.core;
 import eagine.guiplus;
 
 static void run_loop(GLFWwindow* window, int width, int height) {
-    using eagine::integer_range;
+    using eagine::index_range;
     using eagine::ok;
     using namespace eagine::guiplus;
 
@@ -68,7 +68,7 @@ static void run_loop(GLFWwindow* window, int width, int height) {
                     gui.text_unformatted("Select background:");
                     gui.new_line();
                     if(gui.begin_combo("background", color_name).or_false()) {
-                        for(const auto i : integer_range(colors.size())) {
+                        for(const auto i : index_range(colors)) {
                             const bool is_selected{i == color_index};
                             const auto name{std::get<0>(colors[i])};
                             if(gui.selectable(name, is_selected).or_false()) {
