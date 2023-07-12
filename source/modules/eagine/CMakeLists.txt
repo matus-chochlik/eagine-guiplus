@@ -89,6 +89,7 @@ eagine_add_module(
 		c_api objects constants
 		eagine.core.types
 		eagine.core.memory
+		eagine.core.string
 		eagine.core.utility
 		eagine.core.math
 		eagine.core.c_api

@@ -10,6 +10,7 @@ export module eagine.guiplus:api;
 import std;
 import eagine.core.types;
 import eagine.core.memory;
+import eagine.core.string;
 import eagine.core.utility;
 import eagine.core.math;
 import eagine.core.c_api;
@@ -239,6 +240,10 @@ public:
       &imgui_api::SetNextWindowSize,
       void(const vec2_type&, c_api::defaulted)>
       set_next_window_size{*this};
+
+    simple_adapted_function<&imgui_api::PushFont, void(imgui_font)> push_font{
+      *this};
+    simple_adapted_function<&imgui_api::PopFont, void()> pop_font{*this};
 
     simple_adapted_function<&imgui_api::PushItemWidth, void(float)>
       push_item_width{*this};
@@ -486,7 +491,34 @@ class basic_imgui_api
   : protected ApiTraits
   , public basic_imgui_operations<ApiTraits>
   , public basic_imgui_constants<ApiTraits> {
+
+    template <typename Result, typename Function>
+    auto _with_io(Function&& function) const noexcept {
+        return this->GetIO().and_then(
+          [&](auto& arg) -> optionally_valid<Result> {
+              if constexpr(not is_nothing_v<decltype(arg)>) {
+                  return {function(arg), true};
+              }
+              return {};
+          });
+    }
+
+    template <typename Result, typename Function>
+    auto _with_io_fonts(Function&& function) const noexcept {
+        return this->GetIO().and_then(
+          [&](auto& arg) -> optionally_valid<Result> {
+              if constexpr(not is_nothing_v<decltype(arg)>) {
+                  if(arg.Fonts) {
+                      return {function(*arg.Fonts), true};
+                  }
+              }
+              return {};
+          });
+    }
+
 public:
+    using io_type = typename imgui_types::io_type;
+
     template <typename R>
     using combined_result = typename ApiTraits::template combined_result<R>;
 
@@ -535,24 +567,36 @@ public:
 
     auto set_config_flags(const c_api::enum_bitfield<imgui_config_flag> flags)
       const noexcept -> bool {
-        return this->GetIO()
-          .and_then([&](auto& io) -> tribool {
-              // NOLINTNEXTLINE(hicpp-signed-bitwise)
-              io.ConfigFlags |= static_cast<int>(flags);
-              return true;
-          })
-          .or_false();
+        return _with_io<bool>([&](auto& io) {
+                   // NOLINTNEXTLINE(hicpp-signed-bitwise)
+                   io.ConfigFlags |= static_cast<int>(flags);
+                   return true;
+               })
+          .value_or(false);
     }
 
     auto unset_config_flags(const c_api::enum_bitfield<imgui_config_flag> flags)
       const noexcept -> bool {
-        return this->GetIO()
-          .and_then([&](auto& io) -> tribool {
-              // NOLINTNEXTLINE(hicpp-signed-bitwise)
-              io.ConfigFlags &= ~static_cast<int>(flags);
-              return true;
-          })
-          .or_false();
+        return _with_io<bool>([&](auto& io) {
+                   // NOLINTNEXTLINE(hicpp-signed-bitwise)
+                   io.ConfigFlags &= ~static_cast<int>(flags);
+                   return true;
+               })
+          .value_or(false);
+    }
+
+    auto get_default_font(const string_view file_path) const noexcept
+      -> imgui_font {
+        return _with_io<imgui_font>([&](auto& io) { return io.DefaultFont; })
+          .or_default();
+    }
+
+    auto add_font_from_file_ttf(const string_view file_path) const noexcept
+      -> imgui_font {
+        return _with_io<imgui_font>([&](auto& fonts) {
+                   return fonts.AddFontFromFileTTF(c_str(file_path));
+               })
+          .or_default();
     }
 
     void help_marker(const string_view text) const noexcept {
