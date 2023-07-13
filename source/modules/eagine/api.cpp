@@ -12,8 +12,10 @@ import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.string;
 import eagine.core.utility;
+import eagine.core.runtime;
 import eagine.core.math;
 import eagine.core.c_api;
+import eagine.core.resource;
 import :config;
 import :enum_types;
 import :api_traits;
@@ -509,7 +511,10 @@ class basic_imgui_api
           [&](auto& arg) -> optionally_valid<Result> {
               if constexpr(not is_nothing_v<decltype(arg)>) {
                   if(arg.Fonts) {
-                      return {function(*arg.Fonts), true};
+                      return {
+                        function(
+                          *arg.Fonts, typename imgui_types::font_config_type{}),
+                        true};
                   }
               }
               return {};
@@ -591,25 +596,92 @@ public:
           .or_default();
     }
 
-    auto add_font_from_file_ttf(const string_view file_path) const noexcept
-      -> imgui_font {
-        return _with_io<imgui_font>([&](auto& fonts) {
-                   return fonts.AddFontFromFileTTF(c_str(file_path));
-               })
-          .or_default();
-    }
+    auto add_font_from_file_ttf(const string_view file_path, float size_pixels)
+      const noexcept -> imgui_font;
 
-    void help_marker(const string_view text) const noexcept {
-        this->text_unformatted("(?)");
-        if(this->begin_item_tooltip().or_false()) {
-            this->push_text_wrap_pos(
-              this->get_font_size().value_or(13.F) * 35.F);
-            this->text_unformatted(text);
-            this->pop_text_wrap_pos();
-            this->end_tooltip();
-        }
-    }
+    auto add_font_from_memory_ttf(
+      const string_view font_name,
+      const memory::const_block ttf,
+      float size_pixels) const noexcept -> imgui_font;
+
+    auto add_font_from_resource_ttf(
+      data_compressor&,
+      memory::buffer& buf,
+      const std::string_view font_name,
+      const embedded_resource resource,
+      float size_pixels) const noexcept -> imgui_font;
+
+    void help_marker(const string_view text) const noexcept;
 };
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+auto basic_imgui_api<ApiTraits>::add_font_from_file_ttf(
+  const string_view file_path,
+  float size_pixels) const noexcept -> imgui_font {
+    return _with_io_fonts<imgui_font>([&](auto& fonts, auto) {
+               return imgui_font{
+                 fonts.AddFontFromFileTTF(c_str(file_path), size_pixels)};
+           })
+      .or_default();
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+auto basic_imgui_api<ApiTraits>::add_font_from_memory_ttf(
+  const string_view font_name,
+  const memory::const_block ttf,
+  float size_pixels) const noexcept -> imgui_font {
+    return _with_io_fonts<imgui_font>(
+             [&](auto& fonts, auto font_config) -> imgui_font {
+                 memory::copy_what_fits(
+                   font_name, memory::cover(font_config.Name));
+                 typename imgui_types::mem_alloc_func alloc{nullptr};
+                 typename imgui_types::mem_free_func free{nullptr};
+                 void* user_data{nullptr};
+                 this->GetAllocatorFunctions(&alloc, &free, &user_data);
+                 if(alloc) {
+                     if(auto buf{alloc(std_size(ttf.size()), user_data)}) {
+                         memory::copy(
+                           ttf,
+                           memory::block{memory::address(buf), ttf.size()});
+                         return imgui_font{fonts.AddFontFromMemoryTTF(
+                           buf,
+                           limit_cast<int>(ttf.size()),
+                           size_pixels,
+                           &font_config)};
+                     }
+                 }
+                 return {};
+             })
+      .or_default();
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+auto basic_imgui_api<ApiTraits>::add_font_from_resource_ttf(
+  data_compressor& compressor,
+  memory::buffer& buffer,
+  const std::string_view font_name,
+  const embedded_resource resource,
+  float size_pixels) const noexcept -> imgui_font {
+    if(resource.is_ttf() or resource.is_otf()) {
+        return add_font_from_memory_ttf(
+          font_name, resource.unpack(compressor, buffer), size_pixels);
+    }
+    return {};
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+void basic_imgui_api<ApiTraits>::help_marker(
+  const string_view text) const noexcept {
+    this->text_unformatted("(?)");
+    if(this->begin_item_tooltip().or_false()) {
+        this->push_text_wrap_pos(this->get_font_size().value_or(13.F) * 35.F);
+        this->text_unformatted(text);
+        this->pop_text_wrap_pos();
+        this->end_tooltip();
+    }
+}
+//------------------------------------------------------------------------------
+// tuple get
 //------------------------------------------------------------------------------
 export template <std::size_t I, typename ApiTraits>
 auto get(basic_imgui_api<ApiTraits>& x) noexcept ->

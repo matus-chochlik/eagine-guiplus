@@ -29,6 +29,7 @@ export struct imgui_types {
     using glfw_window_type = GLFWwindow;
     using context_type = ImGuiContext;
     using font_type = ImFont;
+    using font_config_type = ImFontConfig;
     using font_atlas_type = ImFontAtlas;
     using draw_data_type = ImDrawData;
     using io_type = ImGuiIO;
@@ -42,6 +43,8 @@ export struct imgui_types {
     using selectable_flags_type = ImGuiSelectableFlags;
     using slider_flags_type = ImGuiSliderFlags;
     using combo_flags_type = ImGuiComboFlags;
+    using mem_alloc_func = ImGuiMemAllocFunc;
+    using mem_free_func = ImGuiMemFreeFunc;
 #else
     static constexpr bool has_api = false;
 
@@ -52,6 +55,7 @@ export struct imgui_types {
     using glfw_window_type = nothing_t;
     using context_type = nothing_t;
     using font_type = nothing_t;
+    using font_config_type = nothing_t;
     using font_atlas_type = nothing_t;
     using draw_data_type = nothing_t;
     using io_type = nothing_t;
@@ -65,6 +69,8 @@ export struct imgui_types {
     using selectable_flags_type = int;
     using slider_flags_type = int;
     using combo_flags_type = int;
+    using mem_alloc_func = void* (*)(std::size_t sz, void*);
+    using mem_free_func = void (*)(std::size_t sz, void*);
 #endif
 };
 //------------------------------------------------------------------------------

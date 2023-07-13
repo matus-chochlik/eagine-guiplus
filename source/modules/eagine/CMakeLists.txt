@@ -91,8 +91,10 @@ eagine_add_module(
 		eagine.core.memory
 		eagine.core.string
 		eagine.core.utility
+		eagine.core.runtime
 		eagine.core.math
 		eagine.core.c_api
+		eagine.core.resource
 )
 
 eagine_add_module(

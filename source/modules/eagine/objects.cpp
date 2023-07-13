@@ -36,6 +36,11 @@ export using imgui_context_tag = imgui_lib_tag<"Context">;
 /// @see imgui_draw_data
 export using imgui_draw_data_tag = imgui_lib_tag<"DrawData">;
 
+/// @brief Tag type denoting ImGui font config object.
+/// @ingroup imgui_api_wrap
+/// @see imgui_font_config
+export using imgui_font_config_tag = imgui_lib_tag<"FontConfig">;
+
 /// @brief Tag type denoting ImGui font object.
 /// @ingroup imgui_api_wrap
 /// @see imgui_font
@@ -66,6 +71,11 @@ export using owned_imgui_context = c_api::
 export using imgui_draw_data =
   c_api::basic_handle<imgui_draw_data_tag, imgui_types::draw_data_type*, nullptr>;
 //------------------------------------------------------------------------------
+/// @brief Alias for ImGui font config handle wrapper.
+/// @ingroup imgui_api_wrap
+export using imgui_font_config = c_api::
+  basic_handle<imgui_font_config_tag, imgui_types::font_config_type*, nullptr>;
+
 /// @brief Alias for ImGui font handle wrapper.
 /// @ingroup imgui_api_wrap
 export using imgui_font =
