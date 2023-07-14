@@ -108,6 +108,8 @@ eagine_add_module(
 		eagine.core.memory
 		eagine.core.container
 		eagine.core.valid_if
+		eagine.core.resource
+		eagine.core.main_ctx
 	PRIVATE_INCLUDE_DIRECTORIES
 		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
 	PRIVATE_LINK_LIBRARIES

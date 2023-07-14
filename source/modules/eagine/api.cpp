@@ -609,13 +609,13 @@ public:
       data_compressor&,
       memory::buffer& buf,
       const std::string_view font_name,
-      const embedded_resource resource,
+      const embedded_resource& resource,
       float size_pixels) const noexcept -> imgui_font;
 
     auto add_font_from_resource(
       main_ctx& ctx,
       const std::string_view font_name,
-      const embedded_resource resource,
+      const embedded_resource& resource,
       float size_pixels) const noexcept -> imgui_font;
 
     void help_marker(const string_view text) const noexcept;
@@ -667,7 +667,7 @@ auto basic_imgui_api<ApiTraits>::add_font_from_resource(
   data_compressor& compressor,
   memory::buffer& buffer,
   const std::string_view font_name,
-  const embedded_resource resource,
+  const embedded_resource& resource,
   float size_pixels) const noexcept -> imgui_font {
     if(resource.is_ttf() or resource.is_otf()) {
         return add_font_from_memory_ttf(
@@ -680,7 +680,7 @@ template <typename ApiTraits>
 auto basic_imgui_api<ApiTraits>::add_font_from_resource(
   main_ctx& ctx,
   const std::string_view font_name,
-  const embedded_resource resource,
+  const embedded_resource& resource,
   float size_pixels) const noexcept -> imgui_font {
     return add_font_from_resource(
       ctx.compressor(), ctx.scratch_space(), font_name, resource, size_pixels);
