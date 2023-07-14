@@ -95,6 +95,7 @@ eagine_add_module(
 		eagine.core.math
 		eagine.core.c_api
 		eagine.core.resource
+		eagine.core.main_ctx
 )
 
 eagine_add_module(

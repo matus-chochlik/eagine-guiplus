@@ -16,6 +16,7 @@ import eagine.core.runtime;
 import eagine.core.math;
 import eagine.core.c_api;
 import eagine.core.resource;
+import eagine.core.main_ctx;
 import :config;
 import :enum_types;
 import :api_traits;
@@ -604,9 +605,15 @@ public:
       const memory::const_block ttf,
       float size_pixels) const noexcept -> imgui_font;
 
-    auto add_font_from_resource_ttf(
+    auto add_font_from_resource(
       data_compressor&,
       memory::buffer& buf,
+      const std::string_view font_name,
+      const embedded_resource resource,
+      float size_pixels) const noexcept -> imgui_font;
+
+    auto add_font_from_resource(
+      main_ctx& ctx,
       const std::string_view font_name,
       const embedded_resource resource,
       float size_pixels) const noexcept -> imgui_font;
@@ -656,7 +663,7 @@ auto basic_imgui_api<ApiTraits>::add_font_from_memory_ttf(
 }
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
-auto basic_imgui_api<ApiTraits>::add_font_from_resource_ttf(
+auto basic_imgui_api<ApiTraits>::add_font_from_resource(
   data_compressor& compressor,
   memory::buffer& buffer,
   const std::string_view font_name,
@@ -667,6 +674,16 @@ auto basic_imgui_api<ApiTraits>::add_font_from_resource_ttf(
           font_name, resource.unpack(compressor, buffer), size_pixels);
     }
     return {};
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+auto basic_imgui_api<ApiTraits>::add_font_from_resource(
+  main_ctx& ctx,
+  const std::string_view font_name,
+  const embedded_resource resource,
+  float size_pixels) const noexcept -> imgui_font {
+    return add_font_from_resource(
+      ctx.compressor(), ctx.scratch_space(), font_name, resource, size_pixels);
 }
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
