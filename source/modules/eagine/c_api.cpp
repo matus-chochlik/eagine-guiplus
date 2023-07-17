@@ -24,9 +24,11 @@ import :result;
 
 #ifndef GUIPLUS_IMGUI_STATIC_FUNC
 #if EAGINE_HAS_IMGUI
+#define GUIPLUS_STATIC_FUNC(NAME) &NAME
 #define GUIPLUS_IMGUI_STATIC_FUNC(NAME) &ImGui::NAME
 #define GUIPLUS_IMGUI_STATIC_IMPL_FUNC(NAME) &ImGui_Impl##NAME
 #else
+#define GUIPLUS_STATIC_FUNC(NAME) nullptr
 #define GUIPLUS_IMGUI_STATIC_FUNC(NAME) nullptr
 #define GUIPLUS_IMGUI_STATIC_IMPL_FUNC(NAME) nullptr
 #endif
@@ -105,6 +107,22 @@ public:
       Function,
       imgui_types::has_api,
       bool(Function)>;
+
+    imgui_api_function<
+      void(
+        typename imgui_types::mem_alloc_func,
+        typename imgui_types::mem_free_func,
+        void*),
+      GUIPLUS_STATIC_FUNC(ImGui::SetAllocatorFunctions)>
+      SetAllocatorFunctions{"SetAllocatorFunctions", *this};
+
+    imgui_api_function<
+      void(
+        typename imgui_types::mem_alloc_func*,
+        typename imgui_types::mem_free_func*,
+        void**),
+      GUIPLUS_STATIC_FUNC(ImGui::GetAllocatorFunctions)>
+      GetAllocatorFunctions{"GetAllocatorFunctions", *this};
 
     /// @var OpenGL3_Init
     /// @imguifuncwrap{OpenGL3_Init}
