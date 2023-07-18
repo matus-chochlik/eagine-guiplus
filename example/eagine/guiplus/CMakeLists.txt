@@ -54,3 +54,12 @@ eagine_example_common(002_imgui_demo)
 eagine_example_common(003_imgui_time_progress)
 eagine_example_common(004_imgui_background)
 eagine_example_common(005_imgui_system_load)
+eagine_example_common(006_imgui_font_resource)
+
+eagine_embed_target_resources(
+	TARGET guiplus-006_imgui_font_resource
+	RESOURCES
+		Expectativ "${CMAKE_CURRENT_SOURCE_DIR}/expectative.ttf"
+	ENABLE_SEARCH
+)
+
