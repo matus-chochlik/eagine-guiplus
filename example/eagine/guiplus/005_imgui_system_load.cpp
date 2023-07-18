@@ -24,10 +24,8 @@ static void run_loop(
     glClearColor(0.3F, 0.3F, 0.9F, 0.0F);
     glClearDepth(1);
 
-    std::array<float, 32> short_loads{};
-    std::array<float, 32> long_loads{};
-    zero(eagine::cover(short_loads));
-    zero(eagine::cover(long_loads));
+    eagine::variable_with_history<float, 32> short_loads{0.F};
+    eagine::variable_with_history<float, 32> long_loads{0.F};
 
     const imgui_api gui;
 
@@ -39,10 +37,6 @@ static void run_loop(
             gui.opengl3_init("#version 150");
             const auto cleanup_opengl{gui.opengl3_shutdown.raii()};
 
-            const auto update{[](auto& vec, float val) {
-                std::rotate(vec.begin(), vec.begin() + 1U, vec.end());
-                vec.back() = val;
-            }};
             eagine::timeout should_update{std::chrono::seconds{1}};
             bool show_window = true;
             while(show_window) {
@@ -72,8 +66,8 @@ static void run_loop(
                 gui.new_frame();
 
                 if(should_update) {
-                    update(short_loads, sys.short_average_load().value_or(0.F));
-                    update(long_loads, sys.long_average_load().value_or(0.F));
+                    short_loads << sys.short_average_load().value_or(0.F);
+                    long_loads << sys.long_average_load().value_or(0.F);
                     should_update.reset();
                 }
 
@@ -81,13 +75,13 @@ static void run_loop(
                 if(gui.begin("system load", show_window).or_false()) {
                     gui.plot_histogram(
                       "short average",
-                      eagine::view(short_loads),
+                      short_loads.view_history(),
                       0.F,
                       2.F,
                       {0.F, 100.F});
                     gui.plot_histogram(
                       "long average",
-                      eagine::view(long_loads),
+                      long_loads.view_history(),
                       0.F,
                       2.F,
                       {0.F, 100.F});
