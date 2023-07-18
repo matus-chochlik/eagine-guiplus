@@ -592,6 +592,13 @@ public:
       GUIPLUS_IMGUI_STATIC_FUNC(TextUnformatted)>
       TextUnformatted{"TextUnformatted", *this};
 
+    /// @var SeparatorText
+    /// @imguifuncwrap{SeparatorText}
+    imgui_api_function<
+      void(const char*),
+      GUIPLUS_IMGUI_STATIC_FUNC(SeparatorText)>
+      SeparatorText{"SeparatorText", *this};
+
     /// @var Button
     /// @imguifuncwrap{Button}
     imgui_api_function<
@@ -617,6 +624,20 @@ public:
       bool(const char*, bool),
       GUIPLUS_IMGUI_STATIC_FUNC(RadioButton)>
       RadioButton{"RadioButton", *this};
+
+    /// @var DragFloat
+    /// @imguifuncwrap{DragFloat}
+    imgui_api_function<
+      bool(const char*, float*, float, float, float, const char*, slider_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(DragFloat)>
+      DragFloat{"DragFloat", *this};
+
+    /// @var DragInt
+    /// @imguifuncwrap{DragInt}
+    imgui_api_function<
+      bool(const char*, int*, float, int, int, const char*, slider_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(DragInt)>
+      DragInt{"DragInt", *this};
 
     /// @var SliderFloat
     /// @imguifuncwrap{SliderFloat}

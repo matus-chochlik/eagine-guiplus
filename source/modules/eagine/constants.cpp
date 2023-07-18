@@ -29,6 +29,18 @@ export template <>
 struct within_limits<guiplus::imgui_window_flag, guiplus::imgui_types::enum_type> {
     auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
 };
+
+export template <>
+struct within_limits<guiplus::imgui_slider_flag, guiplus::imgui_types::enum_type> {
+    auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
+};
+
+export template <>
+struct within_limits<
+  guiplus::imgui_viewport_flag,
+  guiplus::imgui_types::enum_type> {
+    auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
+};
 //------------------------------------------------------------------------------
 namespace guiplus {
 export auto imgui_enum_by_name(const string_view name) noexcept
@@ -387,6 +399,50 @@ public:
 #endif
       window_no_inputs;
 
+    /// @var slider_always_clamp
+    /// @imguiconstwrap{SliderFlags_AlwaysClamp}
+    opt_constant<
+      mp_list<imgui_slider_flag>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiSliderFlags_AlwaysClamp>>
+#else
+      enum_type_i>
+#endif
+      slider_always_clamp;
+
+    /// @var slider_logarithmic
+    /// @imguiconstwrap{SliderFlags_Logarithmic}
+    opt_constant<
+      mp_list<imgui_slider_flag>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiSliderFlags_Logarithmic>>
+#else
+      enum_type_i>
+#endif
+      slider_logarithmic;
+
+    /// @var slider_no_round_to_format
+    /// @imguiconstwrap{SliderFlags_NoRoundToFormat}
+    opt_constant<
+      mp_list<imgui_slider_flag>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiSliderFlags_NoRoundToFormat>>
+#else
+      enum_type_i>
+#endif
+      slider_no_round_to_format;
+
+    /// @var slider_no_input
+    /// @imguiconstwrap{SliderFlags_NoInput}
+    opt_constant<
+      mp_list<imgui_slider_flag>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiSliderFlags_NoInput>>
+#else
+      enum_type_i>
+#endif
+      slider_no_input;
+
     /// @var viewport_is_platform_window
     /// @imguiconstwrap{ViewportFlags_IsPlatformWindow}
     opt_constant<
@@ -456,6 +512,10 @@ basic_imgui_constants<ApiTraits>::basic_imgui_constants(
   , window_no_nav{"WindowFlags_NoNav", traits, api}
   , window_no_decoration{"WindowFlags_NoDecoration", traits, api}
   , window_no_inputs{"WindowFlags_NoInputs", traits, api}
+  , slider_always_clamp{"SliderFlags_AlwaysClamp", traits, api}
+  , slider_logarithmic{"SliderFlags_Logarithmic", traits, api}
+  , slider_no_round_to_format{"SliderFlags_NoRoundToFormat", traits, api}
+  , slider_no_input{"SliderFlags_NoInput", traits, api}
   , viewport_is_platform_window{"ViewportFlags_IsPlatformWindow", traits, api}
   , viewport_is_platform_monitor{"ViewportFlags_IsPlatformMonitor", traits, api}
   , viewport_owned_by_app{"ViewportFlags_OwnedByApp", traits, api} {}

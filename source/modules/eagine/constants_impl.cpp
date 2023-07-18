@@ -57,6 +57,37 @@ auto within_limits<guiplus::imgui_window_flag, guiplus::imgui_types::enum_type>:
     }
 }
 //------------------------------------------------------------------------------
+auto within_limits<guiplus::imgui_slider_flag, guiplus::imgui_types::enum_type>::
+  check(guiplus::imgui_types::enum_type x) const noexcept -> bool {
+    switch(x) {
+#if EAGINE_HAS_IMGUI
+        case ImGuiSliderFlags_AlwaysClamp:
+        case ImGuiSliderFlags_Logarithmic:
+        case ImGuiSliderFlags_NoRoundToFormat:
+        case ImGuiSliderFlags_NoInput:
+            return true;
+#endif
+        default:
+            return false;
+    }
+}
+//------------------------------------------------------------------------------
+auto within_limits<
+  guiplus::imgui_viewport_flag,
+  guiplus::imgui_types::enum_type>::check(guiplus::imgui_types::enum_type x)
+  const noexcept -> bool {
+    switch(x) {
+#if EAGINE_HAS_IMGUI
+        case ImGuiViewportFlags_IsPlatformWindow:
+        case ImGuiViewportFlags_IsPlatformMonitor:
+        case ImGuiViewportFlags_OwnedByApp:
+            return true;
+#endif
+        default:
+            return false;
+    }
+}
+//------------------------------------------------------------------------------
 namespace guiplus {
 //------------------------------------------------------------------------------
 auto map_imgui_enum_by_name() noexcept {
@@ -93,6 +124,13 @@ auto map_imgui_enum_by_name() noexcept {
       .add("window_no_nav", ImGuiWindowFlags_NoNav)
       .add("window_no_decoration", ImGuiWindowFlags_NoDecoration)
       .add("window_no_inputs", ImGuiWindowFlags_NoInputs)
+      .add("slider_always_clamp", ImGuiSliderFlags_AlwaysClamp)
+      .add("slider_logarithmic", ImGuiSliderFlags_Logarithmic)
+      .add("slider_no_round_to_format", ImGuiSliderFlags_NoRoundToFormat)
+      .add("slider_no_input", ImGuiSliderFlags_NoInput)
+      .add("viewport_is_platform_window", ImGuiViewportFlags_IsPlatformWindow)
+      .add("viewport_is_platform_monitor", ImGuiViewportFlags_IsPlatformMonitor)
+      .add("viewport_owned_by_app", ImGuiViewportFlags_OwnedByApp)
 #endif
       ;
 }

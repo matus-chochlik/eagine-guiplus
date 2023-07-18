@@ -317,6 +317,9 @@ public:
     simple_adapted_function<&imgui_api::TextUnformatted, void(string_view)>
       text_unformatted{*this};
 
+    simple_adapted_function<&imgui_api::SeparatorText, void(string_view)>
+      separator_text{*this};
+
     c_api::combined<
       simple_adapted_function<
         &imgui_api::Button,
@@ -339,6 +342,48 @@ public:
 
     simple_adapted_function<&imgui_api::RadioButton, bool(string_view, bool)>
       radio_button{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::DragFloat,
+        bool(
+          string_view,
+          optional_reference<float>,
+          float,
+          float,
+          string_view,
+          c_api::enum_bitfield<imgui_slider_flag>)>,
+      simple_adapted_function<
+        &imgui_api::DragFloat,
+        bool(
+          string_view,
+          optional_reference<float>,
+          float,
+          float,
+          c_api::defaulted,
+          c_api::defaulted)>>
+      drag_float{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::DragInt,
+        bool(
+          string_view,
+          optional_reference<int>,
+          int,
+          int,
+          string_view,
+          c_api::enum_bitfield<imgui_slider_flag>)>,
+      simple_adapted_function<
+        &imgui_api::DragInt,
+        bool(
+          string_view,
+          optional_reference<int>,
+          int,
+          int,
+          c_api::defaulted,
+          c_api::defaulted)>>
+      drag_int{*this};
 
     c_api::combined<
       simple_adapted_function<
