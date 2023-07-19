@@ -26,6 +26,11 @@ import :c_api;
 namespace eagine {
 //------------------------------------------------------------------------------
 export template <>
+struct within_limits<guiplus::imgui_cond, guiplus::imgui_types::enum_type> {
+    auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
+};
+
+export template <>
 struct within_limits<guiplus::imgui_window_flag, guiplus::imgui_types::enum_type> {
     auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
 };
@@ -145,6 +150,61 @@ public:
       enum_type_i>
 #endif
       config_nav_is_touch_screen;
+
+    /// @var cond_none
+    /// @imguiconstwrap{Cond_None}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_None>>
+#else
+      enum_type_i>
+#endif
+      cond_none;
+
+    /// @var cond_always
+    /// @imguiconstwrap{Cond_Always}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_Always>>
+#else
+      enum_type_i>
+#endif
+      cond_always;
+
+    /// @var cond_once
+    /// @imguiconstwrap{Cond_Once}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_Once>>
+#else
+      enum_type_i>
+#endif
+      cond_once;
+
+    /// @var cond_first_use_ever
+    /// @imguiconstwrap{Cond_FirstUseEver}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_FirstUseEver>>
+#else
+      enum_type_i>
+#endif
+      cond_first_use_ever;
+
+    /// @var cond_appearing
+    /// @imguiconstwrap{Cond_Appearing}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_Appearing>>
+#else
+      enum_type_i>
+#endif
+      cond_appearing;
 
     /// @var window_no_title_bar
     /// @imguiconstwrap{WindowFlags_NoTitleBar}
@@ -489,6 +549,11 @@ basic_imgui_constants<ApiTraits>::basic_imgui_constants(
   , config_no_mouse_cursor_change{"ConfigFlags_NoMouseCursorChange", traits, api}
   , config_nav_is_srgb{"ConfigFlags_IsSRGB", traits, api}
   , config_nav_is_touch_screen{"ConfigFlags_IsTouchScreen", traits, api}
+  , cond_none{"Cond_None", traits, api}
+  , cond_always{"Cond_Always", traits, api}
+  , cond_once{"Cond_Once", traits, api}
+  , cond_first_use_ever{"Cond_FirstUseEver", traits, api}
+  , cond_appearing{"Cond_Appearing", traits, api}
   , window_no_title_bar{"WindowFlags_NoTitleBar", traits, api}
   , window_no_resize{"WindowFlags_NoResize", traits, api}
   , window_no_move{"WindowFlags_NoMove", traits, api}

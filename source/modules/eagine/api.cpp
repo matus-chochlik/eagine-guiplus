@@ -239,10 +239,23 @@ public:
     simple_adapted_function<&imgui_api::GetWindowHeight, float()>
       get_window_height{*this};
 
-    simple_adapted_function<
-      &imgui_api::SetNextWindowSize,
-      void(const vec2_type&, c_api::defaulted)>
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::SetNextWindowSize,
+        void(const vec2_type&, c_api::defaulted)>,
+      simple_adapted_function<
+        &imgui_api::SetNextWindowSize,
+        void(const vec2_type&, c_api::enum_bitfield<imgui_cond>)>>
       set_next_window_size{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::SetNextWindowPos,
+        void(const vec2_type&, c_api::defaulted)>,
+      simple_adapted_function<
+        &imgui_api::SetNextWindowPos,
+        void(const vec2_type&, c_api::enum_bitfield<imgui_cond>, const vec2_type&)>>
+      set_next_window_pos{*this};
 
     simple_adapted_function<&imgui_api::PushFont, void(imgui_font)> push_font{
       *this};
@@ -584,6 +597,31 @@ public:
 
     basic_imgui_api()
       : basic_imgui_api{ApiTraits{}} {}
+
+    auto begin_overlay(string_view title, float x, float y) const noexcept {
+        bool always_open{true};
+        this->set_next_window_pos({x, y}, this->cond_always, {0.5F, 0.5F});
+        auto result{this->begin(
+          title,
+          {always_open},
+          this->window_no_decoration | this->window_always_auto_resize |
+            this->window_no_saved_settings |
+            this->window_no_focus_on_appearing | this->window_no_nav)};
+        if(result) {
+            this->text_unformatted(title);
+        }
+
+        return result;
+    }
+
+    auto text_overlay(string_view title, float x, float y) const noexcept
+      -> bool {
+        auto result{begin_overlay(title, x, y)};
+        if(result) {
+            this->end();
+        }
+        return result.or_false();
+    }
 
     template <typename... Args>
     auto format_append_into(
