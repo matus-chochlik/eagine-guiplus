@@ -241,6 +241,15 @@ public:
 
     c_api::combined<
       simple_adapted_function<
+        &imgui_api::SetNextWindowPos,
+        void(const vec2_type&, c_api::defaulted)>,
+      simple_adapted_function<
+        &imgui_api::SetNextWindowPos,
+        void(const vec2_type&, c_api::enum_bitfield<imgui_cond>, const vec2_type&)>>
+      set_next_window_pos{*this};
+
+    c_api::combined<
+      simple_adapted_function<
         &imgui_api::SetNextWindowSize,
         void(const vec2_type&, c_api::defaulted)>,
       simple_adapted_function<
@@ -248,14 +257,24 @@ public:
         void(const vec2_type&, c_api::enum_bitfield<imgui_cond>)>>
       set_next_window_size{*this};
 
-    c_api::combined<
-      simple_adapted_function<
-        &imgui_api::SetNextWindowPos,
-        void(const vec2_type&, c_api::defaulted)>,
-      simple_adapted_function<
-        &imgui_api::SetNextWindowPos,
-        void(const vec2_type&, c_api::enum_bitfield<imgui_cond>, const vec2_type&)>>
-      set_next_window_pos{*this};
+    simple_adapted_function<
+      &imgui_api::SetNextWindowContentSize,
+      void(const vec2_type&)>
+      set_next_window_content_size{*this};
+
+    simple_adapted_function<&imgui_api::SetNextWindowCollapsed, void(bool)>
+      set_next_window_collapsed{*this};
+
+    simple_adapted_function<&imgui_api::SetNextWindowFocus, void()>
+      set_next_window_focus{*this};
+
+    simple_adapted_function<
+      &imgui_api::SetNextWindowScroll,
+      void(const vec2_type&)>
+      set_next_window_scroll{*this};
+
+    simple_adapted_function<&imgui_api::SetNextWindowBgAlpha, void(float)>
+      set_next_window_bg_alpha{*this};
 
     simple_adapted_function<&imgui_api::PushFont, void(imgui_font)> push_font{
       *this};
@@ -600,6 +619,7 @@ public:
 
     auto begin_overlay(string_view title, float x, float y) const noexcept {
         bool always_open{true};
+        this->set_next_window_bg_alpha(0.42F);
         this->set_next_window_pos({x, y}, this->cond_always, {0.5F, 0.5F});
         auto result{this->begin(
           title,

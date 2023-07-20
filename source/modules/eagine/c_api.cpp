@@ -420,6 +420,13 @@ public:
       GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowScroll)>
       SetNextWindowScroll{"SetNextWindowScroll", *this};
 
+    /// @var SetNextWindowBgAlpha
+    /// @imguifuncwrap{SetNextWindowBgAlpha}
+    imgui_api_function<
+      void(float),
+      GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowBgAlpha)>
+      SetNextWindowBgAlpha{"SetNextWindowBgAlpha", *this};
+
     /// @var GetScrollMaxX
     /// @imguifuncwrap{GetScrollMaxX}
     imgui_api_function<float(), GUIPLUS_IMGUI_STATIC_FUNC(GetScrollMaxX)>
