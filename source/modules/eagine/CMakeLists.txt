@@ -106,6 +106,7 @@ eagine_add_module(
 	IMPORTS
 		eagine.core.types
 		eagine.core.memory
+		eagine.core.math
 		eagine.core.container
 		eagine.core.valid_if
 		eagine.core.resource

@@ -606,7 +606,8 @@ public:
           {always_open},
           this->window_no_decoration | this->window_always_auto_resize |
             this->window_no_saved_settings |
-            this->window_no_focus_on_appearing | this->window_no_nav)};
+            this->window_no_focus_on_appearing | this->window_no_nav |
+            this->window_no_move)};
         if(result) {
             this->text_unformatted(title);
         }
