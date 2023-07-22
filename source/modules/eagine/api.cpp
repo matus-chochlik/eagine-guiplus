@@ -84,6 +84,7 @@ public:
     using imgui_api = basic_imgui_c_api<ApiTraits>;
 
     using vec2_type = typename imgui_types::vec2_type;
+    using vec4_type = typename imgui_types::vec4_type;
     using glfw_window_type = typename imgui_types::glfw_window_type;
     using context_type = typename imgui_types::context_type;
     using font_atlas_type = typename imgui_types::font_atlas_type;
@@ -346,8 +347,26 @@ public:
           c_api::defaulted)>>
       progress_bar{*this};
 
+    simple_adapted_function<&imgui_api::Text, void(string_view, c_api::ellipsis)>
+      text{*this};
+
+    simple_adapted_function<
+      &imgui_api::TextColored,
+      void(const vec4_type&, string_view, c_api::ellipsis)>
+      text_colored{*this};
+
+    simple_adapted_function<
+      &imgui_api::TextWrapped,
+      void(string_view, c_api::ellipsis)>
+      text_wrapped{*this};
+
     simple_adapted_function<&imgui_api::TextUnformatted, void(string_view)>
       text_unformatted{*this};
+
+    simple_adapted_function<
+      &imgui_api::BulletText,
+      void(string_view, c_api::ellipsis)>
+      bullet_text{*this};
 
     simple_adapted_function<&imgui_api::SeparatorText, void(string_view)>
       separator_text{*this};

@@ -616,7 +616,7 @@ public:
     /// @var LabelText
     /// @imguifuncwrap{LabelText}
     imgui_api_function<
-      void(const char*, ...),
+      void(const char*, const char*, ...),
       GUIPLUS_IMGUI_STATIC_FUNC(LabelText)>
       LabelText{"LabelText", *this};
 
