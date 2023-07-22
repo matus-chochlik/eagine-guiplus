@@ -51,6 +51,8 @@ public:
 
     /// @brief The GUI 2d vector type.
     using vec2_type = typename imgui_types::vec2_type;
+    /// @brief The GUI 4d vector type.
+    using vec4_type = typename imgui_types::vec4_type;
     /// @brief The GLFW window handle type.
     using glfw_window_type = typename imgui_types::glfw_window_type;
     /// @brief The GUI context type.
@@ -591,6 +593,39 @@ public:
       void(float, const vec2_type&, const char*),
       GUIPLUS_IMGUI_STATIC_FUNC(ProgressBar)>
       ProgressBar{"ProgressBar", *this};
+
+    /// @var Text
+    /// @imguifuncwrap{Text}
+    imgui_api_function<void(const char*, ...), GUIPLUS_IMGUI_STATIC_FUNC(Text)>
+      Text{"Text", *this};
+
+    /// @var TextColored
+    /// @imguifuncwrap{TextColored}
+    imgui_api_function<
+      void(const vec4_type&, const char*, ...),
+      GUIPLUS_IMGUI_STATIC_FUNC(TextColored)>
+      TextColored{"TextColored", *this};
+
+    /// @var TextWrapped
+    /// @imguifuncwrap{TextWrapped}
+    imgui_api_function<
+      void(const char*, ...),
+      GUIPLUS_IMGUI_STATIC_FUNC(TextWrapped)>
+      TextWrapped{"TextWrapped", *this};
+
+    /// @var LabelText
+    /// @imguifuncwrap{LabelText}
+    imgui_api_function<
+      void(const char*, ...),
+      GUIPLUS_IMGUI_STATIC_FUNC(LabelText)>
+      LabelText{"LabelText", *this};
+
+    /// @var BulletText
+    /// @imguifuncwrap{BulletText}
+    imgui_api_function<
+      void(const char*, ...),
+      GUIPLUS_IMGUI_STATIC_FUNC(BulletText)>
+      BulletText{"BulletText", *this};
 
     /// @var TextUnformatted
     /// @imguifuncwrap{TextUnformatted}

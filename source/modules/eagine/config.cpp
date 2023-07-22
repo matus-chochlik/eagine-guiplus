@@ -26,6 +26,7 @@ export struct imgui_types {
     static constexpr bool has_api = true;
 
     using vec2_type = ImVec2;
+    using vec4_type = ImVec4;
     using glfw_window_type = GLFWwindow;
     using context_type = ImGuiContext;
     using font_type = ImFont;
@@ -51,6 +52,10 @@ export struct imgui_types {
     struct vec2_type {
         constexpr vec2_type() noexcept = default;
         constexpr vec2_type(float, float) noexcept = default;
+    };
+    struct vec4_type {
+        constexpr vec4_type() noexcept = default;
+        constexpr vec4_type(float, float, float, float) noexcept = default;
     };
     using glfw_window_type = nothing_t;
     using context_type = nothing_t;
