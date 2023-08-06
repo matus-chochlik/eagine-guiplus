@@ -30,6 +30,7 @@ function(eagine_example_common EXAMPLE_NAME)
 	eagine_add_exe_analysis(guiplus-${EXAMPLE_NAME})
 	eagine_target_modules(
 		guiplus-${EXAMPLE_NAME}
+		std
 		eagine.core
 		eagine.guiplus
 	)

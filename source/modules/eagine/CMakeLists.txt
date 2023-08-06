@@ -6,6 +6,7 @@
 eagine_add_module(
 	eagine.guiplus PARTITION config
 	IMPORTS
+		std
 		eagine.core.types
 		eagine.core.math
 	PRIVATE_INCLUDE_DIRECTORIES
@@ -15,7 +16,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus PARTITION enum_types
 	IMPORTS
-		config
+		std config
 		eagine.core.types
 		eagine.core.identifier
 		eagine.core.c_api
@@ -24,7 +25,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus PARTITION objects
 	IMPORTS
-		config
+		std config
 		eagine.core.types
 		eagine.core.identifier
 		eagine.core.c_api
@@ -35,6 +36,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus PARTITION result
 	IMPORTS
+		std
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.c_api
@@ -43,7 +45,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus PARTITION api_traits
 	IMPORTS
-		result
+		std result
 		eagine.core.memory
 		eagine.core.c_api
 )
@@ -51,7 +53,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus PARTITION c_api
 	IMPORTS
-		config result
+		std config result
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.c_api
@@ -62,7 +64,8 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus PARTITION constants
 	IMPORTS
-		config enum_types c_api
+		std config
+		enum_types c_api
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.valid_if
@@ -74,7 +77,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus PARTITION from_string
 	IMPORTS
-		enum_types constants
+		std enum_types constants
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.string
@@ -84,7 +87,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.guiplus PARTITION api
 	IMPORTS
-		config enum_types
+		std config enum_types
 		api_traits result
 		c_api objects constants
 		eagine.core.types
@@ -104,6 +107,7 @@ eagine_add_module(
 		constants
 		c_api
 	IMPORTS
+		std
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.math
