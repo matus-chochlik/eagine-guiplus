@@ -275,6 +275,23 @@ public:
       GUIPLUS_IMGUI_STATIC_FUNC(StyleColorsClassic)>
       StyleColorsClassic{"StyleColorsClassic", *this};
 
+    /// @var PushIDString
+    /// @imguifuncwrap{PushID}
+    imgui_api_function<void(const char*), GUIPLUS_IMGUI_STATIC_FUNC(PushID)>
+      PushIDString{"PushID", *this};
+
+    /// @var PushID
+    /// @imguifuncwrap{PushID}
+    imgui_api_function<void(int), GUIPLUS_IMGUI_STATIC_FUNC(PushID)> PushID{
+      "PushID",
+      *this};
+
+    /// @var PopID
+    /// @imguifuncwrap{PopID}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(PopID)> PopID{
+      "PopID",
+      *this};
+
     /// @var Begin
     /// @imguifuncwrap{Begin}
     imgui_api_function<

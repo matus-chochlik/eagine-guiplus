@@ -185,6 +185,13 @@ public:
       style_colors_classic{*this};
 
     c_api::combined<
+      simple_adapted_function<&imgui_api::PushIDString, void(string_view)>,
+      simple_adapted_function<&imgui_api::PushID, void(int)>>
+      push_id{*this};
+
+    simple_adapted_function<&imgui_api::PopID, void()> pop_id{*this};
+
+    c_api::combined<
       simple_adapted_function<
         &imgui_api::Begin,
         bool(
