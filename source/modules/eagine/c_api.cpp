@@ -737,6 +737,18 @@ public:
       "EndCombo",
       *this};
 
+    /// @var GetClipboardText
+    /// @imguifuncwrap{GetClipboardText}
+    imgui_api_function<const char*(), GUIPLUS_IMGUI_STATIC_FUNC(GetClipboardText)>
+      GetClipboardText{"GetClipboardText", *this};
+
+    /// @var SetClipboardText
+    /// @imguifuncwrap{SetClipboardText}
+    imgui_api_function<
+      void(const char*),
+      GUIPLUS_IMGUI_STATIC_FUNC(SetClipboardText)>
+      SetClipboardText{"SetClipboardText", *this};
+
     /// @var PlotHistogram
     /// @imguifuncwrap{PlotHistogram}
     imgui_api_function<

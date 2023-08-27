@@ -586,6 +586,12 @@ public:
 
     simple_adapted_function<&imgui_api::EndCombo, void()> end_combo{*this};
 
+    simple_adapted_function<&imgui_api::GetClipboardText, string_view()>
+      get_clipboard_text{*this};
+
+    simple_adapted_function<&imgui_api::SetClipboardText, void(string_view)>
+      set_clipboard_text{*this};
+
     c_api::combined<
       simple_adapted_function<&imgui_api::DestroyContext, void(imgui_context)>,
       simple_adapted_function<&imgui_api::DestroyContext, void(c_api::defaulted)>>
