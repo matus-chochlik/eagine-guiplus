@@ -90,6 +90,7 @@ public:
     using font_atlas_type = typename imgui_types::font_atlas_type;
     using selectable_flags_type = typename imgui_types::selectable_flags_type;
     using combo_flags_type = typename imgui_types::combo_flags_type;
+    using color_edit_flags_type = typename imgui_types::color_edit_flags_type;
 
     basic_imgui_operations(api_traits& traits)
       : imgui_api{traits} {}
@@ -539,6 +540,42 @@ public:
           c_api::defaulted_arg_map<combo_flags_type, 3>>>>
       begin_combo{*this};
 
+    simple_adapted_function<&imgui_api::EndCombo, void()> end_combo{*this};
+
+    c_api::combined<
+      adapted_function<
+        &imgui_api::ColorEdit3,
+        bool(string_view, float[3], c_api::enum_bitfield<imgui_color_edit_flag>),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0, 2>,
+          c_api::get_data_map<1, 1>,
+          c_api::convert<color_edit_flags_type, c_api::trivial_arg_map<3>>>>,
+      adapted_function<
+        &imgui_api::ColorEdit3,
+        bool(string_view, float[3]),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0, 2>,
+          c_api::get_data_map<1, 1>,
+          c_api::defaulted_arg_map<color_edit_flags_type, 3>>>>
+      color_edit_3{*this};
+
+    c_api::combined<
+      adapted_function<
+        &imgui_api::ColorEdit4,
+        bool(string_view, float[4], c_api::enum_bitfield<imgui_color_edit_flag>),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0, 2>,
+          c_api::get_data_map<1, 1>,
+          c_api::convert<color_edit_flags_type, c_api::trivial_arg_map<3>>>>,
+      adapted_function<
+        &imgui_api::ColorEdit4,
+        bool(string_view, float[4]),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0, 2>,
+          c_api::get_data_map<1, 1>,
+          c_api::defaulted_arg_map<color_edit_flags_type, 3>>>>
+      color_edit_4{*this};
+
     c_api::combined<
       adapted_function<
         &imgui_api::PlotHistogram,
@@ -583,8 +620,6 @@ public:
           c_api::defaulted_arg_map<vec2_type, 8>,
           c_api::substituted_arg_map<sizeof(float), 9>>>>
       plot_histogram{*this};
-
-    simple_adapted_function<&imgui_api::EndCombo, void()> end_combo{*this};
 
     simple_adapted_function<&imgui_api::GetClipboardText, string_view()>
       get_clipboard_text{*this};
@@ -755,6 +790,14 @@ public:
       float size_pixels) const noexcept -> imgui_font;
 
     void help_marker(const string_view text) const noexcept;
+
+    template <bool V>
+    auto color_edit(const string_view label, math::vector<float, 3, V>&)
+      const noexcept -> bool;
+
+    template <bool V>
+    auto color_edit(const string_view label, math::vector<float, 4, V>&)
+      const noexcept -> bool;
 };
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
@@ -832,6 +875,32 @@ void basic_imgui_api<ApiTraits>::help_marker(
         this->pop_text_wrap_pos();
         this->end_tooltip();
     }
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+template <bool V>
+auto basic_imgui_api<ApiTraits>::color_edit(
+  const string_view label,
+  math::vector<float, 3, V>& color) const noexcept -> bool {
+    float temp[3]{color.x(), color.y(), color.z()};
+    if(this->color_edit_3(label, temp).or_false()) {
+        color = {temp[0], temp[1], temp[2]};
+        return true;
+    }
+    return false;
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+template <bool V>
+auto basic_imgui_api<ApiTraits>::color_edit(
+  const string_view label,
+  math::vector<float, 4, V>& color) const noexcept -> bool {
+    float temp[4]{color.x(), color.y(), color.z(), color.w()};
+    if(this->color_edit_4(label, temp).or_false()) {
+        color = {temp[0], temp[1], temp[2], temp[3]};
+        return true;
+    }
+    return false;
 }
 //------------------------------------------------------------------------------
 // tuple get

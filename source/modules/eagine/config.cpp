@@ -44,6 +44,7 @@ export struct imgui_types {
     using selectable_flags_type = ImGuiSelectableFlags;
     using slider_flags_type = ImGuiSliderFlags;
     using combo_flags_type = ImGuiComboFlags;
+    using color_edit_flags_type = ImGuiColorEditFlags;
     using mem_alloc_func = ImGuiMemAllocFunc;
     using mem_free_func = ImGuiMemFreeFunc;
 #else
@@ -74,6 +75,7 @@ export struct imgui_types {
     using selectable_flags_type = int;
     using slider_flags_type = int;
     using combo_flags_type = int;
+    using color_edit_flags_type = int;
     using mem_alloc_func = void* (*)(std::size_t sz, void*);
     using mem_free_func = void (*)(std::size_t sz, void*);
 #endif

@@ -81,6 +81,8 @@ public:
     using slider_flags_type = typename imgui_types::slider_flags_type;
     /// @brief The combo item flags type.
     using combo_flags_type = typename imgui_types::combo_flags_type;
+    /// @brief The color edit/picker item flags type.
+    using color_edit_flags_type = typename imgui_types::color_edit_flags_type;
 
     /// @brief Alias for the API traits policy type passed as template argument.
     using api_traits = ApiTraits;
@@ -736,6 +738,34 @@ public:
     imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndCombo)> EndCombo{
       "EndCombo",
       *this};
+
+    /// @var ColorEdit3
+    /// @imguifuncwrap{ColorEdit3}
+    imgui_api_function<
+      bool(const char*, float[3], color_edit_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(ColorEdit3)>
+      ColorEdit3{"ColorEdit3", *this};
+
+    /// @var ColorEdit4
+    /// @imguifuncwrap{ColorEdit4}
+    imgui_api_function<
+      bool(const char*, float[4], color_edit_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(ColorEdit4)>
+      ColorEdit4{"ColorEdit4", *this};
+
+    /// @var ColorPicker3
+    /// @imguifuncwrap{ColorPicker3}
+    imgui_api_function<
+      bool(const char*, float[3], color_edit_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(ColorPicker3)>
+      ColorPicker3{"ColorPicker3", *this};
+
+    /// @var ColorPicker4
+    /// @imguifuncwrap{ColorPicker4}
+    imgui_api_function<
+      bool(const char*, float[4], color_edit_flags_type, const float*),
+      GUIPLUS_IMGUI_STATIC_FUNC(ColorPicker4)>
+      ColorPicker4{"ColorPicker4", *this};
 
     /// @var GetClipboardText
     /// @imguifuncwrap{GetClipboardText}

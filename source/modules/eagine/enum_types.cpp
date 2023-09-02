@@ -65,13 +65,6 @@ export struct imgui_selectable_flag
     using enum_class::enum_class;
 };
 
-/// @brief Typed enumeration for ImGui combo flags constants.
-/// @ingroup imgui_api_wrap
-export struct imgui_combo_flag
-  : imgui_int_class<imgui_combo_flag, "ComboFlag"> {
-    using enum_class::enum_class;
-};
-
 /// @brief Typed enumeration for ImGui viewport flags constants.
 /// @ingroup imgui_api_wrap
 export struct imgui_viewport_flag
@@ -83,6 +76,20 @@ export struct imgui_viewport_flag
 /// @ingroup imgui_api_wrap
 export struct imgui_slider_flag
   : imgui_int_class<imgui_slider_flag, "SliderFlag"> {
+    using enum_class::enum_class;
+};
+
+/// @brief Typed enumeration for ImGui combo flags constants.
+/// @ingroup imgui_api_wrap
+export struct imgui_combo_flag
+  : imgui_int_class<imgui_combo_flag, "ComboFlag"> {
+    using enum_class::enum_class;
+};
+
+/// @brief Typed enumeration for ImGui color_edit flags constants.
+/// @ingroup imgui_api_wrap
+export struct imgui_color_edit_flag
+  : imgui_int_class<imgui_color_edit_flag, "ClrEdtFlag"> {
     using enum_class::enum_class;
 };
 
