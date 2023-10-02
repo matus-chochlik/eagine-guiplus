@@ -51,6 +51,8 @@ public:
 
     /// @brief The GUI 2d vector type.
     using vec2_type = typename imgui_types::vec2_type;
+    /// @brief The GUI 4d vector type.
+    using vec4_type = typename imgui_types::vec4_type;
     /// @brief The GLFW window handle type.
     using glfw_window_type = typename imgui_types::glfw_window_type;
     /// @brief The GUI context type.
@@ -79,6 +81,8 @@ public:
     using slider_flags_type = typename imgui_types::slider_flags_type;
     /// @brief The combo item flags type.
     using combo_flags_type = typename imgui_types::combo_flags_type;
+    /// @brief The color edit/picker item flags type.
+    using color_edit_flags_type = typename imgui_types::color_edit_flags_type;
 
     /// @brief Alias for the API traits policy type passed as template argument.
     using api_traits = ApiTraits;
@@ -273,6 +277,23 @@ public:
       GUIPLUS_IMGUI_STATIC_FUNC(StyleColorsClassic)>
       StyleColorsClassic{"StyleColorsClassic", *this};
 
+    /// @var PushIDString
+    /// @imguifuncwrap{PushID}
+    imgui_api_function<void(const char*), GUIPLUS_IMGUI_STATIC_FUNC(PushID)>
+      PushIDString{"PushID", *this};
+
+    /// @var PushID
+    /// @imguifuncwrap{PushID}
+    imgui_api_function<void(int), GUIPLUS_IMGUI_STATIC_FUNC(PushID)> PushID{
+      "PushID",
+      *this};
+
+    /// @var PopID
+    /// @imguifuncwrap{PopID}
+    imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(PopID)> PopID{
+      "PopID",
+      *this};
+
     /// @var Begin
     /// @imguifuncwrap{Begin}
     imgui_api_function<
@@ -419,6 +440,13 @@ public:
       void(const ImVec2&),
       GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowScroll)>
       SetNextWindowScroll{"SetNextWindowScroll", *this};
+
+    /// @var SetNextWindowBgAlpha
+    /// @imguifuncwrap{SetNextWindowBgAlpha}
+    imgui_api_function<
+      void(float),
+      GUIPLUS_IMGUI_STATIC_FUNC(SetNextWindowBgAlpha)>
+      SetNextWindowBgAlpha{"SetNextWindowBgAlpha", *this};
 
     /// @var GetScrollMaxX
     /// @imguifuncwrap{GetScrollMaxX}
@@ -585,12 +613,52 @@ public:
       GUIPLUS_IMGUI_STATIC_FUNC(ProgressBar)>
       ProgressBar{"ProgressBar", *this};
 
+    /// @var Text
+    /// @imguifuncwrap{Text}
+    imgui_api_function<void(const char*, ...), GUIPLUS_IMGUI_STATIC_FUNC(Text)>
+      Text{"Text", *this};
+
+    /// @var TextColored
+    /// @imguifuncwrap{TextColored}
+    imgui_api_function<
+      void(const vec4_type&, const char*, ...),
+      GUIPLUS_IMGUI_STATIC_FUNC(TextColored)>
+      TextColored{"TextColored", *this};
+
+    /// @var TextWrapped
+    /// @imguifuncwrap{TextWrapped}
+    imgui_api_function<
+      void(const char*, ...),
+      GUIPLUS_IMGUI_STATIC_FUNC(TextWrapped)>
+      TextWrapped{"TextWrapped", *this};
+
+    /// @var LabelText
+    /// @imguifuncwrap{LabelText}
+    imgui_api_function<
+      void(const char*, const char*, ...),
+      GUIPLUS_IMGUI_STATIC_FUNC(LabelText)>
+      LabelText{"LabelText", *this};
+
+    /// @var BulletText
+    /// @imguifuncwrap{BulletText}
+    imgui_api_function<
+      void(const char*, ...),
+      GUIPLUS_IMGUI_STATIC_FUNC(BulletText)>
+      BulletText{"BulletText", *this};
+
     /// @var TextUnformatted
     /// @imguifuncwrap{TextUnformatted}
     imgui_api_function<
       void(const char*, const char*),
       GUIPLUS_IMGUI_STATIC_FUNC(TextUnformatted)>
       TextUnformatted{"TextUnformatted", *this};
+
+    /// @var SeparatorText
+    /// @imguifuncwrap{SeparatorText}
+    imgui_api_function<
+      void(const char*),
+      GUIPLUS_IMGUI_STATIC_FUNC(SeparatorText)>
+      SeparatorText{"SeparatorText", *this};
 
     /// @var Button
     /// @imguifuncwrap{Button}
@@ -617,6 +685,20 @@ public:
       bool(const char*, bool),
       GUIPLUS_IMGUI_STATIC_FUNC(RadioButton)>
       RadioButton{"RadioButton", *this};
+
+    /// @var DragFloat
+    /// @imguifuncwrap{DragFloat}
+    imgui_api_function<
+      bool(const char*, float*, float, float, float, const char*, slider_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(DragFloat)>
+      DragFloat{"DragFloat", *this};
+
+    /// @var DragInt
+    /// @imguifuncwrap{DragInt}
+    imgui_api_function<
+      bool(const char*, int*, float, int, int, const char*, slider_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(DragInt)>
+      DragInt{"DragInt", *this};
 
     /// @var SliderFloat
     /// @imguifuncwrap{SliderFloat}
@@ -656,6 +738,46 @@ public:
     imgui_api_function<void(), GUIPLUS_IMGUI_STATIC_FUNC(EndCombo)> EndCombo{
       "EndCombo",
       *this};
+
+    /// @var ColorEdit3
+    /// @imguifuncwrap{ColorEdit3}
+    imgui_api_function<
+      bool(const char*, float[3], color_edit_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(ColorEdit3)>
+      ColorEdit3{"ColorEdit3", *this};
+
+    /// @var ColorEdit4
+    /// @imguifuncwrap{ColorEdit4}
+    imgui_api_function<
+      bool(const char*, float[4], color_edit_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(ColorEdit4)>
+      ColorEdit4{"ColorEdit4", *this};
+
+    /// @var ColorPicker3
+    /// @imguifuncwrap{ColorPicker3}
+    imgui_api_function<
+      bool(const char*, float[3], color_edit_flags_type),
+      GUIPLUS_IMGUI_STATIC_FUNC(ColorPicker3)>
+      ColorPicker3{"ColorPicker3", *this};
+
+    /// @var ColorPicker4
+    /// @imguifuncwrap{ColorPicker4}
+    imgui_api_function<
+      bool(const char*, float[4], color_edit_flags_type, const float*),
+      GUIPLUS_IMGUI_STATIC_FUNC(ColorPicker4)>
+      ColorPicker4{"ColorPicker4", *this};
+
+    /// @var GetClipboardText
+    /// @imguifuncwrap{GetClipboardText}
+    imgui_api_function<const char*(), GUIPLUS_IMGUI_STATIC_FUNC(GetClipboardText)>
+      GetClipboardText{"GetClipboardText", *this};
+
+    /// @var SetClipboardText
+    /// @imguifuncwrap{SetClipboardText}
+    imgui_api_function<
+      void(const char*),
+      GUIPLUS_IMGUI_STATIC_FUNC(SetClipboardText)>
+      SetClipboardText{"SetClipboardText", *this};
 
     /// @var PlotHistogram
     /// @imguifuncwrap{PlotHistogram}

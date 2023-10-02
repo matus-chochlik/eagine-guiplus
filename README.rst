@@ -46,3 +46,5 @@ The applications using Qt5 are distributed under
 the GNU GENERAL PUBLIC LICENSE version 3.
 See http://www.gnu.org/licenses/gpl-3.0.txt
 
+The "Expectative" true-type font (used by some examples) is downloaded from
+https://www.fontspace.com/expectative-font-f30823 and licensed as "public domain".

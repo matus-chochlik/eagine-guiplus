@@ -23,6 +23,22 @@ import eagine.core.valid_if;
 
 namespace eagine {
 //------------------------------------------------------------------------------
+auto within_limits<guiplus::imgui_cond, guiplus::imgui_types::enum_type>::check(
+  guiplus::imgui_types::enum_type x) const noexcept -> bool {
+    switch(x) {
+#if EAGINE_HAS_IMGUI
+        case ImGuiCond_None:
+        case ImGuiCond_Always:
+        case ImGuiCond_Once:
+        case ImGuiCond_FirstUseEver:
+        case ImGuiCond_Appearing:
+            return true;
+#endif
+        default:
+            return false;
+    }
+}
+//------------------------------------------------------------------------------
 auto within_limits<guiplus::imgui_window_flag, guiplus::imgui_types::enum_type>::
   check(guiplus::imgui_types::enum_type x) const noexcept -> bool {
     switch(x) {
@@ -57,11 +73,47 @@ auto within_limits<guiplus::imgui_window_flag, guiplus::imgui_types::enum_type>:
     }
 }
 //------------------------------------------------------------------------------
+auto within_limits<guiplus::imgui_slider_flag, guiplus::imgui_types::enum_type>::
+  check(guiplus::imgui_types::enum_type x) const noexcept -> bool {
+    switch(x) {
+#if EAGINE_HAS_IMGUI
+        case ImGuiSliderFlags_AlwaysClamp:
+        case ImGuiSliderFlags_Logarithmic:
+        case ImGuiSliderFlags_NoRoundToFormat:
+        case ImGuiSliderFlags_NoInput:
+            return true;
+#endif
+        default:
+            return false;
+    }
+}
+//------------------------------------------------------------------------------
+auto within_limits<
+  guiplus::imgui_viewport_flag,
+  guiplus::imgui_types::enum_type>::check(guiplus::imgui_types::enum_type x)
+  const noexcept -> bool {
+    switch(x) {
+#if EAGINE_HAS_IMGUI
+        case ImGuiViewportFlags_IsPlatformWindow:
+        case ImGuiViewportFlags_IsPlatformMonitor:
+        case ImGuiViewportFlags_OwnedByApp:
+            return true;
+#endif
+        default:
+            return false;
+    }
+}
+//------------------------------------------------------------------------------
 namespace guiplus {
 //------------------------------------------------------------------------------
 auto map_imgui_enum_by_name() noexcept {
     return basic_lc_identifier_trie<imgui_types::enum_type>()
 #if EAGINE_HAS_IMGUI
+      .add("cond_none", ImGuiCond_None)
+      .add("cond_always", ImGuiCond_Always)
+      .add("cond_once", ImGuiCond_Once)
+      .add("cond_first_use_ever", ImGuiCond_FirstUseEver)
+      .add("cond_appearing", ImGuiCond_Appearing)
       .add("window_no_title_bar", ImGuiWindowFlags_NoTitleBar)
       .add("window_no_resize", ImGuiWindowFlags_NoResize)
       .add("window_no_move", ImGuiWindowFlags_NoMove)
@@ -93,6 +145,13 @@ auto map_imgui_enum_by_name() noexcept {
       .add("window_no_nav", ImGuiWindowFlags_NoNav)
       .add("window_no_decoration", ImGuiWindowFlags_NoDecoration)
       .add("window_no_inputs", ImGuiWindowFlags_NoInputs)
+      .add("slider_always_clamp", ImGuiSliderFlags_AlwaysClamp)
+      .add("slider_logarithmic", ImGuiSliderFlags_Logarithmic)
+      .add("slider_no_round_to_format", ImGuiSliderFlags_NoRoundToFormat)
+      .add("slider_no_input", ImGuiSliderFlags_NoInput)
+      .add("viewport_is_platform_window", ImGuiViewportFlags_IsPlatformWindow)
+      .add("viewport_is_platform_monitor", ImGuiViewportFlags_IsPlatformMonitor)
+      .add("viewport_owned_by_app", ImGuiViewportFlags_OwnedByApp)
 #endif
       ;
 }

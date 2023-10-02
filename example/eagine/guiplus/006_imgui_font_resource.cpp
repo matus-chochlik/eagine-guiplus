@@ -1,4 +1,4 @@
-/// @example guiplus/005_imgui_system_load.cpp
+/// @example guiplus/006_imgui_font_resource.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
@@ -16,7 +16,7 @@ static void run_loop(
   GLFWwindow* window,
   int width,
   int height,
-  eagine::system_info& sys) {
+  eagine::main_ctx& ctx) {
     using eagine::integer_range;
     using eagine::ok;
     using namespace eagine::guiplus;
@@ -24,10 +24,8 @@ static void run_loop(
     glClearColor(0.3F, 0.3F, 0.9F, 0.0F);
     glClearDepth(1);
 
-    eagine::variable_with_history<float, 32> short_loads{0.F};
-    eagine::variable_with_history<float, 32> long_loads{0.F};
-
-    const imgui_api gui;
+    gui_utils utils{ctx};
+    const auto& gui{utils.imgui};
 
     if(gui.create_context) {
         if(const ok context{gui.create_context()}) {
@@ -37,7 +35,12 @@ static void run_loop(
             gui.opengl3_init("#version 150");
             const auto cleanup_opengl{gui.opengl3_shutdown.raii()};
 
-            eagine::timeout should_update{std::chrono::seconds{1}};
+            const auto font{gui.add_font_from_resource(
+              ctx,
+              "Expectative",
+              eagine::embed<"Expectativ">("expectative.ttf"),
+              25)};
+
             bool show_window = true;
             while(show_window) {
                 glfwPollEvents();
@@ -64,29 +67,26 @@ static void run_loop(
                 gui.opengl3_new_frame();
                 gui.glfw_new_frame();
                 gui.new_frame();
+                gui.push_font(font);
+                gui.set_next_window_size({400, 240});
+                if(gui.begin("time progress", show_window).or_false()) {
+                    using namespace std::chrono;
+                    const auto now{system_clock::now()};
 
-                if(should_update) {
-                    short_loads << sys.short_average_load().value_or(0.F);
-                    long_loads << sys.long_average_load().value_or(0.F);
-                    should_update.reset();
-                }
+                    const duration<float> sec{now - floor<seconds>(now)};
+                    gui.progress_bar(sec / std::chrono::seconds{1}, "seconds");
 
-                gui.set_next_window_size({400, 250});
-                if(gui.begin("system load", show_window).or_false()) {
-                    gui.plot_histogram(
-                      "short average",
-                      short_loads.view_history(),
-                      0.F,
-                      2.F,
-                      {0.F, 100.F});
-                    gui.plot_histogram(
-                      "long average",
-                      long_loads.view_history(),
-                      0.F,
-                      2.F,
-                      {0.F, 100.F});
+                    gui.new_line();
+                    const duration<float> min{now - floor<minutes>(now)};
+                    gui.progress_bar(min / std::chrono::minutes{1}, "minutes");
+
+                    gui.new_line();
+                    const duration<float> hrs{now - floor<hours>(now)};
+                    gui.progress_bar(hrs / std::chrono::hours{1}, "hours");
+
                     gui.end();
                 }
+                gui.pop_font();
                 gui.end_frame();
                 gui.render();
                 if(const ok draw_data{gui.get_draw_data()}) {
@@ -101,7 +101,7 @@ static void run_loop(
     }
 }
 
-static void init_and_run(eagine::system_info& sys) {
+static void init_and_run(eagine::main_ctx& ctx) {
     if(not glfwInit()) {
         throw std::runtime_error("GLFW initialization error");
     } else {
@@ -124,7 +124,7 @@ static void init_and_run(eagine::system_info& sys) {
         if(auto window{glfwCreateWindow(
              width, height, "GUIplus ImGui example", nullptr, nullptr)}) {
             glfwMakeContextCurrent(window);
-            run_loop(window, width, height, sys);
+            run_loop(window, width, height, ctx);
         } else {
             throw std::runtime_error("Error creating GLFW window");
         }
@@ -134,7 +134,7 @@ static void init_and_run(eagine::system_info& sys) {
 namespace eagine {
 auto main(main_ctx& ctx) -> int {
     try {
-        init_and_run(ctx.system());
+        init_and_run(ctx);
         return 0;
     } catch(const std::runtime_error& sre) {
         std::cerr << "Runtime error: " << sre.what() << std::endl;
@@ -148,4 +148,3 @@ auto main(main_ctx& ctx) -> int {
 auto main(int argc, const char** argv) -> int {
     return eagine::default_main(argc, argv, eagine::main);
 }
-

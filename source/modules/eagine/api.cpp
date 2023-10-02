@@ -84,11 +84,13 @@ public:
     using imgui_api = basic_imgui_c_api<ApiTraits>;
 
     using vec2_type = typename imgui_types::vec2_type;
+    using vec4_type = typename imgui_types::vec4_type;
     using glfw_window_type = typename imgui_types::glfw_window_type;
     using context_type = typename imgui_types::context_type;
     using font_atlas_type = typename imgui_types::font_atlas_type;
     using selectable_flags_type = typename imgui_types::selectable_flags_type;
     using combo_flags_type = typename imgui_types::combo_flags_type;
+    using color_edit_flags_type = typename imgui_types::color_edit_flags_type;
 
     basic_imgui_operations(api_traits& traits)
       : imgui_api{traits} {}
@@ -184,6 +186,13 @@ public:
       style_colors_classic{*this};
 
     c_api::combined<
+      simple_adapted_function<&imgui_api::PushIDString, void(string_view)>,
+      simple_adapted_function<&imgui_api::PushID, void(int)>>
+      push_id{*this};
+
+    simple_adapted_function<&imgui_api::PopID, void()> pop_id{*this};
+
+    c_api::combined<
       simple_adapted_function<
         &imgui_api::Begin,
         bool(
@@ -239,10 +248,42 @@ public:
     simple_adapted_function<&imgui_api::GetWindowHeight, float()>
       get_window_height{*this};
 
-    simple_adapted_function<
-      &imgui_api::SetNextWindowSize,
-      void(const vec2_type&, c_api::defaulted)>
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::SetNextWindowPos,
+        void(const vec2_type&, c_api::defaulted)>,
+      simple_adapted_function<
+        &imgui_api::SetNextWindowPos,
+        void(const vec2_type&, c_api::enum_bitfield<imgui_cond>, const vec2_type&)>>
+      set_next_window_pos{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::SetNextWindowSize,
+        void(const vec2_type&, c_api::defaulted)>,
+      simple_adapted_function<
+        &imgui_api::SetNextWindowSize,
+        void(const vec2_type&, c_api::enum_bitfield<imgui_cond>)>>
       set_next_window_size{*this};
+
+    simple_adapted_function<
+      &imgui_api::SetNextWindowContentSize,
+      void(const vec2_type&)>
+      set_next_window_content_size{*this};
+
+    simple_adapted_function<&imgui_api::SetNextWindowCollapsed, void(bool)>
+      set_next_window_collapsed{*this};
+
+    simple_adapted_function<&imgui_api::SetNextWindowFocus, void()>
+      set_next_window_focus{*this};
+
+    simple_adapted_function<
+      &imgui_api::SetNextWindowScroll,
+      void(const vec2_type&)>
+      set_next_window_scroll{*this};
+
+    simple_adapted_function<&imgui_api::SetNextWindowBgAlpha, void(float)>
+      set_next_window_bg_alpha{*this};
 
     simple_adapted_function<&imgui_api::PushFont, void(imgui_font)> push_font{
       *this};
@@ -314,8 +355,29 @@ public:
           c_api::defaulted)>>
       progress_bar{*this};
 
+    simple_adapted_function<&imgui_api::Text, void(string_view, c_api::ellipsis)>
+      text{*this};
+
+    simple_adapted_function<
+      &imgui_api::TextColored,
+      void(const vec4_type&, string_view, c_api::ellipsis)>
+      text_colored{*this};
+
+    simple_adapted_function<
+      &imgui_api::TextWrapped,
+      void(string_view, c_api::ellipsis)>
+      text_wrapped{*this};
+
     simple_adapted_function<&imgui_api::TextUnformatted, void(string_view)>
       text_unformatted{*this};
+
+    simple_adapted_function<
+      &imgui_api::BulletText,
+      void(string_view, c_api::ellipsis)>
+      bullet_text{*this};
+
+    simple_adapted_function<&imgui_api::SeparatorText, void(string_view)>
+      separator_text{*this};
 
     c_api::combined<
       simple_adapted_function<
@@ -339,6 +401,48 @@ public:
 
     simple_adapted_function<&imgui_api::RadioButton, bool(string_view, bool)>
       radio_button{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::DragFloat,
+        bool(
+          string_view,
+          optional_reference<float>,
+          float,
+          float,
+          string_view,
+          c_api::enum_bitfield<imgui_slider_flag>)>,
+      simple_adapted_function<
+        &imgui_api::DragFloat,
+        bool(
+          string_view,
+          optional_reference<float>,
+          float,
+          float,
+          c_api::defaulted,
+          c_api::defaulted)>>
+      drag_float{*this};
+
+    c_api::combined<
+      simple_adapted_function<
+        &imgui_api::DragInt,
+        bool(
+          string_view,
+          optional_reference<int>,
+          int,
+          int,
+          string_view,
+          c_api::enum_bitfield<imgui_slider_flag>)>,
+      simple_adapted_function<
+        &imgui_api::DragInt,
+        bool(
+          string_view,
+          optional_reference<int>,
+          int,
+          int,
+          c_api::defaulted,
+          c_api::defaulted)>>
+      drag_int{*this};
 
     c_api::combined<
       simple_adapted_function<
@@ -436,6 +540,42 @@ public:
           c_api::defaulted_arg_map<combo_flags_type, 3>>>>
       begin_combo{*this};
 
+    simple_adapted_function<&imgui_api::EndCombo, void()> end_combo{*this};
+
+    c_api::combined<
+      adapted_function<
+        &imgui_api::ColorEdit3,
+        bool(string_view, float[3], c_api::enum_bitfield<imgui_color_edit_flag>),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0, 2>,
+          c_api::get_data_map<1, 1>,
+          c_api::convert<color_edit_flags_type, c_api::trivial_arg_map<3>>>>,
+      adapted_function<
+        &imgui_api::ColorEdit3,
+        bool(string_view, float[3]),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0, 2>,
+          c_api::get_data_map<1, 1>,
+          c_api::defaulted_arg_map<color_edit_flags_type, 3>>>>
+      color_edit_3{*this};
+
+    c_api::combined<
+      adapted_function<
+        &imgui_api::ColorEdit4,
+        bool(string_view, float[4], c_api::enum_bitfield<imgui_color_edit_flag>),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0, 2>,
+          c_api::get_data_map<1, 1>,
+          c_api::convert<color_edit_flags_type, c_api::trivial_arg_map<3>>>>,
+      adapted_function<
+        &imgui_api::ColorEdit4,
+        bool(string_view, float[4]),
+        c_api::combined_map<
+          c_api::trivial_arg_map<0, 2>,
+          c_api::get_data_map<1, 1>,
+          c_api::defaulted_arg_map<color_edit_flags_type, 3>>>>
+      color_edit_4{*this};
+
     c_api::combined<
       adapted_function<
         &imgui_api::PlotHistogram,
@@ -481,7 +621,11 @@ public:
           c_api::substituted_arg_map<sizeof(float), 9>>>>
       plot_histogram{*this};
 
-    simple_adapted_function<&imgui_api::EndCombo, void()> end_combo{*this};
+    simple_adapted_function<&imgui_api::GetClipboardText, string_view()>
+      get_clipboard_text{*this};
+
+    simple_adapted_function<&imgui_api::SetClipboardText, void(string_view)>
+      set_clipboard_text{*this};
 
     c_api::combined<
       simple_adapted_function<&imgui_api::DestroyContext, void(imgui_context)>,
@@ -539,6 +683,33 @@ public:
 
     basic_imgui_api()
       : basic_imgui_api{ApiTraits{}} {}
+
+    auto begin_overlay(string_view title, float x, float y) const noexcept {
+        bool always_open{true};
+        this->set_next_window_bg_alpha(0.42F);
+        this->set_next_window_pos({x, y}, this->cond_always, {0.5F, 0.5F});
+        auto result{this->begin(
+          title,
+          {always_open},
+          this->window_no_decoration | this->window_always_auto_resize |
+            this->window_no_saved_settings |
+            this->window_no_focus_on_appearing | this->window_no_nav |
+            this->window_no_move)};
+        if(result) {
+            this->text_unformatted(title);
+        }
+
+        return result;
+    }
+
+    auto text_overlay(string_view title, float x, float y) const noexcept
+      -> bool {
+        auto result{begin_overlay(title, x, y)};
+        if(result) {
+            this->end();
+        }
+        return result.or_false();
+    }
 
     template <typename... Args>
     auto format_append_into(
@@ -619,6 +790,14 @@ public:
       float size_pixels) const noexcept -> imgui_font;
 
     void help_marker(const string_view text) const noexcept;
+
+    template <bool V>
+    auto color_edit(const string_view label, math::vector<float, 3, V>&)
+      const noexcept -> bool;
+
+    template <bool V>
+    auto color_edit(const string_view label, math::vector<float, 4, V>&)
+      const noexcept -> bool;
 };
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
@@ -696,6 +875,32 @@ void basic_imgui_api<ApiTraits>::help_marker(
         this->pop_text_wrap_pos();
         this->end_tooltip();
     }
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+template <bool V>
+auto basic_imgui_api<ApiTraits>::color_edit(
+  const string_view label,
+  math::vector<float, 3, V>& color) const noexcept -> bool {
+    float temp[3]{color.x(), color.y(), color.z()};
+    if(this->color_edit_3(label, temp).or_false()) {
+        color = {temp[0], temp[1], temp[2]};
+        return true;
+    }
+    return false;
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+template <bool V>
+auto basic_imgui_api<ApiTraits>::color_edit(
+  const string_view label,
+  math::vector<float, 4, V>& color) const noexcept -> bool {
+    float temp[4]{color.x(), color.y(), color.z(), color.w()};
+    if(this->color_edit_4(label, temp).or_false()) {
+        color = {temp[0], temp[1], temp[2], temp[3]};
+        return true;
+    }
+    return false;
 }
 //------------------------------------------------------------------------------
 // tuple get

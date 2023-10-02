@@ -26,7 +26,24 @@ import :c_api;
 namespace eagine {
 //------------------------------------------------------------------------------
 export template <>
+struct within_limits<guiplus::imgui_cond, guiplus::imgui_types::enum_type> {
+    auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
+};
+
+export template <>
 struct within_limits<guiplus::imgui_window_flag, guiplus::imgui_types::enum_type> {
+    auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
+};
+
+export template <>
+struct within_limits<guiplus::imgui_slider_flag, guiplus::imgui_types::enum_type> {
+    auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
+};
+
+export template <>
+struct within_limits<
+  guiplus::imgui_viewport_flag,
+  guiplus::imgui_types::enum_type> {
     auto check(guiplus::imgui_types::enum_type) const noexcept -> bool;
 };
 //------------------------------------------------------------------------------
@@ -133,6 +150,61 @@ public:
       enum_type_i>
 #endif
       config_nav_is_touch_screen;
+
+    /// @var cond_none
+    /// @imguiconstwrap{Cond_None}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_None>>
+#else
+      enum_type_i>
+#endif
+      cond_none;
+
+    /// @var cond_always
+    /// @imguiconstwrap{Cond_Always}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_Always>>
+#else
+      enum_type_i>
+#endif
+      cond_always;
+
+    /// @var cond_once
+    /// @imguiconstwrap{Cond_Once}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_Once>>
+#else
+      enum_type_i>
+#endif
+      cond_once;
+
+    /// @var cond_first_use_ever
+    /// @imguiconstwrap{Cond_FirstUseEver}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_FirstUseEver>>
+#else
+      enum_type_i>
+#endif
+      cond_first_use_ever;
+
+    /// @var cond_appearing
+    /// @imguiconstwrap{Cond_Appearing}
+    opt_constant<
+      mp_list<imgui_cond>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiCond_Appearing>>
+#else
+      enum_type_i>
+#endif
+      cond_appearing;
 
     /// @var window_no_title_bar
     /// @imguiconstwrap{WindowFlags_NoTitleBar}
@@ -387,6 +459,50 @@ public:
 #endif
       window_no_inputs;
 
+    /// @var slider_always_clamp
+    /// @imguiconstwrap{SliderFlags_AlwaysClamp}
+    opt_constant<
+      mp_list<imgui_slider_flag>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiSliderFlags_AlwaysClamp>>
+#else
+      enum_type_i>
+#endif
+      slider_always_clamp;
+
+    /// @var slider_logarithmic
+    /// @imguiconstwrap{SliderFlags_Logarithmic}
+    opt_constant<
+      mp_list<imgui_slider_flag>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiSliderFlags_Logarithmic>>
+#else
+      enum_type_i>
+#endif
+      slider_logarithmic;
+
+    /// @var slider_no_round_to_format
+    /// @imguiconstwrap{SliderFlags_NoRoundToFormat}
+    opt_constant<
+      mp_list<imgui_slider_flag>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiSliderFlags_NoRoundToFormat>>
+#else
+      enum_type_i>
+#endif
+      slider_no_round_to_format;
+
+    /// @var slider_no_input
+    /// @imguiconstwrap{SliderFlags_NoInput}
+    opt_constant<
+      mp_list<imgui_slider_flag>,
+#if EAGINE_HAS_IMGUI
+      enum_type_c<ImGuiSliderFlags_NoInput>>
+#else
+      enum_type_i>
+#endif
+      slider_no_input;
+
     /// @var viewport_is_platform_window
     /// @imguiconstwrap{ViewportFlags_IsPlatformWindow}
     opt_constant<
@@ -433,6 +549,11 @@ basic_imgui_constants<ApiTraits>::basic_imgui_constants(
   , config_no_mouse_cursor_change{"ConfigFlags_NoMouseCursorChange", traits, api}
   , config_nav_is_srgb{"ConfigFlags_IsSRGB", traits, api}
   , config_nav_is_touch_screen{"ConfigFlags_IsTouchScreen", traits, api}
+  , cond_none{"Cond_None", traits, api}
+  , cond_always{"Cond_Always", traits, api}
+  , cond_once{"Cond_Once", traits, api}
+  , cond_first_use_ever{"Cond_FirstUseEver", traits, api}
+  , cond_appearing{"Cond_Appearing", traits, api}
   , window_no_title_bar{"WindowFlags_NoTitleBar", traits, api}
   , window_no_resize{"WindowFlags_NoResize", traits, api}
   , window_no_move{"WindowFlags_NoMove", traits, api}
@@ -456,6 +577,10 @@ basic_imgui_constants<ApiTraits>::basic_imgui_constants(
   , window_no_nav{"WindowFlags_NoNav", traits, api}
   , window_no_decoration{"WindowFlags_NoDecoration", traits, api}
   , window_no_inputs{"WindowFlags_NoInputs", traits, api}
+  , slider_always_clamp{"SliderFlags_AlwaysClamp", traits, api}
+  , slider_logarithmic{"SliderFlags_Logarithmic", traits, api}
+  , slider_no_round_to_format{"SliderFlags_NoRoundToFormat", traits, api}
+  , slider_no_input{"SliderFlags_NoInput", traits, api}
   , viewport_is_platform_window{"ViewportFlags_IsPlatformWindow", traits, api}
   , viewport_is_platform_monitor{"ViewportFlags_IsPlatformMonitor", traits, api}
   , viewport_owned_by_app{"ViewportFlags_OwnedByApp", traits, api} {}

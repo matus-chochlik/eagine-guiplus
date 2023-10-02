@@ -26,6 +26,7 @@ export struct imgui_types {
     static constexpr bool has_api = true;
 
     using vec2_type = ImVec2;
+    using vec4_type = ImVec4;
     using glfw_window_type = GLFWwindow;
     using context_type = ImGuiContext;
     using font_type = ImFont;
@@ -43,6 +44,7 @@ export struct imgui_types {
     using selectable_flags_type = ImGuiSelectableFlags;
     using slider_flags_type = ImGuiSliderFlags;
     using combo_flags_type = ImGuiComboFlags;
+    using color_edit_flags_type = ImGuiColorEditFlags;
     using mem_alloc_func = ImGuiMemAllocFunc;
     using mem_free_func = ImGuiMemFreeFunc;
 #else
@@ -51,6 +53,10 @@ export struct imgui_types {
     struct vec2_type {
         constexpr vec2_type() noexcept = default;
         constexpr vec2_type(float, float) noexcept = default;
+    };
+    struct vec4_type {
+        constexpr vec4_type() noexcept = default;
+        constexpr vec4_type(float, float, float, float) noexcept = default;
     };
     using glfw_window_type = nothing_t;
     using context_type = nothing_t;
@@ -69,6 +75,7 @@ export struct imgui_types {
     using selectable_flags_type = int;
     using slider_flags_type = int;
     using combo_flags_type = int;
+    using color_edit_flags_type = int;
     using mem_alloc_func = void* (*)(std::size_t sz, void*);
     using mem_free_func = void (*)(std::size_t sz, void*);
 #endif
