@@ -924,17 +924,15 @@ namespace std {
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 struct tuple_size<eagine::guiplus::basic_imgui_api<ApiTraits>>
-  : public std::integral_constant<std::size_t, 2> {};
+  : integral_constant<std::size_t, 2> {};
 
 export template <typename ApiTraits>
-struct tuple_element<0, eagine::guiplus::basic_imgui_api<ApiTraits>> {
-    using type = eagine::guiplus::basic_imgui_operations<ApiTraits>;
-};
+struct tuple_element<0, eagine::guiplus::basic_imgui_api<ApiTraits>>
+  : type_identity<eagine::guiplus::basic_imgui_operations<ApiTraits>> {};
 
 export template <typename ApiTraits>
-struct tuple_element<1, eagine::guiplus::basic_imgui_api<ApiTraits>> {
-    using type = eagine::guiplus::basic_imgui_constants<ApiTraits>;
-};
+struct tuple_element<1, eagine::guiplus::basic_imgui_api<ApiTraits>>
+  : type_identity<eagine::guiplus::basic_imgui_constants<ApiTraits>> {};
 //------------------------------------------------------------------------------
 } // namespace std
 namespace eagine::guiplus {
