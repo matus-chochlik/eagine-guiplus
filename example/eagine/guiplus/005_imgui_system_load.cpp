@@ -12,7 +12,10 @@ import std;
 import eagine.core;
 import eagine.guiplus;
 
+namespace eagine {
+
 static void run_loop(
+  main_ctx& ctx,
   GLFWwindow* window,
   int width,
   int height,
@@ -27,7 +30,7 @@ static void run_loop(
     eagine::variable_with_history<float, 32> short_loads{0.F};
     eagine::variable_with_history<float, 32> long_loads{0.F};
 
-    const imgui_api gui;
+    const imgui_api gui{ctx};
 
     if(gui.create_context) {
         if(const ok context{gui.create_context()}) {
@@ -101,7 +104,7 @@ static void run_loop(
     }
 }
 
-static void init_and_run(eagine::system_info& sys) {
+static void init_and_run(main_ctx& ctx) {
     if(not glfwInit()) {
         throw std::runtime_error("GLFW initialization error");
     } else {
@@ -124,17 +127,16 @@ static void init_and_run(eagine::system_info& sys) {
         if(auto window{glfwCreateWindow(
              width, height, "GUIplus ImGui example", nullptr, nullptr)}) {
             glfwMakeContextCurrent(window);
-            run_loop(window, width, height, sys);
+            run_loop(ctx, window, width, height, ctx.system());
         } else {
             throw std::runtime_error("Error creating GLFW window");
         }
     }
 }
 
-namespace eagine {
 auto main(main_ctx& ctx) -> int {
     try {
-        init_and_run(ctx.system());
+        init_and_run(ctx);
         return 0;
     } catch(const std::runtime_error& sre) {
         std::cerr << "Runtime error: " << sre.what() << std::endl;

@@ -29,7 +29,7 @@ public:
     basic_gui_utils(main_ctx_parent parent) noexcept
       : main_ctx_object{"GuiUtils", parent} {}
 
-    basic_imgui_api<ImGuiApiTraits> imgui;
+    basic_imgui_api<ImGuiApiTraits> imgui{as_parent()};
 
     auto add_subtitle_font(
       const string_view file_path,
