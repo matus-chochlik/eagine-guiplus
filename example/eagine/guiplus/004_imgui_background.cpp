@@ -12,7 +12,9 @@ import std;
 import eagine.core;
 import eagine.guiplus;
 
-static void run_loop(GLFWwindow* window, int width, int height) {
+namespace eagine {
+
+static void run_loop(main_ctx& ctx, GLFWwindow* window, int width, int height) {
     using eagine::index_range;
     using eagine::ok;
     using namespace eagine::guiplus;
@@ -26,7 +28,7 @@ static void run_loop(GLFWwindow* window, int width, int height) {
 
     glClearDepth(1);
 
-    const imgui_api gui;
+    const imgui_api gui{ctx};
 
     if(gui.create_context) {
         if(const ok context{gui.create_context()}) {
@@ -96,7 +98,7 @@ static void run_loop(GLFWwindow* window, int width, int height) {
     }
 }
 
-static void init_and_run() {
+static void init_and_run(main_ctx& ctx) {
     if(not glfwInit()) {
         throw std::runtime_error("GLFW initialization error");
     } else {
@@ -119,16 +121,16 @@ static void init_and_run() {
         if(auto window{glfwCreateWindow(
              width, height, "GUIplus ImGui example", nullptr, nullptr)}) {
             glfwMakeContextCurrent(window);
-            run_loop(window, width, height);
+            run_loop(ctx, window, width, height);
         } else {
             throw std::runtime_error("Error creating GLFW window");
         }
     }
 }
 
-auto main() -> int {
+auto main(main_ctx& ctx) -> int {
     try {
-        init_and_run();
+        init_and_run(ctx);
         return 0;
     } catch(const std::runtime_error& sre) {
         std::cerr << "Runtime error: " << sre.what() << std::endl;
@@ -136,4 +138,10 @@ auto main() -> int {
         std::cerr << "Unknown error: " << se.what() << std::endl;
     }
     return 1;
+}
+
+} // namespace eagine
+
+auto main(int argc, const char** argv) -> int {
+    return eagine::default_main(argc, argv, eagine::main);
 }

@@ -635,7 +635,8 @@ public:
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 class basic_imgui_api
-  : protected ApiTraits
+  : public main_ctx_object
+  , protected ApiTraits
   , public basic_imgui_operations<ApiTraits>
   , public basic_imgui_constants<ApiTraits> {
 
@@ -672,17 +673,16 @@ public:
     template <typename R>
     using combined_result = typename ApiTraits::template combined_result<R>;
 
-    basic_imgui_api(ApiTraits traits)
-      : ApiTraits{std::move(traits)}
+    basic_imgui_api(main_ctx_parent parent, ApiTraits traits)
+      : main_ctx_object{"ImGUIAPI", parent}
+      , ApiTraits{std::move(traits)}
       , basic_imgui_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
-      , basic_imgui_constants<ApiTraits> {
-        *static_cast<ApiTraits*>(this),
-          *static_cast<basic_imgui_operations<ApiTraits>*>(this)
-    }
-    {}
+      , basic_imgui_constants<ApiTraits>{
+          *static_cast<ApiTraits*>(this),
+          *static_cast<basic_imgui_operations<ApiTraits>*>(this)} {}
 
-    basic_imgui_api()
-      : basic_imgui_api{ApiTraits{}} {}
+    basic_imgui_api(main_ctx_parent parent)
+      : basic_imgui_api{parent, ApiTraits{}} {}
 
     auto begin_overlay(string_view title, float x, float y) const noexcept {
         bool always_open{true};
@@ -784,7 +784,6 @@ public:
       float size_pixels) const noexcept -> imgui_font;
 
     auto add_font_from_resource(
-      main_ctx& ctx,
       const std::string_view font_name,
       const embedded_resource& resource,
       float size_pixels) const noexcept -> imgui_font;
@@ -857,12 +856,15 @@ auto basic_imgui_api<ApiTraits>::add_font_from_resource(
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 auto basic_imgui_api<ApiTraits>::add_font_from_resource(
-  main_ctx& ctx,
   const std::string_view font_name,
   const embedded_resource& resource,
   float size_pixels) const noexcept -> imgui_font {
     return add_font_from_resource(
-      ctx.compressor(), ctx.scratch_space(), font_name, resource, size_pixels);
+      main_context().compressor(),
+      main_context().scratch_space(),
+      font_name,
+      resource,
+      size_pixels);
 }
 //------------------------------------------------------------------------------
 template <typename ApiTraits>

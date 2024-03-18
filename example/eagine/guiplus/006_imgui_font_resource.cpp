@@ -12,11 +12,9 @@ import std;
 import eagine.core;
 import eagine.guiplus;
 
-static void run_loop(
-  GLFWwindow* window,
-  int width,
-  int height,
-  eagine::main_ctx& ctx) {
+namespace eagine {
+
+static void run_loop(main_ctx& ctx, GLFWwindow* window, int width, int height) {
     using eagine::integer_range;
     using eagine::ok;
     using namespace eagine::guiplus;
@@ -36,7 +34,6 @@ static void run_loop(
             const auto cleanup_opengl{gui.opengl3_shutdown.raii()};
 
             const auto font{gui.add_font_from_resource(
-              ctx,
               "Expectative",
               eagine::embed<"Expectativ">("expectative.ttf"),
               25)};
@@ -101,7 +98,7 @@ static void run_loop(
     }
 }
 
-static void init_and_run(eagine::main_ctx& ctx) {
+static void init_and_run(main_ctx& ctx) {
     if(not glfwInit()) {
         throw std::runtime_error("GLFW initialization error");
     } else {
@@ -124,14 +121,13 @@ static void init_and_run(eagine::main_ctx& ctx) {
         if(auto window{glfwCreateWindow(
              width, height, "GUIplus ImGui example", nullptr, nullptr)}) {
             glfwMakeContextCurrent(window);
-            run_loop(window, width, height, ctx);
+            run_loop(ctx, window, width, height);
         } else {
             throw std::runtime_error("Error creating GLFW window");
         }
     }
 }
 
-namespace eagine {
 auto main(main_ctx& ctx) -> int {
     try {
         init_and_run(ctx);
