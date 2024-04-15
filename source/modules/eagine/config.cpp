@@ -39,6 +39,7 @@ export struct imgui_types {
     using enum_type = int;
     using mouse_button_type = ImGuiMouseButton;
     using window_flags_type = ImGuiWindowFlags;
+    using child_flags_type = ImGuiChildFlags;
     using focused_flags_type = ImGuiFocusedFlags;
     using hovered_flags_type = ImGuiHoveredFlags;
     using selectable_flags_type = ImGuiSelectableFlags;
@@ -70,6 +71,7 @@ export struct imgui_types {
     using enum_type = int;
     using mouse_button_type = nothing_t;
     using window_flags_type = int;
+    using child_flags_type = int;
     using focused_flags_type = int;
     using hovered_flags_type = int;
     using selectable_flags_type = int;

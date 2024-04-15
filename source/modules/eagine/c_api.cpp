@@ -71,6 +71,8 @@ public:
     using cond_type = typename imgui_types::cond_type;
     /// @brief The window flags type.
     using window_flags_type = typename imgui_types::window_flags_type;
+    /// @brief The child flags type.
+    using child_flags_type = typename imgui_types::child_flags_type;
     /// @brief The focus flags type.
     using focused_flags_type = typename imgui_types::focused_flags_type;
     /// @brief The hover flags type.
@@ -308,8 +310,16 @@ public:
     /// @var BeginChild
     /// @imguifuncwrap{BeginChild}
     imgui_api_function<
-      bool(const char* name, const vec2_type&, bool, window_flags_type),
-      GUIPLUS_IMGUI_STATIC_FUNC(BeginChild)>
+      bool(const char* name, const vec2_type&, child_flags_type, window_flags_type),
+#if EAGINE_HAS_IMGUI
+      (bool (*)(
+        const char*,
+        const vec2_type&,
+        child_flags_type,
+        window_flags_type))(&ImGui::BeginChild)>
+#else
+      nullptr>
+#endif
       BeginChild{"BeginChild", *this};
 
     /// @var EndChild
