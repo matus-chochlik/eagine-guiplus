@@ -20,10 +20,9 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config)
 list(APPEND CMAKE_MODULE_PATH ${EAGINE_CORE_ROOT}/config)
 file(STRINGS "${EAGINE_CORE_ROOT}/VERSION" EAGINE_VERSION)
 
-add_subdirectory(submodules)
-
-include(EAGineCoreCommon)
 include(EAGinePackageGUIplus)
+add_subdirectory(submodules)
+include(EAGineCoreCommon)
 find_package(EAGineGLEW)
 find_package(EAGineGLFW3)
 
@@ -50,4 +49,3 @@ endif()
 
 add_subdirectory(source)
 add_subdirectory(example)
-add_subdirectory(deploy)
