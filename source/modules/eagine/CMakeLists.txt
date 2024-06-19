@@ -154,3 +154,15 @@ eagine_add_module_tests(
 eagine_add_license(guiplus-dev)
 eagine_add_debian_changelog(guiplus-dev)
 
+eagine_add_package_property(
+	guiplus-dev
+	GENERATOR DEBIAN
+	VARIABLE PACKAGE_DEPENDS
+	VALUE "eagine-core-dev (>= @EAGINE_VERSION@)")
+
+eagine_add_package_property(
+	guiplus-dev
+	GENERATOR DEBIAN
+	VARIABLE DESCRIPTION
+	VALUE "C++ wrapper for ImGUI.")
+

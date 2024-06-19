@@ -61,6 +61,17 @@ eagine_embed_target_resources(
 	TARGET guiplus-006_imgui_font_resource
 	RESOURCES
 		Expectativ "${CMAKE_CURRENT_SOURCE_DIR}/expectative.ttf"
-	ENABLE_SEARCH
-)
+	ENABLE_SEARCH)
+
+eagine_add_package_property(
+	guiplus-examples
+	GENERATOR DEBIAN
+	VARIABLE PACKAGE_DEPENDS
+	VALUE "\${CXX_RUNTIME_PKGS},\${EAGINE_CORE_RUNTIME_PKGS}")
+
+eagine_add_package_property(
+	guiplus-examples
+	GENERATOR DEBIAN
+	VARIABLE DESCRIPTION
+	VALUE "EAGine GUIplus examples.")
 
