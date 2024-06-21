@@ -63,6 +63,9 @@ eagine_embed_target_resources(
 		Expectativ "${CMAKE_CURRENT_SOURCE_DIR}/expectative.ttf"
 	ENABLE_SEARCH)
 
+eagine_add_license(guiplus-examples)
+eagine_add_debian_changelog(guiplus-examples)
+
 eagine_add_package_property(
 	guiplus-examples
 	GENERATOR DEBIAN
