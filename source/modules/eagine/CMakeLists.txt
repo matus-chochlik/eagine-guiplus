@@ -4,7 +4,9 @@
 # https://www.boost.org/LICENSE_1_0.txt
 
 eagine_add_module(
-	eagine.guiplus PARTITION config
+	eagine.guiplus
+	COMPONENT guiplus-dev
+	PARTITION config
 	IMPORTS
 		std
 		eagine.core.types
@@ -14,7 +16,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.guiplus PARTITION enum_types
+	eagine.guiplus
+	COMPONENT guiplus-dev
+	PARTITION enum_types
 	IMPORTS
 		std config
 		eagine.core.types
@@ -23,7 +27,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.guiplus PARTITION objects
+	eagine.guiplus
+	COMPONENT guiplus-dev
+	PARTITION objects
 	IMPORTS
 		std config
 		eagine.core.types
@@ -34,7 +40,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.guiplus PARTITION result
+	eagine.guiplus
+	COMPONENT guiplus-dev
+	PARTITION result
 	IMPORTS
 		std
 		eagine.core.types
@@ -43,7 +51,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.guiplus PARTITION api_traits
+	eagine.guiplus
+	COMPONENT guiplus-dev
+	PARTITION api_traits
 	IMPORTS
 		std result
 		eagine.core.memory
@@ -51,7 +61,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.guiplus PARTITION c_api
+	eagine.guiplus
+	COMPONENT guiplus-dev
+	PARTITION c_api
 	IMPORTS
 		std config result
 		eagine.core.types
@@ -62,7 +74,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.guiplus PARTITION constants
+	eagine.guiplus
+	COMPONENT guiplus-dev
+	PARTITION constants
 	IMPORTS
 		std config
 		enum_types c_api
@@ -75,7 +89,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.guiplus PARTITION from_string
+	eagine.guiplus
+	COMPONENT guiplus-dev
+	PARTITION from_string
 	IMPORTS
 		std enum_types constants
 		eagine.core.types
@@ -85,7 +101,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.guiplus PARTITION api
+	eagine.guiplus
+	COMPONENT guiplus-dev
+	PARTITION api
 	IMPORTS
 		std config enum_types
 		api_traits result
@@ -103,6 +121,7 @@ eagine_add_module(
 
 eagine_add_module(
 	eagine.guiplus
+	COMPONENT guiplus-dev
 	SOURCES
 		constants
 		c_api
@@ -131,3 +150,19 @@ eagine_add_module_tests(
 	IMPORTS
 		eagine.core
 )
+
+eagine_add_license(guiplus-dev)
+eagine_add_debian_changelog(guiplus-dev)
+
+eagine_add_package_property(
+	guiplus-dev
+	GENERATOR DEBIAN
+	VARIABLE PACKAGE_DEPENDS
+	VALUE "eagine-core-dev (>= ${EAGINE_VERSION})")
+
+eagine_add_package_property(
+	guiplus-dev
+	GENERATOR DEBIAN
+	VARIABLE DESCRIPTION
+	VALUE "C++ wrapper for ImGUI.")
+

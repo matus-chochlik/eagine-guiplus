@@ -12,8 +12,8 @@ set_target_properties(
 function(eagine_install_example TARGET_NAME)
 	install(
 		TARGETS ${TARGET_NAME}
-		DESTINATION share/eagine/example/guiplus
-	)
+		COMPONENT guiplus-examples
+		DESTINATION share/eagine/example/guiplus)
 endfunction()
 
 function(eagine_example_common EXAMPLE_NAME)
@@ -61,6 +61,20 @@ eagine_embed_target_resources(
 	TARGET guiplus-006_imgui_font_resource
 	RESOURCES
 		Expectativ "${CMAKE_CURRENT_SOURCE_DIR}/expectative.ttf"
-	ENABLE_SEARCH
-)
+	ENABLE_SEARCH)
+
+eagine_add_license(guiplus-examples)
+eagine_add_debian_changelog(guiplus-examples)
+
+eagine_add_package_property(
+	guiplus-examples
+	GENERATOR DEBIAN
+	VARIABLE PACKAGE_DEPENDS
+	VALUE "\${CXX_RUNTIME_PKGS},\${EAGINE_CORE_RUNTIME_PKGS}")
+
+eagine_add_package_property(
+	guiplus-examples
+	GENERATOR DEBIAN
+	VARIABLE DESCRIPTION
+	VALUE "EAGine GUIplus examples.")
 
