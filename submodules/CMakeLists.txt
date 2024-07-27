@@ -3,20 +3,6 @@
 # See accompanying file LICENSE_1_0.txt or copy at
 #  http://www.boost.org/LICENSE_1_0.txt
 #
-
-if(NOT TARGET EAGine::Core AND NOT TARGET eagine.core)
-	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/eagine-core/CMakeLists.txt")
-		unset(SUBMODULE_INIT_ARG)
-	else()
-		set(SUBMODULE_INIT_ARG --init)
-	endif()
-	execute_process(
-		COMMAND git submodule update ${SUBMODULE_INIT_ARG}
-		WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/eagine-core"
-	)
-	add_subdirectory(eagine-core EXCLUDE_FROM_ALL)
-endif()
-
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h")
 	execute_process(
 		COMMAND git submodule update --init
@@ -24,3 +10,16 @@ if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h")
 	)
 endif()
 
+foreach(SUBMODULE core)
+	if(NOT TARGET eagine.${SUBMODULE})
+		if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/eagine-${SUBMODULE}/CMakeLists.txt")
+			unset(SUBMODULE_INIT_ARG)
+		else()
+			set(SUBMODULE_INIT_ARG --init)
+		endif()
+		execute_process(
+			COMMAND git submodule update ${SUBMODULE_INIT_ARG}
+			WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/eagine-${SUBMODULE}")
+		add_subdirectory(eagine-${SUBMODULE} EXCLUDE_FROM_ALL)
+	endif()
+endforeach()
