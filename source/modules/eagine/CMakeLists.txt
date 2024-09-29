@@ -12,8 +12,7 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.math
 	PRIVATE_INCLUDE_DIRECTORIES
-		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
-)
+		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui")
 
 eagine_add_module(
 	eagine.guiplus
@@ -23,8 +22,7 @@ eagine_add_module(
 		std config
 		eagine.core.types
 		eagine.core.identifier
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.guiplus
@@ -36,8 +34,7 @@ eagine_add_module(
 		eagine.core.identifier
 		eagine.core.c_api
 	PRIVATE_INCLUDE_DIRECTORIES
-		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
-)
+		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui")
 
 eagine_add_module(
 	eagine.guiplus
@@ -47,8 +44,7 @@ eagine_add_module(
 		std
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.guiplus
@@ -57,8 +53,7 @@ eagine_add_module(
 	IMPORTS
 		std result
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.guiplus
@@ -70,8 +65,7 @@ eagine_add_module(
 		eagine.core.memory
 		eagine.core.c_api
 	PRIVATE_INCLUDE_DIRECTORIES
-		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
-)
+		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui")
 
 eagine_add_module(
 	eagine.guiplus
@@ -85,8 +79,7 @@ eagine_add_module(
 		eagine.core.valid_if
 		eagine.core.c_api
 	PRIVATE_INCLUDE_DIRECTORIES
-		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui"
-)
+		"${CMAKE_CURRENT_SOURCE_DIR}/../../../submodules/imgui")
 
 eagine_add_module(
 	eagine.guiplus
@@ -97,8 +90,7 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.string
-		eagine.core.valid_if
-)
+		eagine.core.valid_if)
 
 eagine_add_module(
 	eagine.guiplus
@@ -116,8 +108,7 @@ eagine_add_module(
 		eagine.core.math
 		eagine.core.c_api
 		eagine.core.resource
-		eagine.core.main_ctx
-)
+		eagine.core.main_ctx)
 
 eagine_add_module(
 	eagine.guiplus
@@ -140,16 +131,14 @@ eagine_add_module(
 		imgui
 		EAGine::Deps::GLFW3
 	INTERFACE_LINK_LIBRARIES
-		imgui
-)
+		imgui)
 
 eagine_add_module_tests(
 	eagine.guiplus
 	UNITS
 		constants
 	IMPORTS
-		eagine.core
-)
+		eagine.core)
 
 eagine_add_license(guiplus-dev)
 eagine_add_debian_changelog(guiplus-dev)
